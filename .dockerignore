@@ -1,0 +1,16 @@
+.venv
+backend/.venv
+__pycache__
+*/__pycache__
+*.pyc
+*.pyo
+*.pyd
+*.log
+.env
+.git
+.gitignore
+.vscode
+.idea
+node_modules
+data/embeddings
+samples

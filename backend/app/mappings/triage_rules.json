@@ -1,0 +1,104 @@
+{
+  "rules": [
+    {
+      "symptoms": ["sốt"],
+      "possible_diseases": [
+        {"name": "Nhiễm siêu vi", "score": 0.65},
+        {"name": "Cảm cúm", "score": 0.60},
+        {"name": "Viêm đường hô hấp nhẹ", "score": 0.55}
+      ],
+      "triage_level": "Tự theo dõi",
+      "department": "Nội tổng quát"
+    },
+    {
+      "symptoms": ["sốt", "ho"],
+      "possible_diseases": [
+        {"name": "Cúm mùa", "score": 0.78},
+        {"name": "Viêm đường hô hấp", "score": 0.70},
+        {"name": "COVID-19", "score": 0.62}
+      ],
+      "triage_level": "Thông thường",
+      "department": "Hô hấp"
+    },
+    {
+      "symptoms": ["sốt", "ho", "khó thở"],
+      "possible_diseases": [
+        {"name": "Viêm phổi", "score": 0.82},
+        {"name": "Cúm mùa", "score": 0.74},
+        {"name": "Hen phế quản", "score": 0.58}
+      ],
+      "triage_level": "Rất khẩn",
+      "department": "Hô hấp"
+    },
+    {
+      "symptoms": ["đau ngực", "khó thở"],
+      "possible_diseases": [
+        {"name": "Hội chứng mạch vành", "score": 0.88},
+        {"name": "Cơn đau thắt ngực", "score": 0.80},
+        {"name": "Thuyên tắc phổi", "score": 0.50}
+      ],
+      "triage_level": "Cấp cứu ngay",
+      "department": "Tim mạch"
+    },
+    {
+      "symptoms": ["đau bụng", "buồn nôn"],
+      "possible_diseases": [
+        {"name": "Rối loạn tiêu hóa", "score": 0.76},
+        {"name": "Viêm dạ dày", "score": 0.72},
+        {"name": "Ngộ độc thực phẩm", "score": 0.69}
+      ],
+      "triage_level": "Thông thường",
+      "department": "Tiêu hóa"
+    },
+    {
+      "symptoms": ["đau bụng", "sốt", "buồn nôn"],
+      "possible_diseases": [
+        {"name": "Viêm ruột thừa", "score": 0.76},
+        {"name": "Viêm túi mật", "score": 0.62},
+        {"name": "Nhiễm trùng tiêu hóa", "score": 0.58}
+      ],
+      "triage_level": "Khẩn mức vừa",
+      "department": "Tiêu hóa"
+    },
+    {
+      "symptoms": ["sốt cao", "đau sau hốc mắt", "đau mỏi cơ", "phát ban"],
+      "possible_diseases": [
+        {"name": "Sốt xuất huyết", "score": 0.88},
+        {"name": "Nhiễm siêu vi", "score": 0.52},
+        {"name": "Cúm mùa", "score": 0.45}
+      ],
+      "triage_level": "Khẩn mức vừa",
+      "department": "Truyền nhiễm"
+    },
+    {
+      "symptoms": ["ợ nóng", "ợ chua", "đau thượng vị"],
+      "possible_diseases": [
+        {"name": "GERD", "score": 0.84},
+        {"name": "Viêm dạ dày", "score": 0.62},
+        {"name": "Rối loạn tiêu hóa", "score": 0.50}
+      ],
+      "triage_level": "Thông thường",
+      "department": "Tiêu hóa"
+    },
+    {
+      "symptoms": ["ngứa", "khô da", "mẩn đỏ"],
+      "possible_diseases": [
+        {"name": "Viêm da cơ địa", "score": 0.82},
+        {"name": "Dị ứng da", "score": 0.65},
+        {"name": "Nấm da", "score": 0.45}
+      ],
+      "triage_level": "Tự theo dõi",
+      "department": "Da liễu"
+    },
+    {
+      "symptoms": ["huyết áp cao", "đau đầu"],
+      "possible_diseases": [
+        {"name": "Tăng huyết áp", "score": 0.82},
+        {"name": "Cơn tăng huyết áp", "score": 0.70},
+        {"name": "Đau đầu căng thẳng", "score": 0.38}
+      ],
+      "triage_level": "Khẩn mức vừa",
+      "department": "Tim mạch"
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+fastapi
+uvicorn[standard]
+pydantic
+pydantic-settings
+python-dotenv
+pymongo
+motor
+httpx
+scikit-learn
+pandas
+numpy
+google-genai
+slowapi
+scipy
+joblib
+openpyxl

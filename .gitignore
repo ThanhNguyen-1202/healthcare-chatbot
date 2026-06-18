@@ -1,0 +1,15 @@
+__pycache__/
+*.pyc
+.env
+backend/.env
+.venv/
+venv/
+node_modules/
+.DS_Store
+.idea/
+.vscode/
+*.log
+data/embeddings/
+backend/app/ml/artifacts/
+data/
+backend/.env.docker

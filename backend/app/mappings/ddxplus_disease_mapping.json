@@ -1,0 +1,296 @@
+{
+  "Spontaneous pneumothorax": {
+    "vi": "Tràn khí màng phổi tự phát",
+    "department": "Hô Hấp",
+    "icd10": "J93",
+    "severity": 2
+  },
+  "Cluster headache": {
+    "vi": "Đau đầu từng cụm",
+    "department": "Thần Kinh",
+    "icd10": "g44.009",
+    "severity": 3
+  },
+  "Boerhaave": {
+    "vi": "Hội chứng Boerhaave (vỡ thực quản tự phát)",
+    "department": "Tiêu Hóa",
+    "icd10": "K22.3",
+    "severity": 2
+  },
+  "Spontaneous rib fracture": {
+    "vi": "Gãy xương sườn tự phát",
+    "department": "Cơ Xương Khớp",
+    "icd10": "S22.9",
+    "severity": 3
+  },
+  "GERD": {
+    "vi": "Trào ngược dạ dày - thực quản",
+    "department": "Tiêu Hóa",
+    "icd10": "K21",
+    "severity": 3
+  },
+  "HIV (initial infection)": {
+    "vi": "Nhiễm HIV giai đoạn đầu",
+    "department": "Nhiễm",
+    "icd10": "B20",
+    "severity": 3
+  },
+  "Anemia": {
+    "vi": "Thiếu máu",
+    "department": "Nội Tổng Quát",
+    "icd10": "D64.9",
+    "severity": 4
+  },
+  "Viral pharyngitis": {
+    "vi": "Viêm họng do vi-rút",
+    "department": "Tai Mũi Họng",
+    "icd10": "J02.9",
+    "severity": 4
+  },
+  "Inguinal hernia": {
+    "vi": "Thoát vị bẹn",
+    "department": "Ngoại Tổng Quát",
+    "icd10": "K40",
+    "severity": 3
+  },
+  "Myasthenia gravis": {
+    "vi": "Nhược cơ",
+    "department": "Thần Kinh",
+    "icd10": "G70.0",
+    "severity": 3
+  },
+  "Whooping cough": {
+    "vi": "Ho gà",
+    "department": "Hô Hấp",
+    "icd10": "A37",
+    "severity": 4
+  },
+  "Anaphylaxis": {
+    "vi": "Phản vệ",
+    "department": "Cấp Cứu",
+    "icd10": "T78.0",
+    "severity": 1
+  },
+  "Epiglottitis": {
+    "vi": "Viêm nắp thanh quản",
+    "department": "Tai Mũi Họng",
+    "icd10": "J05.1",
+    "severity": 2
+  },
+  "Guillain-Barré syndrome": {
+    "vi": "Hội chứng Guillain-Barré",
+    "department": "Thần Kinh",
+    "icd10": "G61.0",
+    "severity": 2
+  },
+  "Acute laryngitis": {
+    "vi": "Viêm thanh quản cấp",
+    "department": "Tai Mũi Họng",
+    "icd10": "J04.0",
+    "severity": 4
+  },
+  "Croup": {
+    "vi": "Viêm thanh khí phế quản (Croup)",
+    "department": "Nhi Khoa",
+    "icd10": "J05.0",
+    "severity": 2
+  },
+  "PSVT": {
+    "vi": "Nhịp nhanh kịch phát trên thất",
+    "department": "Tim Mạch",
+    "icd10": "I47.1",
+    "severity": 2
+  },
+  "Atrial fibrillation": {
+    "vi": "Rung nhĩ",
+    "department": "Tim Mạch",
+    "icd10": "I48.91",
+    "severity": 3
+  },
+  "Bronchiectasis": {
+    "vi": "Giãn phế quản",
+    "department": "Hô Hấp",
+    "icd10": "J47",
+    "severity": 3
+  },
+  "Allergic sinusitis": {
+    "vi": "Viêm mũi xoang dị ứng",
+    "department": "Tai Mũi Họng",
+    "icd10": "J30",
+    "severity": 4
+  },
+  "Chagas": {
+    "vi": "Bệnh Chagas",
+    "department": "Nhiễm",
+    "icd10": "B57",
+    "severity": 3
+  },
+  "Scombroid food poisoning": {
+    "vi": "Ngộ độc thực phẩm Scombroid",
+    "department": "Cấp Cứu",
+    "icd10": "T61.1",
+    "severity": 2
+  },
+  "Myocarditis": {
+    "vi": "Viêm cơ tim",
+    "department": "Tim Mạch",
+    "icd10": "I51.4",
+    "severity": 2
+  },
+  "Larygospasm": {
+    "vi": "Co thắt thanh quản",
+    "department": "Cấp Cứu",
+    "icd10": "J38.5",
+    "severity": 1
+  },
+  "Acute dystonic reactions": {
+    "vi": "Phản ứng loạn trương lực cấp",
+    "department": "Thần Kinh",
+    "icd10": "G24.02",
+    "severity": 2
+  },
+  "Localized edema": {
+    "vi": "Phù khu trú",
+    "department": "Nội Tổng Quát",
+    "icd10": "R60.0",
+    "severity": 4
+  },
+  "SLE": {
+    "vi": "Lupus ban đỏ hệ thống",
+    "department": "Cơ Xương Khớp",
+    "icd10": "M32",
+    "severity": 4
+  },
+  "Tuberculosis": {
+    "vi": "Lao phổi",
+    "department": "Hô Hấp",
+    "icd10": "a15",
+    "severity": 3
+  },
+  "Unstable angina": {
+    "vi": "Đau thắt ngực không ổn định",
+    "department": "Tim Mạch",
+    "icd10": "I20.0",
+    "severity": 2
+  },
+  "Stable angina": {
+    "vi": "Đau thắt ngực ổn định",
+    "department": "Tim Mạch",
+    "icd10": "I20.9",
+    "severity": 2
+  },
+  "Ebola": {
+    "vi": "Bệnh do vi-rút Ebola",
+    "department": "Nhiễm",
+    "icd10": "a98.4",
+    "severity": 1
+  },
+  "Acute otitis media": {
+    "vi": "Viêm tai giữa cấp",
+    "department": "Tai Mũi Họng",
+    "icd10": "H66.90",
+    "severity": 4
+  },
+  "Panic attack": {
+    "vi": "Cơn hoảng loạn",
+    "department": "Tâm Lý - Tâm Thần",
+    "icd10": "f41",
+    "severity": 5
+  },
+  "Bronchospasm / acute asthma exacerbation": {
+    "vi": "Co thắt phế quản / cơn hen cấp",
+    "department": "Hô Hấp",
+    "icd10": "J45",
+    "severity": 3
+  },
+  "Bronchitis": {
+    "vi": "Viêm phế quản",
+    "department": "Hô Hấp",
+    "icd10": "j40",
+    "severity": 4
+  },
+  "Acute COPD exacerbation / infection": {
+    "vi": "Đợt cấp COPD / nhiễm trùng",
+    "department": "Hô Hấp",
+    "icd10": "j44.1",
+    "severity": 3
+  },
+  "Pulmonary embolism": {
+    "vi": "Thuyên tắc phổi",
+    "department": "Cấp Cứu",
+    "icd10": "i26",
+    "severity": 2
+  },
+  "URTI": {
+    "vi": "Nhiễm trùng đường hô hấp trên",
+    "department": "Hô Hấp",
+    "icd10": "j06.9",
+    "severity": 5
+  },
+  "Influenza": {
+    "vi": "Cúm",
+    "department": "Hô Hấp",
+    "icd10": "j11.1",
+    "severity": 3
+  },
+  "Pneumonia": {
+    "vi": "Viêm phổi",
+    "department": "Hô Hấp",
+    "icd10": "j17, j18",
+    "severity": 3
+  },
+  "Acute rhinosinusitis": {
+    "vi": "Viêm mũi xoang cấp",
+    "department": "Tai Mũi Họng",
+    "icd10": "j01",
+    "severity": 4
+  },
+  "Chronic rhinosinusitis": {
+    "vi": "Viêm mũi xoang mạn",
+    "department": "Tai Mũi Họng",
+    "icd10": "j32",
+    "severity": 5
+  },
+  "Bronchiolitis": {
+    "vi": "Viêm tiểu phế quản",
+    "department": "Nhi Khoa",
+    "icd10": "j21",
+    "severity": 3
+  },
+  "Pulmonary neoplasm": {
+    "vi": "U phổi",
+    "department": "Ung Bướu",
+    "icd10": "c34",
+    "severity": 3
+  },
+  "Possible NSTEMI / STEMI": {
+    "vi": "Nghi nhồi máu cơ tim cấp",
+    "department": "Cấp Cứu",
+    "icd10": "I21",
+    "severity": 1
+  },
+  "Sarcoidosis": {
+    "vi": "Bệnh Sarcoidosis",
+    "department": "Hô Hấp",
+    "icd10": "d86",
+    "severity": 4
+  },
+  "Pancreatic neoplasm": {
+    "vi": "U tụy",
+    "department": "Ung Bướu",
+    "icd10": "c25",
+    "severity": 3
+  },
+  "Acute pulmonary edema": {
+    "vi": "Phù phổi cấp",
+    "department": "Cấp Cứu",
+    "icd10": "J81.0",
+    "severity": 1
+  },
+  "Pericarditis": {
+    "vi": "Viêm màng ngoài tim",
+    "department": "Tim Mạch",
+    "icd10": "I30",
+    "severity": 4
+  }
+}

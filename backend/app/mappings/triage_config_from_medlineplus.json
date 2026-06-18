@@ -1,0 +1,2008 @@
+{
+  "metadata": {
+    "name": "MedlinePlus-derived red flag and triage rules",
+    "version": "1.0.0",
+    "generated_at": "2026-06-03T01:48:12.689274+00:00",
+    "source_file": "medlineplus_health_topics.xml",
+    "source_total_topics": 2033,
+    "source_date_generated": "04/07/2026 02:30:39",
+    "purpose": "Seed rules for health screening red-flag detection. Curated Vietnamese keywords are supported by MedlinePlus emergency/help-immediately snippets.",
+    "limitations": [
+      "This is a rule seed, not a trained clinical triage dataset.",
+      "The XML is mostly English/Spanish; Vietnamese keywords are curated translations/adaptations for the chatbot.",
+      "A clinician or supervisor should review before production use."
+    ],
+    "source": {
+      "organization": "MedlinePlus / U.S. National Library of Medicine",
+      "xml_doctype": "https://medlineplus.gov/xml/mplus_topics.dtd"
+    }
+  },
+  "triage_levels": {
+    "1": {
+      "label": "Cấp cứu ngay",
+      "description": "Có dấu hiệu nguy hiểm; khuyến nghị gọi 115 hoặc đến cơ sở cấp cứu gần nhất."
+    },
+    "2": {
+      "label": "Khẩn cấp",
+      "description": "Cần được nhân viên y tế đánh giá sớm."
+    },
+    "3": {
+      "label": "Khám sớm",
+      "description": "Nên đi khám trong thời gian gần nếu triệu chứng kéo dài hoặc nặng hơn."
+    },
+    "4": {
+      "label": "Theo dõi",
+      "description": "Có thể theo dõi, nghỉ ngơi và đi khám nếu triệu chứng không cải thiện."
+    }
+  },
+  "critical_red_flag_keywords": [
+    "khó thở nặng",
+    "khó thở",
+    "thở gấp",
+    "thở không nổi",
+    "tím tái",
+    "môi tím",
+    "đau ngực dữ dội",
+    "đau tức ngực kéo dài",
+    "đau ngực lan cổ",
+    "đau ngực lan vai",
+    "lơ mơ",
+    "lú lẫn",
+    "khó đánh thức",
+    "không tỉnh táo",
+    "ngất",
+    "mất ý thức",
+    "co giật",
+    "chảy máu không cầm",
+    "nôn ra máu",
+    "ho ra máu",
+    "đi ngoài ra máu",
+    "không nói được",
+    "nói khó",
+    "yếu liệt nửa người",
+    "méo miệng",
+    "đau bụng dữ dội",
+    "đau bụng đột ngột",
+    "bụng cứng",
+    "đau đầu dữ dội",
+    "chấn thương đầu",
+    "chấn thương cột sống"
+  ],
+  "urgent_red_flag_keywords": [
+    "sốt cao không hạ",
+    "sốt trên 39 độ",
+    "nôn liên tục",
+    "tiêu chảy nhiều",
+    "mất nước",
+    "đau tăng nhanh",
+    "mệt lả",
+    "chóng mặt nhiều",
+    "phát ban lan nhanh",
+    "khò khè nhiều",
+    "khó nuốt",
+    "đau khi nuốt nặng"
+  ],
+  "negation_patterns": [
+    "không",
+    "không bị",
+    "không có",
+    "không thấy",
+    "chưa",
+    "chưa từng",
+    "chưa bao giờ",
+    "không còn"
+  ],
+  "medlineplus_emergency_evidence": [
+    {
+      "title": "Abdominal Pain",
+      "url": "https://medlineplus.gov/abdominalpain.html",
+      "groups": [
+        "Digestive System",
+        "Symptoms"
+      ],
+      "urgent_text": [
+        "Call your health care provider if mild pain lasts a week or more or if you have pain with other symptoms. Get medical help immediately if:",
+        "You have abdominal pain that is sudden and sharp",
+        "You also have pain in your chest, neck or shoulder",
+        "You're vomiting blood or have blood in your stool",
+        "Your abdomen is stiff, hard and tender to touch",
+        "You can't move your bowels, especially if you're also vomiting"
+      ]
+    },
+    {
+      "title": "Acute Flaccid Myelitis",
+      "url": "https://medlineplus.gov/acuteflaccidmyelitis.html",
+      "groups": [
+        "Children and Teenagers",
+        "Infections",
+        "Brain and Nerves"
+      ],
+      "urgent_text": [
+        "If you or your child develops any of these symptoms, get medical care right away.",
+        "How is acute flaccid myelitis (AFM) diagnosed?",
+        "AFM causes many of the same symptoms as other neurologic diseases, such as transverse myelitis and Guillain-Barre syndrome . This can make it difficult to diagnose. To find out if you have AFM, your doctor may use:",
+        "A neurologic exam , including looking at where there is weakness, poor muscle tone, and decreased reflexes",
+        "An MRI to look at the spinal cord and brain",
+        "Lab tests on the cerebrospinal fluid (the fluid around the brain and spinal cord)",
+        "Nerve conduction and electromyography (EMG) studies . These tests check nerve speed and the response of muscles to the messages from the nerves.",
+        "It is important that the tests are done as soon as possible after the symptoms start."
+      ]
+    },
+    {
+      "title": "Alcohol Use Disorder (AUD) Treatment",
+      "url": "https://medlineplus.gov/alcoholusedisorderaudtreatment.html",
+      "groups": [
+        "Substance Use and Disorders"
+      ],
+      "urgent_text": [
+        "For most people, treatment for an AUD is helpful. But overcoming an alcohol use disorder is an ongoing process, and you may relapse (start drinking again). You should look at relapse as a temporary setback, and keep trying. Many people repeatedly try to cut back or quit drinking, have a setback, then try to quit again. Having a relapse does not mean that you cannot recover. If you do relapse, it is important to return to treatment right away, so you can learn more about your relapse triggers and improve your coping skills. This may help you be more successful the next time.",
+        "NIH: National Institute on Alcohol Abuse and Alcoholism"
+      ]
+    },
+    {
+      "title": "Amino Acid Metabolism Disorders",
+      "url": "https://medlineplus.gov/aminoacidmetabolismdisorders.html",
+      "groups": [
+        "Metabolic Problems"
+      ],
+      "urgent_text": [
+        "Metabolism is the process your body uses to make energy from the food you eat. Food is made up of proteins, carbohydrates, and fats. Your digestive system breaks the food parts down into sugars and acids, your body's fuel. Your body can use this fuel right away, or it can store the energy in your body. If you have a metabolic disorder , something goes wrong with this process.",
+        "One group of these disorders is amino acid metabolism disorders. They include phenylketonuria (PKU) and maple syrup urine disease. Amino acids are \"building blocks\" that join together to form proteins. If you have one of these disorders, your body may have trouble breaking down certain amino acids. Or there may be a problem getting the amino acids into your cells. These problems cause a buildup of harmful substances in your body. That can lead to serious, sometimes life-threatening, health problems.",
+        "These disorders are usually inherited. A baby who is born with one may not have any symptoms right away. Because the disorders can be so serious, early diagnosis and treatment are critical. Newborn babies get screened for many of them, using blood tests.",
+        "Treatments may include special diets, medicines, and supplements. Some babies may also need additional treatments if there are complications."
+      ]
+    },
+    {
+      "title": "Anaphylaxis",
+      "url": "https://medlineplus.gov/anaphylaxis.html",
+      "groups": [
+        "Immune System"
+      ],
+      "urgent_text": [
+        "If someone is having a serious allergic reaction, call 911. If an auto-injector is available, give the person the injection right away."
+      ]
+    },
+    {
+      "title": "Antidepressants",
+      "url": "https://medlineplus.gov/antidepressants.html",
+      "groups": [
+        "Mental Health and Behavior",
+        "Drug Therapy"
+      ],
+      "urgent_text": [
+        "If you have serious problems or notice any changes that worry you, such as new or worsening symptoms, unusual changes in your mood, or you start acting differently, call your provider right away.",
+        "In some cases, children, teenagers, and young adults under 25 may be more likely to think about hurting or killing themselves when starting antidepressants or when the dose is changed. Get medical help right away if this happens.",
+        "What can I do to take antidepressants safely?",
+        "Antidepressants are generally safe when you use them correctly:",
+        "Tell your provider about everything you take. That includes medicines, herbs, supplements, and over-the-counter medicines you take, such as pain relievers and decongestants. Be honest about recreational drugs and alcohol, too.",
+        "Try to get all your medicines from the same pharmacy. That way the pharmacist can warn you and your provider if you take medicines that may cause problems when used together.",
+        "Follow all instructions about how to take your medicine.",
+        "Talk with your provider if side effects bother you."
+      ]
+    },
+    {
+      "title": "Appendicitis",
+      "url": "https://medlineplus.gov/appendicitis.html",
+      "groups": [
+        "Digestive System"
+      ],
+      "urgent_text": [
+        "Appendicitis is a medical emergency. Treatment almost always involves removing the appendix. Anyone can get appendicitis, but it is more common among people 10 to 30 years old.",
+        "NIH: National Institute of Diabetes and Digestive and Kidney Diseases"
+      ]
+    },
+    {
+      "title": "Arrhythmia",
+      "url": "https://medlineplus.gov/arrhythmia.html",
+      "groups": [
+        "Blood, Heart and Circulation"
+      ],
+      "urgent_text": [
+        "Seek emergency medical care if you have chest pain, shortness of breath, or think you are having a heart attack.",
+        "How is an arrhythmia diagnosed?",
+        "To find out if you have an arrhythmia, your health care provider may order an electrocardiogram (EKG). This test records your heart's electrical activity and is the most common for finding an arrhythmia. Your provider may also:",
+        "Ask about your medical history, including your symptoms and lifestyle habits.",
+        "Do a physical exam, which includes checking your heartbeat and pulse.",
+        "Order blood tests and other heart tests .",
+        "Check your legs or feet for swelling.",
+        "Look for signs of other health conditions that could cause an arrythmia, such as thyroid disease ."
+      ]
+    },
+    {
+      "title": "Asthma in Children",
+      "url": "https://medlineplus.gov/asthmainchildren.html",
+      "groups": [
+        "Children and Teenagers",
+        "Lungs and Breathing",
+        "Immune System"
+      ],
+      "urgent_text": [
+        "When children have an asthma attack, their symptoms get much worse. The attacks may come on gradually or suddenly. Sometimes they can be life-threatening. Warning signs of a severe attack include severe coughing, serious breathing problems, and turning very pale or blue in the face, lips and/or fingernails. If your child has those symptoms, get medical help right away.",
+        "How is asthma in children diagnosed?",
+        "It can be hard to diagnose asthma in children, especially if they are young. Asthma has similar symptoms as other childhood conditions. And some children may not have asthma symptoms very often, so it may seem like they are having respiratory infections instead.",
+        "Your child's health care provider may use many tools to diagnose asthma:",
+        "Physical exam",
+        "Medical history",
+        "Chest x-ray",
+        "Lung function tests , including spirometry, to test how well the lungs work. Younger children are usually not able to do these tests."
+      ]
+    },
+    {
+      "title": "Birth Defects",
+      "url": "https://medlineplus.gov/birthdefects.html",
+      "groups": [
+        "Genetics/Birth Defects"
+      ],
+      "urgent_text": [
+        "Other birth defects may not be found until after the baby is born. Providers may find them through newborn screening . Some defects, such as club foot, are obvious right away. Other times, the health care provider may not discover a defect until later in life, when the child has symptoms.",
+        "What are the treatments for birth defects?",
+        "Children with birth defects often need special care and treatments. Because the symptoms and problems caused by birth defects vary, the treatments also vary. Possible treatments may include surgery, medicines, assistive devices , physical therapy, and speech therapy.",
+        "Often, children with birth defects need a variety of services and may need to see several specialists. The primary health care provider can coordinate the special care that the child needs.",
+        "Can birth defects be prevented?",
+        "Not all birth defects can be prevented. But there are things you can do before and during pregnancy to increase your chance of having a healthy baby:",
+        "Start prenatal care as soon as you think you might be pregnant, and see your health care provider regularly during pregnancy",
+        "Get 400 micrograms (mcg) of folic acid every day. If possible, you should start taking it at least one month before you get pregnant."
+      ]
+    },
+    {
+      "title": "Carbohydrate Metabolism Disorders",
+      "url": "https://medlineplus.gov/carbohydratemetabolismdisorders.html",
+      "groups": [
+        "Metabolic Problems"
+      ],
+      "urgent_text": [
+        "Metabolism is the process your body uses to make energy from the food you eat. Food is made up of proteins, carbohydrates, and fats. Chemicals in your digestive system (enzymes) break the food parts down into sugars and acids, your body's fuel. Your body can use this fuel right away, or it can store the energy in your body tissues. If you have a metabolic disorder , something goes wrong with this process.",
+        "Carbohydrate metabolism disorders are a group of metabolic disorders. Normally your enzymes break carbohydrates down into glucose (a type of sugar). If you have one of these disorders, you may not have enough enzymes to break down the carbohydrates. Or the enzymes may not work properly. This causes a harmful amount of sugar to build up in your body. That can lead to health problems, some of which can be serious. Some of the disorders are fatal.",
+        "These disorders are inherited. Newborn babies get screened for many of them, using blood tests. If there is a family history of one of these disorders, parents can get genetic testing to see whether they carry the gene. Other genetic tests can tell whether the fetus has the disorder or carries the gene for the disorder.",
+        "Treatments may include special diets, supplements, and medicines. Some babies may also need additional treatments, if there are complications. For some disorders, there is no cure, but treatments may help with symptoms."
+      ]
+    },
+    {
+      "title": "Childhood Leukemia",
+      "url": "https://medlineplus.gov/childhoodleukemia.html",
+      "groups": [
+        "Cancers",
+        "Children and Teenagers",
+        "Blood, Heart and Circulation",
+        "Immune System"
+      ],
+      "urgent_text": [
+        "Treatment for childhood leukemia is often successful. But the treatments can cause complications right away or later in life. Children who survived leukemia will need follow-up care the rest of their lives to watch for and treat any complications they may have.",
+        "NIH: National Cancer Institute"
+      ]
+    },
+    {
+      "title": "Cholera",
+      "url": "https://medlineplus.gov/cholera.html",
+      "groups": [
+        "Infections"
+      ],
+      "urgent_text": [
+        "In some cases, the infection can be severe, causing lots of watery diarrhea, vomiting, and leg cramps. Because you quickly lose body fluids, you are at risk for dehydration and shock . Without treatment, you could die within hours. If you think that you might have cholera, you should get medical care right away.",
+        "Doctors diagnose cholera with a stool sample or rectal swab. Treatment is the replacement of the fluid and salts that you lost through the diarrhea. This is usually with a rehydration solution that you drink. People with severe cases may need an I.V. to replace the fluids. Some of them may also need antibiotics . Most people who get fluid replacement right away will recover.",
+        "There are vaccines to prevent cholera. One of them is available for adults in the U.S. Very few Americans need it, because most people do not visit areas that have an active cholera outbreak.",
+        "There are also simple steps you can take to help to prevent cholera infection:",
+        "Use only bottled or purified water for drinking, washing dishes, making ice cubes, and brushing your teeth",
+        "If you do use tap water, boil it or use iodine tablets",
+        "Wash your hands often with soap and clean water",
+        "Make sure that the cooked food you eat is fully cooked and served hot"
+      ]
+    },
+    {
+      "title": "Chronic Lymphocytic Leukemia",
+      "url": "https://medlineplus.gov/chroniclymphocyticleukemia.html",
+      "groups": [
+        "Cancers",
+        "Blood, Heart and Circulation",
+        "Immune System"
+      ],
+      "urgent_text": [
+        "Watchful waiting, which means that you don't get treatment right away. Your health care provider regularly checks to see if your signs or symptoms appear or change.",
+        "Targeted therapy, which uses drugs or other substances that attack specific cancer cells with less harm to normal cells.",
+        "Chemotherapy",
+        "Radiation therapy",
+        "Immunotherapy",
+        "Chemotherapy with bone marrow or stem cell transplant",
+        "The goals of treatment are to slow the growth of the leukemia cells and to give you long periods of remission. Remission means that the signs and symptoms of cancer are reduced or have disappeared. The CLL may come back after remission, and you may need more treatment.",
+        "NIH: National Cancer Institute"
+      ]
+    },
+    {
+      "title": "Common Infant and Newborn Problems",
+      "url": "https://medlineplus.gov/commoninfantandnewbornproblems.html",
+      "groups": [
+        "Children and Teenagers"
+      ],
+      "urgent_text": [
+        "Many of these problems are not serious. It is important to know how to help your sick baby, and to know the warning signs for more serious problems. Trust your intuition - if you are worried about your baby, call your health care provider right away."
+      ]
+    },
+    {
+      "title": "Concussion",
+      "url": "https://medlineplus.gov/concussion.html",
+      "groups": [
+        "Brain and Nerves",
+        "Injuries and Wounds"
+      ],
+      "urgent_text": [
+        "Symptoms of a concussion may not start right away; they may start days or weeks after the injury. Symptoms may include a headache or neck pain. You may also have nausea, ringing in your ears, dizziness, or tiredness. You may feel dazed or not your normal self for several days or weeks after the injury. Consult your health care professional if any of your symptoms get worse, or if you have more serious symptoms such as:",
+        "Convulsions or seizures",
+        "Drowsiness or inability to wake up",
+        "A headache that gets worse and does not go away",
+        "Weakness, numbness, or decreased coordination",
+        "Repeated vomiting or nausea",
+        "Confusion",
+        "Slurred speech"
+      ]
+    },
+    {
+      "title": "CPR",
+      "url": "https://medlineplus.gov/cpr.html",
+      "groups": [
+        "Blood, Heart and Circulation",
+        "Injuries and Wounds"
+      ],
+      "urgent_text": [
+        "When someone's blood flow or breathing stops, seconds count. Permanent brain damage or death can happen quickly. If you know how to perform cardiopulmonary resuscitation (CPR), you could save a life. CPR is an emergency procedure for a person whose heart has stopped (called sudden cardiac arrest ) or who is no longer breathing. CPR can maintain the blood flow breathing until emergency medical help arrives.",
+        "Take these steps if someone is in sudden cardiac arrest:",
+        "Call 911.",
+        "If someone else is around, have them look for an automated external defibrillator (AED). An AED is a device that sends an electric shock to the heart to try to restore its normal rhythm. AEDs are available in many public places such as schools, businesses, and airports .",
+        "Make sure that the person with sudden cardiac arrest is lying on their back on a firm surface.",
+        "If you haven't had any CPR training, you can do \"hands-only\" CPR for a teen or adult whose heart has stopped beating (\"hands-only\" CPR isn't recommended for children). \"Hands-only\" CPR uses chest compressions to keep blood circulating. Chest compressions involve pushing hard and fast in the center of the chest.",
+        "If you've had training, you can use chest compressions, clear the airway, and do rescue breathing. Rescue breathing helps get oxygen to the lungs for a person who has stopped breathing. To keep your skills up, repeat the CPR training every two years.",
+        "Use the AED as soon as possible, if there is one available."
+      ]
+    },
+    {
+      "title": "Croup",
+      "url": "https://medlineplus.gov/croup.html",
+      "groups": [
+        "Children and Teenagers",
+        "Lungs and Breathing"
+      ],
+      "urgent_text": [
+        "Most cases of viral croup are mild and can be treated at home. Rarely, croup can become serious and interfere with your child's breathing. If you are worried about your child's breathing, call your health care provider right away."
+      ]
+    },
+    {
+      "title": "CT Scans",
+      "url": "https://medlineplus.gov/ctscans.html",
+      "groups": [
+        "Diagnostic Tests"
+      ],
+      "urgent_text": [
+        "Most people can return to normal activities right away. If you were given a contrast material, drinking fluids can help your body clear it.",
+        "A specialist called a radiologist reviews the images and shares the results with your provider.",
+        "NIH: National Cancer Institute"
+      ]
+    },
+    {
+      "title": "Dehydration",
+      "url": "https://medlineplus.gov/dehydration.html",
+      "groups": [
+        "Symptoms",
+        "Metabolic Problems"
+      ],
+      "urgent_text": [
+        "Dehydration can be mild, or it can be severe enough to be life-threatening. Get medical help right away if the symptoms also include:",
+        "Confusion",
+        "Fainting",
+        "Lack of urination",
+        "Rapid heartbeat",
+        "Rapid breathing",
+        "Shock",
+        "How is dehydration diagnosed?"
+      ]
+    },
+    {
+      "title": "Depression",
+      "url": "https://medlineplus.gov/depression.html",
+      "groups": [
+        "Mental Health and Behavior"
+      ],
+      "urgent_text": [
+        "If you or someone you know has thoughts of hurting themselves or attempting suicide, get help right away. If it is an emergency, dial 911.",
+        "NIH: National Institute of Mental Health"
+      ]
+    },
+    {
+      "title": "Diabetic Eye Problems",
+      "url": "https://medlineplus.gov/diabeticeyeproblems.html",
+      "groups": [
+        "Eyes and Vision",
+        "Endocrine System",
+        "Diabetes Mellitus"
+      ],
+      "urgent_text": [
+        "You should also watch for sudden changes in your vision that could be signs of an emergency. Call your eye care professional right away if you notice any of these symptoms:",
+        "Many new spots or dark wavy strings floating in your vision (floaters)",
+        "Flashes of light",
+        "A dark shadow over part of your vision, like a curtain",
+        "Vision loss",
+        "Eye pain or redness",
+        "Talk with your eye care professional if you have these symptoms, even if they come and go:",
+        "Spots or dark wavy strings floating in your vision"
+      ]
+    },
+    {
+      "title": "Diabetic Foot",
+      "url": "https://medlineplus.gov/diabeticfoot.html",
+      "groups": [
+        "Blood, Heart and Circulation",
+        "Bones, Joints and Muscles",
+        "Brain and Nerves",
+        "Endocrine System",
+        "Diabetes Mellitus"
+      ],
+      "urgent_text": [
+        "Serious foot problems can develop quickly. See your health care provider right away if you notice:",
+        "A cut, blister, or bruise on your feet that doesn't start to heal in a few days",
+        "Red, warm, or painful skin on your feet",
+        "A callus with dried blood inside",
+        "A foot infection that becomes black and smells bad that could be gangrene",
+        "Remember, controlling your blood sugar and caring for your feet every day are the best steps you can take to prevent serious diabetic foot problems.",
+        "NIH: National Institute of Diabetes and Digestive and Kidney Diseases"
+      ]
+    },
+    {
+      "title": "Dislocated Shoulder",
+      "url": "https://medlineplus.gov/dislocatedshoulder.html",
+      "groups": [
+        "Bones, Joints and Muscles",
+        "Injuries and Wounds"
+      ],
+      "urgent_text": [
+        "If you are having these symptoms, get medical treatment right away.",
+        "How is a dislocated shoulder diagnosed?",
+        "To make a diagnosis, your health care provider will take a medical history and examine your shoulder. Your provider may also ask you to get an x-ray to confirm the diagnosis.",
+        "What are the treatments for a dislocated shoulder?",
+        "The treatment for dislocated shoulder usually involves three steps:",
+        "The first step is a closed reduction, a procedure in which your health care provider puts the ball of your upper arm back into the socket. You may first get medicine to relieve the pain and relax your shoulder muscles. Once the joint is back in place, the severe pain should end.",
+        "The second step is wearing a sling or other device to keep your shoulder in place. You will wear it for a few days to several weeks.",
+        "The third step is rehabilitation, once the pain and swelling have improved. You will do exercises to improve your range of motion and strengthen your muscles."
+      ]
+    },
+    {
+      "title": "Ebola",
+      "url": "https://medlineplus.gov/ebola.html",
+      "groups": [
+        "Infections"
+      ],
+      "urgent_text": [
+        "When people become infected with Ebola, they do not start developing signs or symptoms right away. They cannot spread Ebola to others until after they develop symptoms.",
+        "What are the symptoms of Ebola?",
+        "The symptoms of Ebola may appear anywhere from 2 to 21 days after exposure to the virus. The average is about 8 to 10 days. The symptoms usually include:",
+        "Fever",
+        "Headache",
+        "Joint and muscle aches",
+        "Weakness and fatigue",
+        "Sore throat"
+      ]
+    },
+    {
+      "title": "Ectopic Pregnancy",
+      "url": "https://medlineplus.gov/ectopicpregnancy.html",
+      "groups": [
+        "Women",
+        "Pregnancy and Reproduction",
+        "Female Reproductive System"
+      ],
+      "urgent_text": [
+        "Early signs of an ectopic pregnancy may be light vaginal bleeding and pelvic pain. Ectopic pregnancy can be a medical emergency. Get medical care right away if you have these signs:",
+        "Abdominal (belly) pain",
+        "Shoulder pain",
+        "Vaginal bleeding",
+        "Feeling dizzy or faint",
+        "How is an ectopic pregnancy diagnosed?",
+        "An ectopic pregnancy can't be diagnosed without blood tests and an ultrasound . Your health care provider will do a pregnancy test to confirm that you're pregnant. They may do a pelvic exam to check for areas of pain, tenderness, or a mass.",
+        "What is the treatment for an ectopic pregnancy?"
+      ]
+    },
+    {
+      "title": "Elder Abuse",
+      "url": "https://medlineplus.gov/elderabuse.html",
+      "groups": [
+        "Older Adults",
+        "Injuries and Wounds",
+        "Social/Family Issues"
+      ],
+      "urgent_text": [
+        "Elder abuse will not stop on its own. Someone else needs to step in and help. If you think that an older person is in urgent danger, call 911. Otherwise, contact adult protective services.",
+        "NIH: National Institute on Aging"
+      ]
+    },
+    {
+      "title": "Emergency Medical Services",
+      "url": "https://medlineplus.gov/emergencymedicalservices.html",
+      "groups": [
+        "Health System"
+      ],
+      "urgent_text": [
+        "If you get very sick or badly hurt and need help right away, you should use emergency medical services. These services use specially trained people and specially equipped facilities.",
+        "You may need care in the hospital emergency room (ER). Doctors and nurses there treat emergencies, such as heart attacks and injuries. For some emergencies, you need help where you are. Emergency medical technicians, or EMTs, do specific rescue jobs. They answer emergency calls and give basic medical care. Some EMTs are paramedics - they have training to do medical procedures on site. They usually take you to the ER for more care.",
+        "If you or someone you know needs emergency care, go to your hospital's emergency room. If you think the problem is life-threatening, call 911."
+      ]
+    },
+    {
+      "title": "Encephalitis",
+      "url": "https://medlineplus.gov/encephalitis.html",
+      "groups": [
+        "Brain and Nerves"
+      ],
+      "urgent_text": [
+        "If you or your child is having symptoms of encephalitis, it's important to get medical care right away.",
+        "How is encephalitis diagnosed?",
+        "To find out if you have encephalitis, your health care provider:",
+        "Will do a physical exam",
+        "Will take your medical history, which includes asking about your symptoms",
+        "May do a neurologic exam",
+        "May order imaging tests , such as a brain CT scan or MRI",
+        "May order an EEG (electroencephalography), which use small electric sensors to measure your brain activity"
+      ]
+    },
+    {
+      "title": "Endocarditis",
+      "url": "https://medlineplus.gov/endocarditis.html",
+      "groups": [
+        "Blood, Heart and Circulation"
+      ],
+      "urgent_text": [
+        "Endocarditis may sometimes lead to sepsis , a medical emergency that happens when your body has an extreme response to the infection.",
+        "Endocarditis can also cause serious heart problems including:",
+        "Heart valve damage",
+        "Heart failure",
+        "Arrhythmia (a problem with the rate or rhythm of your heartbeat)",
+        "How is endocarditis diagnosed?",
+        "To find out if you have endocarditis, your health care provider will:",
+        "Ask about your medical history , including your symptoms, recent illnesses, and other health conditions that affect your chance of developing endocarditis."
+      ]
+    },
+    {
+      "title": "Enlarged Prostate (BPH)",
+      "url": "https://medlineplus.gov/enlargedprostatebph.html",
+      "groups": [
+        "Male Reproductive System"
+      ],
+      "urgent_text": [
+        "You should get medical help right away if you:",
+        "Can't urinate at all",
+        "Have fever and chills with urination that's painful, frequent, and urgent",
+        "Have blood in your urine",
+        "Have pain in your lower abdomen (belly) and urinary tract",
+        "What other problems can BPH cause?",
+        "For most people, BPH doesn't cause other problems. But BPH increases your chance of developing serious conditions, including:",
+        "Acute urinary retention. With this condition, you suddenly can't urinate at all. This a medical emergency . Acute urinary retention is common in older males and the chance of having it increases with age. It may be triggered by:"
+      ]
+    },
+    {
+      "title": "Epilepsy",
+      "url": "https://medlineplus.gov/epilepsy.html",
+      "groups": [
+        "Brain and Nerves"
+      ],
+      "urgent_text": [
+        "Doctors use brain scans and other tests to diagnose epilepsy. It is important to start treatment right away. There is no cure for epilepsy, but medicines can control seizures for most people. When medicines are not working well, surgery or implanted devices such as vagus nerve stimulators may help. Special diets can help some children with epilepsy.",
+        "NIH: National Institute of Neurological Disorders and Stroke"
+      ]
+    },
+    {
+      "title": "Esophagus Disorders",
+      "url": "https://medlineplus.gov/esophagusdisorders.html",
+      "groups": [
+        "Digestive System",
+        "Ear, Nose and Throat"
+      ],
+      "urgent_text": [
+        "Get medical help right away if you have chest pain with shortness of breath , or pain in your jaw or arm. These could be signs of a heart problem.",
+        "How are esophagus disorders diagnosed?",
+        "Your health care provider will ask about your symptoms and medical history. They may order one or more tests, such as:",
+        "Upper gastrointestinal (GI) endoscopy . This test uses a tiny camera to look inside your esophagus and stomach.",
+        "Biopsy . This test takes a small tissue sample to check.",
+        "Barium swallow. This test uses imaging to see how you swallow.",
+        "Esophageal manometry. This test checks how well your esophagus moves food to your stomach.",
+        "Esophageal pH test. This test measures how often acid backs up into your esophagus and how long the acid stays there."
+      ]
+    },
+    {
+      "title": "Exercise and Physical Fitness",
+      "url": "https://medlineplus.gov/exerciseandphysicalfitness.html",
+      "groups": [
+        "Wellness and Lifestyle",
+        "Fitness and Exercise"
+      ],
+      "urgent_text": [
+        "If you  haven't exercised in a while , start slowly and talk to your provider if you have health concerns. If you don't feel right, or have any pain, extreme  shortness of breath , or  dizziness , stop exercising and seek help right away.",
+        "How can I stay motivated?",
+        "Even with the best intentions, it's easy to fall off track. Here are some ways to keep going:",
+        "Choose activities you enjoy. It's easier to make exercise a regular part of your life if you have fun doing it.",
+        "Exercise safely . Use the proper equipment to prevent  injuries , listen to your body, and don't overdo it.",
+        "Give yourself goals. Your goals should be challenging, but realistic. It may be helpful to reward yourself when you reach them. The rewards could be something big, like new workout gear, or something smaller, such as a new water bottle or movie tickets.",
+        "Mix it up. Try a new class, playlist, Podcast, or outdoor route when things get stale.",
+        "Find an accountability partner. Exercise with a friend, join a group challenge, or check in with an online community."
+      ]
+    },
+    {
+      "title": "Eye Care",
+      "url": "https://medlineplus.gov/eyecare.html",
+      "groups": [
+        "Eyes and Vision"
+      ],
+      "urgent_text": [
+        "See an eye care specialist right away if you have symptoms like sudden loss of vision, double vision, blurred vision with eye pain, flashes of light, black spots or halos around lights. These symptoms may represent a serious medical or eye condition."
+      ]
+    },
+    {
+      "title": "Eye Diseases",
+      "url": "https://medlineplus.gov/eyediseases.html",
+      "groups": [
+        "Eyes and Vision"
+      ],
+      "urgent_text": [
+        "Get regular eye exams and call your eye care professional right away if you notice any of these symptoms:",
+        "A sudden change in vision",
+        "Everything looks dim",
+        "Flashes of light",
+        "Eye pain",
+        "Double vision",
+        "Fluid coming from your eye",
+        "Inflammation (swelling)"
+      ]
+    },
+    {
+      "title": "Eye Injuries",
+      "url": "https://medlineplus.gov/eyeinjuries.html",
+      "groups": [
+        "Eyes and Vision",
+        "Injuries and Wounds"
+      ],
+      "urgent_text": [
+        "Chemicals or heat can burn your eyes. With chemicals, the pain may cause you to close your eyes. This traps the irritant next to the eye and may cause more damage. You should wash out your eye right away while you wait for medical help."
+      ]
+    },
+    {
+      "title": "First Aid",
+      "url": "https://medlineplus.gov/firstaid.html",
+      "groups": [
+        "Injuries and Wounds",
+        "Safety Issues"
+      ],
+      "urgent_text": [
+        "Accidents happen. Someone chokes on an ice cube or gets stung by a bee. It is important to know when to call 911 -- it is for life-threatening emergencies. While waiting for help to arrive, you may be able to save someone's life. Cardiopulmonary resuscitation ( CPR ) is for people whose hearts or breathing has stopped and the Heimlich maneuver is for people who are choking.",
+        "You can also learn to handle common injuries and wounds . Cuts and scrapes, for example, should be rinsed with cool water. To stop bleeding, apply firm but gentle pressure, using gauze. If blood soaks through, add more gauze, keeping the first layer in place. Continue to apply pressure.",
+        "It is important to have a first aid kit available. Keep one at home and one in your car. It should include a first-aid guide. Read the guide to learn how to use the items, so you are ready in case an emergency happens."
+      ]
+    },
+    {
+      "title": "Food Allergy",
+      "url": "https://medlineplus.gov/foodallergy.html",
+      "groups": [
+        "Immune System",
+        "Food and Nutrition"
+      ],
+      "urgent_text": [
+        "This is a medical emergency. Call 911 if someone is having the symptoms of anaphylaxis.",
+        "How are food allergies diagnosed?",
+        "To find out if you have a food allergy, your health care provider will",
+        "Ask about your symptoms, family health history, and medical history, including other allergies.",
+        "Likely do a physical exam.",
+        "Do food allergy testing . This could involve skin testing, blood testing, a food elimination diet, and/or an oral food challenge test. An oral food challenge test is the most accurate food allergy test.",
+        "What are the treatments for food allergies?",
+        "There is no cure for food allergies. The only way to prevent a reaction is to avoid eating the food that you are allergic to."
+      ]
+    },
+    {
+      "title": "Food Safety",
+      "url": "https://medlineplus.gov/foodsafety.html",
+      "groups": [
+        "Food and Nutrition",
+        "Poisoning, Toxicology, Environmental Health",
+        "Safety Issues"
+      ],
+      "urgent_text": [
+        "Chill - put fresh food in the refrigerator right away.",
+        "In the grocery store, avoid cans that are bulging or jars that have cracks or loose lids. Check packages to be sure food hasn't reached its expiration date.",
+        "United States Department of Agriculture"
+      ]
+    },
+    {
+      "title": "Fractures",
+      "url": "https://medlineplus.gov/fractures.html",
+      "groups": [
+        "Bones, Joints and Muscles",
+        "Injuries and Wounds"
+      ],
+      "urgent_text": [
+        "A fracture is a break in a bone. Fractures are usually caused by injuries. Since they can sometimes be serious, it's important to get medical care right away if you think you have a fracture.",
+        "What are the different types of fractures?",
+        "There are different ways to describe fractures. For example, there are different types of fractures based on:",
+        "Whether the bone is partially or completely broken.",
+        "Whether the bone breaks through the skin; if it does, it's called an open (or compound) fracture. If not, it's a closed fracture.",
+        "The direction or shape of the break, for example if it's in a line across the bone or if it has some kind of pattern.",
+        "The cause of the break. For example, a stress fracture is a small break in a bone that is often caused by overuse.",
+        "Which bone is broken, for example facial fractures include nose and jaw fractures."
+      ]
+    },
+    {
+      "title": "Gastroenteritis",
+      "url": "https://medlineplus.gov/gastroenteritis.html",
+      "groups": [
+        "Digestive System",
+        "Infections"
+      ],
+      "urgent_text": [
+        "If you or a family member are at higher risk and have symptoms of gastroenteritis, contact a health care provider right away.",
+        "Even if you are not at high risk, it is possible to become dehydrated or have more serious symptoms. There are some warning signs to watch for. It's important to contact a provider right away if you or your child have any of them:",
+        "For adults, they include:",
+        "Change in mental state, such as irritability or lack of energy",
+        "Diarrhea lasting more than 2 days",
+        "High fever",
+        "Vomiting often",
+        "Six or more loose stools in a day"
+      ]
+    },
+    {
+      "title": "GERD",
+      "url": "https://medlineplus.gov/gerd.html",
+      "groups": [
+        "Digestive System"
+      ],
+      "urgent_text": [
+        "Get medical help right away if you have chest pain with shortness of breath , or pain in your jaw or arm. These can be signs of a heart problem.",
+        "How is GERD diagnosed?",
+        "Your health care provider will ask about your symptoms and medical history. They may recommend tests such as:",
+        "Upper GI endoscopy to look at the esophagus and stomach lining with a tiny camera.",
+        "Biopsy to check a small tissue sample.",
+        "X-Ray to take pictures of the upper digestive system.",
+        "Esophageal pH test to measure how often acid backs up the esophagus and how long the acid stays there.",
+        "Esophageal manometry to check how well your esophagus moves food when you swallow."
+      ]
+    },
+    {
+      "title": "Glaucoma",
+      "url": "https://medlineplus.gov/glaucoma.html",
+      "groups": [
+        "Older Adults",
+        "Eyes and Vision"
+      ],
+      "urgent_text": [
+        "If you have sudden symptoms of intense eye pain, blurry vision, red eyes, or an upset stomach (nausea), you need to go to your eye care provider or an emergency room right away. These could be symptoms of angle-closure glaucoma. This less common type of glaucoma causes fluid to build up quickly in your eye.",
+        "How is glaucoma diagnosed?",
+        "A comprehensive eye exam can tell if you have glaucoma. This would include:",
+        "A dilated eye exam . This involves getting eye drops that dilate (widen) your pupils. This allows more light to enter your eye. Your eye care provider examines your eyes using a special magnifying lens. This provides a clear view of important tissues at the back of your eye to check for glaucoma or other eye problems. For a few hours after the exam your vision may be blurry and sensitive to light, so you will need someone to take you home.",
+        "Visual field testing . This check of your peripheral (side) vision allows your eye care provider to find out how well you can see objects off to the side of your vision without moving your eyes.",
+        "Tonometry . This measures the pressure inside your eye.",
+        "If you're at higher risk for glaucoma, you should get comprehensive eye exams every one to two years. You're at higher risk if you:",
+        "Are Black or African American and over age 40"
+      ]
+    },
+    {
+      "title": "Head Injuries",
+      "url": "https://medlineplus.gov/headinjuries.html",
+      "groups": [
+        "Injuries and Wounds"
+      ],
+      "urgent_text": [
+        "It is important to know the warning signs of a moderate or severe head injury. Get help immediately if the injured person has:",
+        "A headache that gets worse or does not go away",
+        "Repeated vomiting or nausea",
+        "Convulsions or seizures",
+        "An inability to wake up",
+        "Dilated (enlarged) pupil in one or both eyes",
+        "Slurred speech",
+        "Weakness or numbness in the arms or legs"
+      ]
+    },
+    {
+      "title": "Headache",
+      "url": "https://medlineplus.gov/headache.html",
+      "groups": [
+        "Brain and Nerves",
+        "Symptoms"
+      ],
+      "urgent_text": [
+        "Not all headaches require a doctor's attention. But sometimes headaches warn of a more serious disorder. Let your health care provider know if you have sudden, severe headaches. Get medical help right away if you have a headache after a blow to your head, or if you have a headache along with a stiff neck, fever, confusion, loss of consciousness, or pain in the eye or ear.",
+        "NIH: National Institute of Neurological Disorders and Stroke"
+      ]
+    },
+    {
+      "title": "Heart Attack",
+      "url": "https://medlineplus.gov/heartattack.html",
+      "groups": [
+        "Blood, Heart and Circulation"
+      ],
+      "urgent_text": [
+        "Each year almost 800,000 Americans have a heart attack. A heart attack happens when blood flow to the heart suddenly becomes blocked. Without the blood coming in, the heart can't get oxygen. If not treated quickly, the heart muscle begins to die. But if you do get quick treatment, you may be able to prevent or limit damage to the heart muscle. That's why it's important to know the symptoms of a heart attack and call 911 if you or someone else is having them. You should call, even if you are not sure that it is a heart attack.",
+        "The most common symptoms in men and women are:",
+        "Chest discomfort. It is often in center or left side of the chest. It usually lasts more than a few minutes. It may go away and come back. It can feel like pressure, squeezing, fullness, or pain . It also can feel like heartburn or indigestion.",
+        "Shortness of breath. Sometimes this is your only symptom. You may get it before or during the chest discomfort. It can happen when you are resting or doing a little bit of physical activity.",
+        "Discomfort in the upper body. You may feel pain or discomfort in one or both arms, the back, shoulders, neck, jaw, or upper part of the stomach.",
+        "You may also have other symptoms, such as nausea, vomiting, dizziness, and lightheadedness. You may break out in a cold sweat. Sometimes women will have different symptoms then men. For example, they are more likely to feel tired for no reason.",
+        "The most common cause of heart attacks is coronary artery disease (CAD). With CAD, there is a buildup of cholesterol and other material, called plaque, on their inner walls or the arteries. This is atherosclerosis . It can build up for years. Eventually an area of plaque can rupture (break open). A blood clot can form around the plaque and block the artery.",
+        "A less common cause of heart attack is a severe spasm (tightening) of a coronary artery. The spasm cuts off blood flow through the artery."
+      ]
+    },
+    {
+      "title": "Heart Surgery",
+      "url": "https://medlineplus.gov/heartsurgery.html",
+      "groups": [
+        "Blood, Heart and Circulation",
+        "Surgery and Rehabilitation"
+      ],
+      "urgent_text": [
+        "In some cases, heart surgery may be a medical emergency. For example, surgery for a severe heart attack may need to be done right away. In other cases, you can plan heart surgery ahead of time. Some heart surgeries are major operations, such as heart bypass surgery for blocked arteries in the heart. Other surgeries are more minor heart procedures, such as putting in a pacemaker.",
+        "What conditions does heart surgery treat?",
+        "There are different types of heart surgery that can help treat many heart conditions:",
+        "What conditions does heart surgery treat?",
+        "What does the heart surgery do?",
+        "Coronary artery disease (CAD) - when a sticky substance called plaque narrows or blocks the arteries that supply blood to your heart muscle.",
+        "Makes a new path for blood to flow around the blocked part of an artery in the heart. This is called a coronary artery bypass graft (CABG) , or heart bypass. It's the most common heart surgery in adults.",
+        "Heart valve diseases - problems with the valves that control the flow of blood through your heart."
+      ]
+    },
+    {
+      "title": "Heart Valve Diseases",
+      "url": "https://medlineplus.gov/heartvalvediseases.html",
+      "groups": [
+        "Blood, Heart and Circulation"
+      ],
+      "urgent_text": [
+        "You were born with an aortic valve that wasn't formed right. Sometimes this will cause problems right away. Other times, the valve may work well enough for years before causing problems.",
+        "What are the symptoms of heart valve diseases?",
+        "Many people live their whole lives with a heart valve that doesn't work perfectly and never have any problems. But heart valve disease may get worse slowly over time. You may develop signs and symptoms, such as:",
+        "Shortness of breath (feeling like you can't get enough air)",
+        "Fatigue",
+        "Swelling in your feet, ankles, abdomen (belly), or the veins in your neck",
+        "Chest pain when you're physically active",
+        "Arrhythmia , a problem with the rate or rhythm of your heartbeat"
+      ]
+    },
+    {
+      "title": "Heat Illness",
+      "url": "https://medlineplus.gov/heatillness.html",
+      "groups": [
+        "Injuries and Wounds",
+        "Symptoms"
+      ],
+      "urgent_text": [
+        "Heat stroke - a life-threatening illness in which body temperature may rise above 106 °F (41 °C) in minutes. Symptoms include dry skin, a rapid, strong pulse, dizziness, nausea, and confusion. If you see any of these signs, get medical help right away.",
+        "Heat exhaustion - an illness that can happen after several days of exposure to high temperatures and not enough fluids. Symptoms include heavy sweating, rapid breathing, and a fast, weak pulse. If it is not treated, it can turn into heat stroke.",
+        "Heat cramps - muscle pains or spasms that happen during heavy exercise. You usually get them in your abdomen, arms, or legs.",
+        "Heat rash - skin irritation from excessive sweating. It is more common in young children.",
+        "You can lower your risk of heat illness by drinking fluids to prevent dehydration , replacing lost salt and minerals, and limiting your time in the heat.",
+        "Centers for Disease Control and Prevention"
+      ]
+    },
+    {
+      "title": "Hemorrhagic Stroke",
+      "url": "https://medlineplus.gov/hemorrhagicstroke.html",
+      "groups": [
+        "Blood, Heart and Circulation",
+        "Brain and Nerves"
+      ],
+      "urgent_text": [
+        "T ime to call 911.",
+        "How is a hemorrhagic stroke diagnosed?",
+        "To make a diagnosis, your health care provider may do a physical exam, ask about your symptoms and medical history, and use imaging tests to check for bleeding in your brain.",
+        "How is hemorrhagic stroke treated?",
+        "It is important to treat strokes as quickly as possible. For a hemorrhagic stroke, the first step is to find the cause of bleeding in the brain and stop it. Treatment may involve medicines or, in some cases, surgery to stop the bleeding or relieve pressure on the brain.",
+        "After the stroke, rehabilitation can help people recover lost abilities and regain independence.",
+        "Can a hemorrhagic stroke be prevented?",
+        "The best way to prevent stroke is by making heart-healthy lifestyle changes to lower your risk. If lifestyle changes aren't enough, your provider may prescribe medicine to help manage your risk factors."
+      ]
+    },
+    {
+      "title": "Hepatitis B",
+      "url": "https://medlineplus.gov/hepatitisb.html",
+      "groups": [
+        "Digestive System",
+        "Infections"
+      ],
+      "urgent_text": [
+        "If you think you have been in contact with the hepatitis B virus, see your health care provider right away. Your provider may give you a dose of the hepatitis B vaccine to prevent infection. In some cases, your provider may also give you a medicine called hepatitis B immune globulin (HBIG). You need to get the vaccine and the HBIG (if needed) as soon as possible after coming into contact with the virus. It is best if you can get them within 24 hours.",
+        "National Institute of Diabetes and Digestive and Kidney Diseases"
+      ]
+    },
+    {
+      "title": "High Blood Pressure",
+      "url": "https://medlineplus.gov/highbloodpressure.html",
+      "groups": [
+        "Older Adults",
+        "Blood, Heart and Circulation"
+      ],
+      "urgent_text": [
+        "Hypertensive Crisis (dangerously high blood pressure - seek medical care right away)",
+        "Higher than 180",
+        "and",
+        "Higher than 120",
+        "For children and teens, the health care provider compares the blood pressure reading to what is normal for other kids who are the same age, height, and sex.",
+        "What are the different types of high blood pressure?",
+        "There are two main types of high blood pressure:",
+        "Primary, or essential, high blood pressure. This is the most common type of high blood pressure. For most people who get this kind of blood pressure, it develops over time as you get older."
+      ]
+    },
+    {
+      "title": "HIV and Pregnancy",
+      "url": "https://medlineplus.gov/hivandpregnancy.html",
+      "groups": [
+        "Women",
+        "Pregnancy and Reproduction",
+        "Immune System",
+        "Female Reproductive System"
+      ],
+      "urgent_text": [
+        "If you are pregnant or planning to get pregnant, it's important to get tested for HIV as soon as possible. If you find out that do have HIV , you can start treatment right away to protect your health and the health of your baby.",
+        "If I have HIV, can I pass it on to my baby during pregnancy?",
+        "If you are pregnant and have HIV, there is a risk of passing HIV to your baby. It can happen in three ways:",
+        "During pregnancy",
+        "During childbirth, especially if it is vaginal childbirth",
+        "During breastfeeding",
+        "But having HIV doesn't mean that you can't have children. Treatment with a combination of HIV medicines can help prevent passing HIV to your baby and protect your own health.",
+        "If I have HIV, how can I prevent giving it to my baby?"
+      ]
+    },
+    {
+      "title": "HIV: PrEP and PEP",
+      "url": "https://medlineplus.gov/hivprepandpep.html",
+      "groups": [
+        "Infections",
+        "Immune System",
+        "Drug Therapy"
+      ],
+      "urgent_text": [
+        "If you are HIV-negative and you think you may have been recently exposed to HIV, contact your health care provider immediately or go to an emergency room right away.",
+        "You may be prescribed PEP if you are HIV negative or don't know your HIV status, and in the last 72 hours you may have been exposed to HIV:",
+        "During sex, for example if a condom broke during sex with someone who could have HIV,",
+        "Through the sharing of needles or drug preparation equipment",
+        "Through sexual assault",
+        "Your provider or emergency room doctor will help to decide whether PEP is right for you.",
+        "PEP may also be given to a health care worker after a possible exposure to HIV at work, for example, from a needlestick injury.",
+        "When should I start PEP and how long do I need to take it?"
+      ]
+    },
+    {
+      "title": "Hives",
+      "url": "https://medlineplus.gov/hives.html",
+      "groups": [
+        "Skin, Hair and Nails",
+        "Immune System",
+        "Symptoms"
+      ],
+      "urgent_text": [
+        "Hives are very common. They usually go away on their own, but if you have a serious case, you might need medicine or a shot. In rare cases, hives can cause a dangerous swelling in your airways, making it hard to breathe - which is a medical emergency."
+      ]
+    },
+    {
+      "title": "How to Prevent High Blood Pressure",
+      "url": "https://medlineplus.gov/howtopreventhighbloodpressure.html",
+      "groups": [
+        "Blood, Heart and Circulation"
+      ],
+      "urgent_text": [
+        "Hypertensive Crisis (dangerously high blood pressure - seek medical care right away)",
+        "Higher than 180",
+        "and",
+        "Higher than 120",
+        "For children and teens, the provider compares the blood pressure reading to what is normal for other kids who are the same age, height, and sex.",
+        "Who is more likely to develop high blood pressure?",
+        "Anyone can develop high blood pressure, but there are certain factors that can increase your risk:",
+        "Age. Blood pressure tends to rise with age."
+      ]
+    },
+    {
+      "title": "Hyperglycemia",
+      "url": "https://medlineplus.gov/hyperglycemia.html",
+      "groups": [
+        "Endocrine System",
+        "Metabolic Problems",
+        "Diabetes Mellitus"
+      ],
+      "urgent_text": [
+        "If you have an an at-home test for ketones, check your ketone level every 4 to 6 hours when your blood glucose is very high or when you are having these symptoms. If the test shows that your ketones are moderate or high, or if you don't have a ketones test, contact your health care provider right away or get emergency medical help.",
+        "How is hyperglycemia diagnosed?",
+        "If you have diabetes, you'll most likely need to check your blood glucose every day and make sure that it's not too high. You can do this with a blood glucose meter or continuous glucose monitoring (CGM) system.",
+        "There are also blood tests that providers can use to check if your blood glucose is too high.",
+        "What are the treatments for hyperglycemia?",
+        "If you have diabetes and often have high blood glucose, your health care team may make changes to your diabetes meal plan, physical activity plan, and/or diabetes medicines.",
+        "If you have severe hyperglycemia and are having symptoms of DKA, you will need treatment at the hospital. The treatment often includes I.V. (intravenous) fluids and insulin.",
+        "Can hyperglycemia be prevented?"
+      ]
+    },
+    {
+      "title": "Hypothermia",
+      "url": "https://medlineplus.gov/hypothermia.html",
+      "groups": [
+        "Injuries and Wounds",
+        "Symptoms"
+      ],
+      "urgent_text": [
+        "Cold weather can affect your body in different ways. You can get frostbite , which is an injury to the body that is caused by freezing. Your body can also lose heat faster than you can produce it. That can cause hypothermia, or abnormally low body temperature. It can make you sleepy, confused, and clumsy. Because it happens gradually and affects your thinking, you may not realize you need help. That makes it especially dangerous. A body temperature below 95 °F (35 °C) is a medical emergency and can lead to death if not treated promptly.",
+        "Anyone who spends much time outdoors in cold weather can get hypothermia. You can also get it from being cold and wet, or under cold water for too long. Babies and old people are especially at risk. Babies can get it from sleeping in a cold room.",
+        "Centers for Disease Control and Prevention"
+      ]
+    },
+    {
+      "title": "Immune System and Disorders",
+      "url": "https://medlineplus.gov/immunesystemanddisorders.html",
+      "groups": [
+        "Immune System"
+      ],
+      "urgent_text": [
+        "Passive immunity happens when you receive antibodies to a disease instead of making them through your own immune system. For example, newborn babies have antibodies from their mothers. People can also get passive immunity through blood products that contain antibodies. This kind of immunity gives you protection right away. But it only lasts a few weeks or months.",
+        "What can go wrong with the immune system?",
+        "Sometimes a person may have an immune response even though there is no real threat. This can lead to problems such as allergies , asthma , and autoimmune diseases . If you have an autoimmune disease, your immune system attacks healthy cells in your body by mistake.",
+        "Other immune system problems happen when your immune system does not work correctly. These problems include immunodeficiency diseases. If you have an immunodeficiency disease, you get sick more often. Your infections may last longer and can be more serious and harder to treat. They are often genetic disorders .",
+        "There are other diseases that can affect your immune system. For example, HIV is a virus that harms your immune system by destroying your white blood cells. If HIV is not treated, it can lead to AIDS (acquired immunodeficiency syndrome). People with AIDS have badly damaged immune systems. They get an increasing number of severe illnesses."
+      ]
+    },
+    {
+      "title": "Infectious Mononucleosis",
+      "url": "https://medlineplus.gov/infectiousmononucleosis.html",
+      "groups": [
+        "Infections",
+        "Immune System"
+      ],
+      "urgent_text": [
+        "Mono can cause an enlarged spleen, which could rupture and cause a medical emergency. To try to protect the spleen, providers recommend avoiding intense exercise and contact sports until you fully recover (about a month).",
+        "Can infectious mononucleosis (mono) be prevented?",
+        "There is no vaccine to protect against mono. To lower your chance of getting or spreading mono:",
+        "Don't share food, drinks, forks, spoons, or lip balm with anyone, especially if you or the other person has mono.",
+        "Don't kiss someone if you or the other person has mono.",
+        "Wash your hands often with soap and water.",
+        "Centers for Disease Control and Prevention"
+      ]
+    },
+    {
+      "title": "Intestinal Obstruction",
+      "url": "https://medlineplus.gov/intestinalobstruction.html",
+      "groups": [
+        "Digestive System"
+      ],
+      "urgent_text": [
+        "A complete intestinal obstruction is a medical emergency. It often requires surgery.",
+        "NIH: National Institute of Diabetes and Digestive and Kidney Diseases"
+      ]
+    },
+    {
+      "title": "Intimate Partner Violence",
+      "url": "https://medlineplus.gov/intimatepartnerviolence.html",
+      "groups": [
+        "Women",
+        "Injuries and Wounds",
+        "Social/Family Issues"
+      ],
+      "urgent_text": [
+        "Your safety is the most important concern. If you are in immediate danger, call 911.",
+        "If you are not in immediate danger, you can:",
+        "Get medical care if you have been injured or sexually assaulted.",
+        "Call a helpline for free, anonymous help. You can contact the National Domestic Violence Hotline at 800-799-SAFE (7233) or 800-787-3224 (TTY). You can also chat with them through their website or through text by texting START to 88788.",
+        "Find out where to get help in your community. Contact local organizations that can help you.",
+        "Make a safety plan to leave. Intimate partner violence usually does not get better. Think about a safe place for you to go and all the things you will need when you leave.",
+        "Save the evidence. Keep evidence of abuse, such as pictures of your injuries or threatening emails or texts. Make sure that it is in a safe place the abuser cannot access.",
+        "Talk to someone you trust , such as a family member, a friend, a co-worker, or a spiritual leader."
+      ]
+    },
+    {
+      "title": "Ischemic Stroke",
+      "url": "https://medlineplus.gov/ischemicstroke.html",
+      "groups": [
+        "Blood, Heart and Circulation",
+        "Brain and Nerves"
+      ],
+      "urgent_text": [
+        "T ime to call 911.",
+        "How is an ischemic stroke diagnosed?",
+        "To make a diagnosis, your health care provider may do a physical exam, ask about your symptoms and medical history, and use imaging tests . Other heart tests may be done to help find the cause of the stroke.",
+        "How is an ischemic stroke treated?",
+        "It is important to treat strokes as quickly as possible. The most common treatments include:",
+        "Medicines such as blood thinners or thrombolytics (which break up and dissolve existing clots) may be used to prevent or treat ischemic stroke.",
+        "Surgery or stenting may be used to open narrowed arteries or remove plaque build-up from the carotid arteries, which supply blood to the brain.",
+        "After treatment, rehabilitation can help you regain lost skills and independence. Your provider may also order other medicines to manage your blood pressure , cholesterol , or other health problems such as diabetes that may increase your risk for stroke."
+      ]
+    },
+    {
+      "title": "Joint Disorders",
+      "url": "https://medlineplus.gov/jointdisorders.html",
+      "groups": [
+        "Bones, Joints and Muscles"
+      ],
+      "urgent_text": [
+        "Dislocated joints . A joint is dislocated when the bones are pushed or pulled out of position. A joint dislocation is a medical emergency.",
+        "Treatment depends on the type of injury. You can treat many sports injuries at home. But you should call your health care provider if you:",
+        "Have a lot of joint pain, swelling or numbness",
+        "Can't put weight on the joint",
+        "Have pain from an old injury with more swelling, an unstable joint, or a joint that isn't normal in another way",
+        "What types of joint disorders happen from overuse?",
+        "Overuse injuries usually damage the soft tissues of the joint. They can happen when you work a joint too hard by doing the same movements over and over. For example, you could get an overuse injury from playing a musical instrument, playing sports, or doing certain jobs, such as carpentry or painting.",
+        "Joint overuse injuries include:"
+      ]
+    },
+    {
+      "title": "Kawasaki Disease",
+      "url": "https://medlineplus.gov/kawasakidisease.html",
+      "groups": [
+        "Blood, Heart and Circulation",
+        "Skin, Hair and Nails",
+        "Immune System"
+      ],
+      "urgent_text": [
+        "Kawasaki disease is a rare illness that usually affects small children. Other names for the disease are Kawasaki syndrome and mucocutaneous lymph node syndrome. It is a type of vasculitis , which is inflammation of the blood vessels. Kawasaki disease is serious, but most children can fully recover if they are treated right away.",
+        "What causes Kawasaki disease?",
+        "Kawasaki disease happens when the immune system injures the blood vessels by mistake. Researchers do not fully know why this happens. But when it does, the blood vessels become inflamed and can narrow or close off.",
+        "Genetics may play a role in Kawasaki disease. There may also be environmental factors, such as infections. It does not seem to be contagious. This means that it cannot be passed from one child to another.",
+        "Who is more likely to develop Kawasaki disease?",
+        "Kawasaki disease usually affects children under the age of 5. But older children and adults can sometimes get it. It is more common in boys than girls. It can affect children of any race, but those with Asian or Pacific Islander descent are more likely to get it.",
+        "What are the symptoms of Kawasaki disease?",
+        "The symptoms of Kawasaki disease may include:"
+      ]
+    },
+    {
+      "title": "Klinefelter Syndrome",
+      "url": "https://medlineplus.gov/klinefeltersyndrome.html",
+      "groups": [
+        "Genetics/Birth Defects",
+        "Men"
+      ],
+      "urgent_text": [
+        "Some males with KS may have no symptoms or very mild symptoms. So they might not know that they have KS, or they might not get diagnosed with it right away. In other cases, the symptoms can be more severe.",
+        "Boys with KS may be taller than other boys their age, with more fat around the belly. After puberty, they may have:",
+        "Smaller testes and penis",
+        "Breast growth (called gynecomastia)",
+        "Less facial and body hair",
+        "Reduced muscle tone",
+        "Narrower shoulders and wider hips",
+        "Weaker bones"
+      ]
+    },
+    {
+      "title": "Lipid Metabolism Disorders",
+      "url": "https://medlineplus.gov/lipidmetabolismdisorders.html",
+      "groups": [
+        "Metabolic Problems"
+      ],
+      "urgent_text": [
+        "Metabolism is the process your body uses to make energy from the food you eat. Food is made up of proteins, carbohydrates, and fats. Chemicals in your digestive system (enzymes) break the food parts down into sugars and acids, your body's fuel. Your body can use this fuel right away, or it can store the energy in your body tissues. If you have a metabolic disorder , something goes wrong with this process.",
+        "Lipid metabolism disorders, such as Gaucher disease and Tay-Sachs disease , involve lipids. Lipids are fats or fat-like substances. They include oils, fatty acids, waxes, and cholesterol. If you have one of these disorders, you may not have enough enzymes to break down lipids. Or the enzymes may not work properly and your body can't convert the fats into energy. They cause a harmful amount of lipids to build up in your body. Over time, that can damage your cells and tissues, especially in the brain, peripheral nervous system, liver, spleen, and bone marrow. Many of these disorders can be very serious, or sometimes even fatal.",
+        "These disorders are inherited. Newborn babies get screened for some of them, using blood tests. If there is a family history of one of these disorders, parents can get genetic testing to see whether they carry the gene. Other genetic tests can tell whether the fetus has the disorder or carries the gene for the disorder.",
+        "Enzyme replacement therapies can help with a few of these disorders. For others, there is no treatment. Medicines, blood transfusions, and other procedures may help with complications."
+      ]
+    },
+    {
+      "title": "Lupus",
+      "url": "https://medlineplus.gov/lupus.html",
+      "groups": [
+        "Immune System"
+      ],
+      "urgent_text": [
+        "Your primary care provider should coordinate care between all of your other providers and treat other problems as they come up. You and your primary care provider will develop a treatment plan to fit your needs. You will both review the plan often to make sure that it is working. You should report new symptoms to your provider right away so that your treatment plan can be changed, if needed.",
+        "The goals of a treatment plan are to:",
+        "Prevent flares",
+        "Treat flares when they occur",
+        "Reduce organ damage and other problems",
+        "Improve your quality of life",
+        "Treatments may include drugs to:",
+        "Reduce fever, swelling, and pain"
+      ]
+    },
+    {
+      "title": "Lyme Disease",
+      "url": "https://medlineplus.gov/lymedisease.html",
+      "groups": [
+        "Infections"
+      ],
+      "urgent_text": [
+        "Most Lyme disease tests check for antibodies made by the body in response to infection. These antibodies can take several weeks to develop. If you are tested right away, it may not show that you have Lyme disease, even if you have it. So you may need to have another test later.",
+        "What are the treatments for Lyme disease?",
+        "Lyme disease is treated with antibiotics . The earlier you are treated, the better; it gives you the best chance of fully recovering quickly.",
+        "After treatment, some patients may still have pain, fatigue, or difficulty thinking that lasts more than 6 months. This is called post-treatment Lyme disease syndrome (PTLDS). Researchers don't know why some people have PTLDS. There is no proven treatment for PTLDS; long-term antibiotics have not been shown to help. However, there are ways to help with the symptoms of PTLDS. If you have been treated for Lyme disease and still feel unwell, contact your health care provider about how to manage your symptoms. Most people do get better with time. But it can take several months before you feel better.",
+        "Can Lyme disease be prevented?",
+        "To prevent Lyme disease, you should lower your risk of getting a tick bite:",
+        "Avoid areas where ticks live, such as grassy, brushy, or wooded areas. If you are hiking, walk in the center of the trail to avoid brush and grass.",
+        "Use an Environmental Protection Agency (EPA)-registered insect repellent when you go outdoors. They are evaluated to make sure they are safe and effective. Make sure that the repellant has one of these ingredients: DEET, picaridin, IR3535, oil of lemon eucalyptus, or para-menthane-diol. It is important to follow the instructions on the label."
+      ]
+    },
+    {
+      "title": "Lymphoma",
+      "url": "https://medlineplus.gov/lymphoma.html",
+      "groups": [
+        "Cancers",
+        "Immune System"
+      ],
+      "urgent_text": [
+        "Your doctor will diagnose lymphoma with a physical exam, blood tests, a chest x-ray, and a biopsy. Treatments include chemotherapy, radiation therapy, targeted therapy, biological therapy, or therapy to remove proteins from the blood. Targeted therapy uses drugs or other substances that attack specific cancer cells with less harm to normal cells. Biologic therapy boosts your body's own ability to fight cancer. If you don't have symptoms, you may not need treatment right away. This is called watchful waiting.",
+        "NIH: National Cancer Institute"
+      ]
+    },
+    {
+      "title": "Medicines and Children",
+      "url": "https://medlineplus.gov/medicinesandchildren.html",
+      "groups": [
+        "Children and Teenagers",
+        "Drug Therapy"
+      ],
+      "urgent_text": [
+        "Watch out for problems. Contact your health care provider or pharmacist right away if",
+        "You notice any new symptoms or unexpected side effects in your child",
+        "The medicine doesn't appear to be working when you expect it to. For example, antibiotics may take a few days to start working, but a pain reliever usually starts working soon after your child takes it.",
+        "Know the abbreviations for the amounts of medicines:",
+        "Tablespoon (tbsp.)",
+        "Teaspoon (tsp.)",
+        "Milligram (mg.)",
+        "Milliliter (mL.)"
+      ]
+    },
+    {
+      "title": "Meningitis",
+      "url": "https://medlineplus.gov/meningitis.html",
+      "groups": [
+        "Infections",
+        "Brain and Nerves"
+      ],
+      "urgent_text": [
+        "Anyone can get meningitis, but it is more common in people with weak immune systems. Meningitis can get serious very quickly. You should get medical care right away if you have:",
+        "A sudden high fever",
+        "A severe headache",
+        "A stiff neck",
+        "Nausea or vomiting",
+        "Early treatment can help prevent serious problems, including death. Tests to diagnose meningitis include blood tests, imaging tests, and a spinal tap to test cerebrospinal fluid. Antibiotics can treat bacterial meningitis. Antiviral medicines may help some types of viral meningitis. Other medicines can help treat symptoms.",
+        "There are vaccines to prevent some of the bacterial infections that cause meningitis.",
+        "NIH: National Institute of Neurological Disorders and Stroke"
+      ]
+    },
+    {
+      "title": "Meningococcal Disease",
+      "url": "https://medlineplus.gov/meningococcaldisease.html",
+      "groups": [
+        "Infections"
+      ],
+      "urgent_text": [
+        "Certain antibiotics can treat meningococcal disease. It is important that treatment is started as soon as possible. So if the provider thinks you have meningococcal disease, they will give you antibiotics right away (before the test results come back).",
+        "People with serious disease may need additional treatments, such as:",
+        "Breathing support",
+        "Medicines to treat low blood pressure",
+        "Surgery to remove dead tissue",
+        "Wound care for parts of the body with damaged skin",
+        "Some people with meningococcal disease will have long-term health problems and disabilities . These may include:",
+        "Loss of limb(s)"
+      ]
+    },
+    {
+      "title": "Metabolic Disorders",
+      "url": "https://medlineplus.gov/metabolicdisorders.html",
+      "groups": [
+        "Genetics/Birth Defects",
+        "Metabolic Problems"
+      ],
+      "urgent_text": [
+        "Metabolism is the process your body uses to get or make energy from the food you eat. Food is made up of proteins, carbohydrates, and fats. Chemicals in your digestive system break the food parts down into sugars and acids, your body's fuel. Your body can use this fuel right away, or it can store the energy in your body tissues, such as your liver, muscles, and body fat.",
+        "A metabolic disorder occurs when abnormal chemical reactions in your body disrupt this process. When this happens, you might have too much of some substances or too little of other ones that you need to stay healthy. There are different groups of disorders. Some affect the breakdown of amino acids , carbohydrates , or lipids . Another group, mitochondrial diseases , affects the parts of the cells that produce the energy.",
+        "You can develop a metabolic disorder when some organs, such as your liver or pancreas, become diseased or do not function normally. Diabetes is an example."
+      ]
+    },
+    {
+      "title": "Miscarriage",
+      "url": "https://medlineplus.gov/miscarriage.html",
+      "groups": [
+        "Women",
+        "Pregnancy and Reproduction",
+        "Female Reproductive System"
+      ],
+      "urgent_text": [
+        "Vaginal spotting or bleeding with or without pain. Some women may have some spotting in early pregnancy and don't miscarry. To be sure, contact your provider right away if you have any bleeding.",
+        "Dark-colored vaginal discharge.",
+        "A gush of fluid or tissue from your vagina.",
+        "Cramping or pain in your abdomen (belly) or lower back.",
+        "Sometimes, it's hard to know what's normal during pregnancy. If something seems unusual or is worrying you, talk to your provider.",
+        "How is a miscarriage diagnosed?",
+        "To check if you have had a miscarriage, your provider may do the following:",
+        "A pelvic exam to check your cervix."
+      ]
+    },
+    {
+      "title": "Mitochondrial Diseases",
+      "url": "https://medlineplus.gov/mitochondrialdiseases.html",
+      "groups": [
+        "Metabolic Problems"
+      ],
+      "urgent_text": [
+        "Metabolism is the process your body uses to make energy from the food you eat. Food is made up of proteins, carbohydrates, and fats. Chemicals in your digestive system (enzymes) break the food parts down into sugars and acids, your body's fuel. Your body can use this fuel right away, or it can store the energy in your body tissues. If you have a metabolic disorder , something goes wrong with this process.",
+        "Mitochondrial diseases are a group of metabolic disorders. Mitochondria are small structures that produce energy in almost all of your cells. They make it by combining oxygen with the fuel molecules (sugars and fats) that come from your food. When the mitochondria are defective, the cells do not have enough energy. The unused oxygen and fuel molecules build up in the cells and cause damage.",
+        "The symptoms of mitochondrial disease can vary. It depends on how many mitochondria are defective, and where they are in the body. Sometimes only one organ, tissue, or cell type is affected. But often the problem affects many of them. Muscle and nerve cells have especially high energy needs, so muscular and neurological problems are common. The diseases range from mild to severe. Some types can be fatal.",
+        "Genetic mutations cause these diseases. They usually happen before age 20, and some are more common in infants. There are no cures for these diseases, but treatments may help with symptoms and slow down the disease. They may include physical therapy, vitamins and supplements, special diets, and medicines."
+      ]
+    },
+    {
+      "title": "Mosquito Bites",
+      "url": "https://medlineplus.gov/mosquitobites.html",
+      "groups": [
+        "Skin, Hair and Nails",
+        "Injuries and Wounds"
+      ],
+      "urgent_text": [
+        "Causing allergic reactions , including blisters, large hives, and in rare cases, anaphylaxis . Anaphylaxis is a severe allergic reaction that affects the whole body. It is a medical emergency.",
+        "Spreading diseases to humans . Some of these diseases can be serious. Many of them do not have any treatments, and only a few have vaccines to prevent them. These diseases are more of a problem in Africa and other tropical areas of the world, but more of them are spreading to the United States. One factor is climate change , which makes the conditions in some parts of the United States more favorable to certain types of mosquitoes. Other reasons include increased trade with, and travel to, tropical and subtropical areas.",
+        "Which diseases can mosquitoes spread?",
+        "Common diseases spread by mosquitoes include:",
+        "Chikungunya , a viral infection that causes symptoms such as fever and severe joint pain. The symptoms usually last about a week, but for some, the joint pain may last for months. Most cases of chikungunya in the United States are in people who traveled to other countries. There have been a few cases where it has spread in the United States.",
+        "Dengue , a viral infection that causes a high fever, headaches, joint and muscle pain, vomiting, and a rash. Most people get better within a few weeks. In some cases, it can become very severe, even life-threatening. Dengue is rare in the United States.",
+        "Malaria , a parasitic disease that causes serious symptoms such as high fevers, shaking chills, and flu-like illness. It can be life-threatening, but there are drugs to treat it. Malaria is a major health problem in many tropical and subtropical areas of the world. Almost all cases of malaria in the United States are in people who traveled to other countries.",
+        "West Nile Virus (WNV), a viral infection that often has no symptoms. In those that do have symptoms, they are usually mild, and include fever, headache, and nausea. In rare cases, the virus can enter the brain, and it can be life-threatening. WNV has spread across the continental United States."
+      ]
+    },
+    {
+      "title": "Multiple Myeloma",
+      "url": "https://medlineplus.gov/multiplemyeloma.html",
+      "groups": [
+        "Cancers",
+        "Immune System"
+      ],
+      "urgent_text": [
+        "Doctors diagnose multiple myeloma using lab tests, imaging tests, and a bone marrow biopsy. Your treatment depends on how advanced the disease is and whether you have symptoms. If you have no symptoms, you may not need treatment right away. If you have symptoms, you may have chemotherapy, stem cell transplantation, radiation, or targeted therapy. Targeted therapy uses drugs or other substances that attack specific cancer cells with less harm to normal cells.",
+        "NIH: National Cancer Institute"
+      ]
+    },
+    {
+      "title": "Nausea and Vomiting",
+      "url": "https://medlineplus.gov/nauseaandvomiting.html",
+      "groups": [
+        "Digestive System",
+        "Symptoms"
+      ],
+      "urgent_text": [
+        "Nausea and vomiting are common. They are usually not serious. However, you should contact your health care provider immediately if you have:",
+        "A reason to think that your vomiting is from poisoning",
+        "Vomited for longer than 24 hours",
+        "Blood in the vomit",
+        "Severe abdominal pain",
+        "Severe headache and stiff neck",
+        "Signs of dehydration , such as dry mouth, infrequent urination or dark urine",
+        "How is the cause of nausea and vomiting diagnosed?"
+      ]
+    },
+    {
+      "title": "Newborn Screening",
+      "url": "https://medlineplus.gov/newbornscreening.html",
+      "groups": [
+        "Children and Teenagers",
+        "Genetics/Birth Defects"
+      ],
+      "urgent_text": [
+        "These tests look for serious medical conditions. If not treated, some of these conditions can cause lifelong health problems. Others can cause early death. With early diagnosis, treatment can begin right away, before serious problems can occur or become permanent.",
+        "If a screening shows that your baby might have a condition, the health care provider or the state health department will call you. It is important to follow up quickly. Further testing can verify whether your baby has the condition. If so, treatment should start right away.",
+        "NIH: National Institute of Child Health and Human Development"
+      ]
+    },
+    {
+      "title": "Opioid Overdose",
+      "url": "https://medlineplus.gov/opioidoverdose.html",
+      "groups": [
+        "Substance Use and Disorders"
+      ],
+      "urgent_text": [
+        "Call 911 immediately .",
+        "Give the person naloxone, if it is available. Naloxone is a safe medication that can quickly stop an opioid overdose. There are two forms. One is a nasal spray that you spray info the nose. The other type is injected into the muscle under the skin, or into the veins. Naloxone works by blocking the effects of the opioids on the body. It's important to read the product instructions and check the expiration date before you give it to someone.",
+        "Try to keep the person awake and breathing.",
+        "Lay the person on their side to prevent choking.",
+        "Stay with the person until emergency workers arrive.",
+        "Naloxone won't harm someone if they're overdosing on drugs other than opioids, so it's best to use it if you think someone is overdosing.",
+        "Can an opioid overdose be prevented?",
+        "If you are taking opioid pain medicine, there are steps you can take to help prevent an opioid overdose:"
+      ]
+    },
+    {
+      "title": "Opioids and Opioid Use Disorder (OUD)",
+      "url": "https://medlineplus.gov/opioidsandopioidusedisorderoud.html",
+      "groups": [
+        "Substance Use and Disorders"
+      ],
+      "urgent_text": [
+        "Opioids can cause side effects such as drowsiness, mental fog, nausea, and constipation. They may also cause slowed breathing, which can lead to overdose deaths. If someone has signs of an overdose , call 911. These signs may include:",
+        "Very small pupils of the eyes",
+        "Falling asleep or loss of consciousness",
+        "Slow, shallow breathing",
+        "Choking or gurgling sounds",
+        "Vomiting",
+        "Limp body",
+        "Pale, blue, or cold skin"
+      ]
+    },
+    {
+      "title": "Ovarian Cysts",
+      "url": "https://medlineplus.gov/ovariancysts.html",
+      "groups": [
+        "Women",
+        "Endocrine System",
+        "Female Reproductive System"
+      ],
+      "urgent_text": [
+        "If your health care provider finds a cyst, you may be able to wait to see if it gets bigger. You may need surgery if you have pain, are past menopause, or if the cyst does not go away. If a cyst bursts or causes bleeding, you should get medical help right away. Birth control pills can help prevent new cysts.",
+        "Rarely, ovarian cysts can become cancerous. This risk increases as you get older.",
+        "A health problem that involves ovarian cysts is polycystic ovary syndrome (PCOS). Women with PCOS can have high levels of male hormones, irregular or no periods, and small ovarian cysts.",
+        "Dept. of Health and Human Services Office on Women's Health"
+      ]
+    },
+    {
+      "title": "Pancreatic Cancer",
+      "url": "https://medlineplus.gov/pancreaticcancer.html",
+      "groups": [
+        "Cancers",
+        "Digestive System",
+        "Endocrine System"
+      ],
+      "urgent_text": [
+        "Pancreatic cancer is hard to catch early. It doesn't cause symptoms right away. When you do get symptoms, they are often vague or you may not notice them. They include yellowing of the skin and eyes, pain in the abdomen and back, weight loss and fatigue. Also, because the pancreas is hidden behind other organs, health care providers cannot see or feel the tumors during routine exams. Doctors use a physical exam, blood tests, imaging tests, and a biopsy to diagnose it.",
+        "Because it is often found late and it spreads quickly, pancreatic cancer can be hard to treat. Possible treatments include surgery, radiation, chemotherapy, and targeted therapy. Targeted therapy uses drugs or other substances that attack specific cancer cells with less harm to normal cells.",
+        "NIH: National Cancer Institute"
+      ]
+    },
+    {
+      "title": "Poison Ivy, Oak, and Sumac",
+      "url": "https://medlineplus.gov/poisonivyoakandsumac.html",
+      "groups": [
+        "Skin, Hair and Nails"
+      ],
+      "urgent_text": [
+        "The best way to avoid the rash is to learn what the plants look like and stay away from them. If you come into contact with the plants, wash your skin and clothing right away. If you develop a rash, ask your pharmacist about over-the-counter medicines. For severe rashes, see your doctor.",
+        "National Park Service"
+      ]
+    },
+    {
+      "title": "Poisoning",
+      "url": "https://medlineplus.gov/poisoning.html",
+      "groups": [
+        "Poisoning, Toxicology, Environmental Health",
+        "Safety Issues"
+      ],
+      "urgent_text": [
+        "The effects of poisoning range from short-term illness to brain damage, coma, and death. To prevent poisoning it is important to use and store products exactly as their labels say. Keep dangerous products where children can't get to them. Treatment for poisoning depends on the type of poison. If you suspect someone has been poisoned, call your local poison control center at 1-800-222-1222 right away."
+      ]
+    },
+    {
+      "title": "Polio and Post-Polio Syndrome",
+      "url": "https://medlineplus.gov/polioandpostpoliosyndrome.html",
+      "groups": [
+        "Bones, Joints and Muscles",
+        "Infections",
+        "Brain and Nerves"
+      ],
+      "urgent_text": [
+        "If you think you or someone in your family has symptoms of polio, call your healthcare provider right away or go to an emergency room.",
+        "To find out if you or your child has polio, the provider:",
+        "Will do a physical exam.",
+        "Will take a detailed medical history, including your vaccination history and history of any recent travel.",
+        "Will collect samples of body fluids, such as stool, saliva, blood, urine, and spinal fluid. Poliovirus is most likely to be detected in stool specimens.",
+        "May do an MRI to look at pictures of the spinal cord.",
+        "What are the treatments for polio and post-polio syndrome (PPS)?",
+        "There is no cure or specific treatment for polio. For a mild case, getting rest and drinking plenty of liquids may help with some of the symptoms."
+      ]
+    },
+    {
+      "title": "Postpartum Depression",
+      "url": "https://medlineplus.gov/postpartumdepression.html",
+      "groups": [
+        "Women",
+        "Mental Health and Behavior",
+        "Pregnancy and Reproduction"
+      ],
+      "urgent_text": [
+        "If you have thoughts about suicide , or hurting yourself or your baby get help right away:",
+        "Call 911 or go to your local emergency room",
+        "Contact a crisis hotline. In the United States, you can reach the National Suicide and Crisis Lifeline at any time:",
+        "Call or text 988",
+        "Chat online with Lifeline Chat",
+        "TTY users: Use your preferred relay service or dial 711 then 988",
+        "Veterans can contact the Veterans Crisis Line:",
+        "Call 988, then press 1"
+      ]
+    },
+    {
+      "title": "Pregnancy",
+      "url": "https://medlineplus.gov/pregnancy.html",
+      "groups": [
+        "Women",
+        "Pregnancy and Reproduction",
+        "Female Reproductive System"
+      ],
+      "urgent_text": [
+        "Have regular visits with your health care provider. During prenatal care visits your provider checks your health and carefully monitors your pregnancy until you deliver a healthy baby. And if there are any health problems, your provider can find them early. Getting treatment right away can cure many problems and prevent others.",
+        "Eat healthy and drink plenty of water. Good nutrition during pregnancy includes eating a variety of:",
+        "Fruits",
+        "Vegetables",
+        "Whole grains",
+        "Lean meats or other protein sources",
+        "Low-fat dairy products",
+        "Take prenatal vitamins. During pregnancy, you need higher amounts of certain vitamins and minerals, such as folic acid and iron ."
+      ]
+    },
+    {
+      "title": "Prostate Cancer",
+      "url": "https://medlineplus.gov/prostatecancer.html",
+      "groups": [
+        "Cancers",
+        "Older Adults",
+        "Men",
+        "Male Reproductive System"
+      ],
+      "urgent_text": [
+        "Suddenly needing to urinate right away",
+        "Urinating often, especially at night",
+        "Pain or burning when urinating",
+        "Blood in your urine or semen",
+        "Pain in your lower back , hips, or pelvis that does not go away",
+        "Painful ejaculation (the release of semen through the penis during orgasm)",
+        "But many of these symptoms may be from other common prostate problems that aren't cancer, such as an enlarged prostate .",
+        "You should discuss your prostate health with your health care provider if you:"
+      ]
+    },
+    {
+      "title": "Prostate Diseases",
+      "url": "https://medlineplus.gov/prostatediseases.html",
+      "groups": [
+        "Older Adults",
+        "Men",
+        "Male Reproductive System"
+      ],
+      "urgent_text": [
+        "Not being able to urinate at all. This is a medical emergency.",
+        "Any problems, starting or controlling urine flow.",
+        "Waking up often to urinate.",
+        "Blood in your urine or urine that has an unusual smell or color.",
+        "Fever , chills, or body aches.",
+        "Great discomfort or pain:",
+        "While urinating or after ejaculation.",
+        "In your abdomen (belly), between your scrotum and anus, or in your scrotum or penis."
+      ]
+    },
+    {
+      "title": "Pulmonary Embolism",
+      "url": "https://medlineplus.gov/pulmonaryembolism.html",
+      "groups": [
+        "Lungs and Breathing"
+      ],
+      "urgent_text": [
+        "If you have PE, you need medical treatment right away. The goal of treatment is to break up clots and help keep other clots from forming. Treatment options include medicines and procedures.",
+        "Medicines :",
+        "Anticoagulants, or blood thinners , keep blood clots from getting larger and stop new clots from forming. You might get them as an injection, a pill, or through an I.V. (intravenous). They can cause bleeding, especially if you are taking other medicines that also thin your blood, such as aspirin.",
+        "Thrombolytics are medicines to dissolve blood clots. You may get them if you have large clots that cause severe symptoms or other serious complications. Thrombolytics can cause sudden bleeding, so they are used if your PE is serious and may be life-threatening.",
+        "Procedures :",
+        "Catheter-assisted thrombus removal uses a flexible tube to reach a blood clot in your lung. Your health care provider can insert a tool in the tube to break up the clot or to deliver medicine through the tube. Usually you will get medicine to put you to sleep for this procedure.",
+        "A vena cava filter may be used in some people who cannot take blood thinners. Your health care provider inserts a filter inside a large vein called the vena cava. The filter catches blood clots before they travel to the lungs, which prevents pulmonary embolism. But the filter does not stop new blood clots from forming.",
+        "Can pulmonary embolism (PE) be prevented?"
+      ]
+    },
+    {
+      "title": "Rabies",
+      "url": "https://medlineplus.gov/rabies.html",
+      "groups": [
+        "Infections"
+      ],
+      "urgent_text": [
+        "In people, symptoms of rabies include fever, headache and fatigue, then confusion, hallucinations and paralysis. Once the symptoms begin, the disease is usually fatal. A series of shots can prevent rabies in people exposed to the virus. You need to get them right away. If an animal bites you, wash the wound well; then get medical care.",
+        "To help prevent rabies:",
+        "Vaccinate your pet. Rabies vaccines are available for dogs, cats and farm animals",
+        "Don't let pets roam",
+        "Don't approach stray animals. Animals with rabies might be aggressive and vicious, or tired and weak",
+        "Centers for Disease Control and Prevention"
+      ]
+    },
+    {
+      "title": "Rashes",
+      "url": "https://medlineplus.gov/rashes.html",
+      "groups": [
+        "Skin, Hair and Nails"
+      ],
+      "urgent_text": [
+        "Some rashes develop right away. Others form over several days. Although most rashes clear up fairly quickly, others are long-lasting and need long-term treatment.",
+        "Because rashes can be caused by many different things, it's important to figure out what kind you have before you treat it. If it is a bad rash, if it does not go away, or if you have other symptoms, you should see your health care provider. Treatments may include moisturizers, lotions, baths, cortisone creams that relieve swelling, and antihistamines, which relieve itching."
+      ]
+    },
+    {
+      "title": "Refractive Errors",
+      "url": "https://medlineplus.gov/refractiveerrors.html",
+      "groups": [
+        "Eyes and Vision"
+      ],
+      "urgent_text": [
+        "Sometimes you may not notice vision changes right away, which is why regular eye exams are so important.",
+        "The most common symptom is blurred vision. Other symptoms may include:",
+        "Double vision",
+        "Haziness",
+        "Glare or halos around bright lights",
+        "A need to squint to see clearly",
+        "Headaches",
+        "Eye strain or tired eyes"
+      ]
+    },
+    {
+      "title": "Respiratory Failure",
+      "url": "https://medlineplus.gov/respiratoryfailure.html",
+      "groups": [
+        "Lungs and Breathing"
+      ],
+      "urgent_text": [
+        "Acute respiratory failure can be a medical emergency. You may need treatment in intensive care unit at a hospital. Chronic respiratory failure can often be treated at home. But if your chronic respiratory failure is severe, you might need treatment in a long-term care center.",
+        "One of the main goals of treatment is to get oxygen to your lungs and other organs and remove carbon dioxide from your body. Another goal is to treat the cause of the condition. Treatments may include:",
+        "Oxygen therapy , through a nasal cannula (two small plastic tubes that go in your nostrils) or through a mask that fits over your nose and mouth",
+        "Tracheostomy, a surgically-made hole that goes through the front of your neck and into your windpipe. A breathing tube, also called a tracheostomy, or trach tube, is placed in the hole to help you breathe.",
+        "Ventilator, a breathing machine that blows air into your lungs. It also carries carbon dioxide out of your lungs.",
+        "Other breathing treatments, such as noninvasive positive pressure ventilation (NPPV), which uses mild air pressure to keep your airways open while you sleep. Another treatment is a special bed that rocks back and forth, to help you breathe in and out.",
+        "Fluids, often through an intravenous (IV), to improve blood flow throughout your body. They also provide nutrition.",
+        "Medicines for discomfort"
+      ]
+    },
+    {
+      "title": "Retinal Detachment",
+      "url": "https://medlineplus.gov/retinaldetachment.html",
+      "groups": [
+        "Eyes and Vision"
+      ],
+      "urgent_text": [
+        "A retinal detachment is a medical emergency. If not promptly treated, it can cause permanent vision loss. If you have any symptoms, see an eye care professional immediately. Treatment includes different types of surgery.",
+        "NIH: National Eye Institute"
+      ]
+    },
+    {
+      "title": "Retinal Disorders",
+      "url": "https://medlineplus.gov/retinaldisorders.html",
+      "groups": [
+        "Eyes and Vision"
+      ],
+      "urgent_text": [
+        "Retinal detachment. Occurs when the retina pulls away from the back of the eye. This is a medical emergency.",
+        "Retinal tears. A hole or break in the retina caused when the gel-like substance inside your eye (the vitreous) pulls away.",
+        "Retinoblastoma. A rare cancer of the retina that most often affects young children.",
+        "Macular pucker. Scar tissue that forms on the macula and distorts vision.",
+        "Macular hole. A small opening in the macula, often related to aging or injury. It can blur or distort central vision.",
+        "Eye floaters. Small specks, cobwebs, or threads that drift across your vision. These are more common with aging.",
+        "Retina pigmentosa. A group of inherited disorders (passed down through families) that slowly damage the retina and cause loss of night and side (peripheral) vision.",
+        "What are the symptoms of retinal disorders?"
+      ]
+    },
+    {
+      "title": "Seizures",
+      "url": "https://medlineplus.gov/seizures.html",
+      "groups": [
+        "Brain and Nerves"
+      ],
+      "urgent_text": [
+        "it is a medical emergency if seizures last longer than 5 minutes or if a person has many",
+        "seizures and does not wake up between them. Seizures can have many causes, including",
+        "medicines, high fevers, head injuries and certain diseases. People who have recurring",
+        "seizures due to a brain disorder have epilepsy .",
+        "NIH: National Institute of Neurological Disorders and Stroke"
+      ]
+    },
+    {
+      "title": "Sepsis",
+      "url": "https://medlineplus.gov/sepsis.html",
+      "groups": [
+        "Infections"
+      ],
+      "urgent_text": [
+        "Sepsis is your body's overactive and extreme response to an infection . Sepsis is a life-threatening medical emergency. Without quick treatment, it can lead to tissue damage, organ failure, and even death.",
+        "What causes sepsis?",
+        "Sepsis happens when an infection you already have triggers a chain reaction throughout your body. Bacterial infections are the most common cause, but other types of infections can also cause it.",
+        "The infections are often in the lungs, stomach, kidneys, or bladder. It's possible for sepsis to begin with a small cut that gets infected or with an infection that develops after surgery. Sometimes, sepsis can occur in people who didn't even know that they had an infection.",
+        "Who is more likely to develop sepsis?",
+        "Anyone with an infection could get sepsis. But certain people are more likely to develop it:",
+        "Adults 65 or older",
+        "People with chronic (long-lasting) conditions, such as diabetes , lung disease , cancer , and kidney disease"
+      ]
+    },
+    {
+      "title": "Sexual Assault",
+      "url": "https://medlineplus.gov/sexualassault.html",
+      "groups": [
+        "Women",
+        "Injuries and Wounds",
+        "Social/Family Issues"
+      ],
+      "urgent_text": [
+        "If you are in danger or need medical care, call 911. If you can, get away from the person who assaulted you and get to a safe place as fast as you can.",
+        "You can call the National Sexual Assault Hotline at 800-656-HOPE (4673) to connect with a sexual assault service provider in your area who can direct you to local resources.",
+        "Getting support after a sexual assault may help you cope better and reduce the long-term effects. Victim services like rape crisis centers may offer a safe, healing place where you can find support.",
+        "Studies show that treatments such as Trauma-Focused Cognitive Behavioral Therapy (TF-CBT) can help victims cope with depression, anxiety, and post-traumatic stress disorder.",
+        "Can sexual assault be prevented?",
+        "Sexual assault is never the victim's fault. No one who has been assaulted should be blamed for something that they did or did not do.",
+        "You can take some steps to try to be safer around others:",
+        "Go to parties with friends. Look out for each other. If a friend seems drunk or drugged, get them to a safe place. Have a plan for how you'll get home, too."
+      ]
+    },
+    {
+      "title": "Shock",
+      "url": "https://medlineplus.gov/shock.html",
+      "groups": [
+        "Blood, Heart and Circulation"
+      ],
+      "urgent_text": [
+        "Shock is a life-threatening medical emergency and it is important to get help right away. Treatment of shock depends on the cause.",
+        "NIH: National Heart, Lung, and Blood Institute"
+      ]
+    },
+    {
+      "title": "Sickle Cell Disease",
+      "url": "https://medlineplus.gov/sicklecelldisease.html",
+      "groups": [
+        "Blood, Heart and Circulation",
+        "Genetics/Birth Defects"
+      ],
+      "urgent_text": [
+        "All states now test newborns for SCD (as well as many other treatable conditions) as part of their screening programs . These programs help find the conditions early, so treatment can be started right away.",
+        "Health care providers can also diagnose SCD before a baby is born. That test uses a sample of amniotic fluid (the liquid in the sac surrounding the baby) or tissue taken from the placenta (the organ that brings oxygen and nutrients to the baby).",
+        "People who are thinking about having children can have the test to find out how likely it is that their children will have SCD.",
+        "What are the treatments for sickle cell disease (SCD)?",
+        "There are many ways to manage sickle cell disease. Your medical team will probably include a hematologist, a doctor who specializes in blood diseases. You will work with your medical team to set up a treatment plan. Possible treatment options may include:",
+        "Treatments that can help relieve symptoms and lessen complications, including:",
+        "Hydroxyurea, a medicine to reduce sickling of red blood cells. This can help prevent serious symptoms of sickle cell disease. This medicine can be used in adults and in children as young as 9 months old. But this medicine is not safe during pregnancy.",
+        "Voxelotor, another medicine to prevent the sickling of red blood cells. It can be used in adults and children ages 4 years and older."
+      ]
+    },
+    {
+      "title": "Skin Conditions",
+      "url": "https://medlineplus.gov/skinconditions.html",
+      "groups": [
+        "Skin, Hair and Nails"
+      ],
+      "urgent_text": [
+        "If you do get a cut or scrape, clean it right away with soap and warm water. Put on a bandage to protect it while it heals.",
+        "When you are spending time outdoors, wear long sleeves and pants and use insect repellant to prevent insect bites.",
+        "Prevent sunburn by covering up and using sunscreen when outdoors.",
+        "Wash your hands often with soap and water.",
+        "When you take a shower or bath, use warm (not hot) water. Use mild cleansers and wash gently (don't scrub).",
+        "Use moisturizers, like lotions, creams, or ointments, to prevent dry skin.",
+        "NIH: National Institute of Arthritis and Musculoskeletal and Skin Diseases"
+      ]
+    },
+    {
+      "title": "Spinal Cord Injuries",
+      "url": "https://medlineplus.gov/spinalcordinjuries.html",
+      "groups": [
+        "Brain and Nerves",
+        "Injuries and Wounds"
+      ],
+      "urgent_text": [
+        "A spinal cord injury is a medical emergency. Immediate treatment can reduce long-term effects. Treatments may include medicines, braces or traction to stabilize the spine, and surgery. Later treatment usually includes medicines and rehabilitation therapy. Mobility aids and assistive devices may help you to get around and do some daily tasks.",
+        "NIH: National Institute of Neurological Disorders and Stroke"
+      ]
+    },
+    {
+      "title": "Stress",
+      "url": "https://medlineplus.gov/stress.html",
+      "groups": [
+        "Mental Health and Behavior"
+      ],
+      "urgent_text": [
+        "Always get help right away if stress is causing you to:",
+        "Have thoughts of suicide",
+        "Feel you can't cope",
+        "Use drugs or alcohol more often than usual",
+        "Your health care provider may refer you to a mental health professional such as a psychologist or social worker.",
+        "NIH: National Institute of Mental Health"
+      ]
+    },
+    {
+      "title": "Stroke",
+      "url": "https://medlineplus.gov/stroke.html",
+      "groups": [
+        "Older Adults",
+        "Blood, Heart and Circulation",
+        "Brain and Nerves"
+      ],
+      "urgent_text": [
+        "If you think that you or someone else is having a stroke, call 911 right away. Immediate treatment may save someone's life and increase the chances for successful rehabilitation and recovery.",
+        "What are the types of stroke?",
+        "There are two types of stroke:",
+        "Ischemic stroke is caused by a blood clot that blocks or plugs a blood vessel in the brain. This is the most common type; about 80% of strokes are ischemic.",
+        "Hemorrhagic stroke is caused by a blood vessel that breaks and bleeds into the brain.",
+        "Another condition that's similar to a stroke is a transient ischemic attack (TIA). It's sometimes called a \"mini-stroke.\" TIAs happen when the blood supply to the brain is blocked for a short time. The damage to the brain cells isn't permanent, but having a TIA puts you at much higher risk of having a stroke.",
+        "Who is at risk for a stroke?",
+        "Certain factors can raise your risk of a stroke. The major risk factors include:"
+      ]
+    },
+    {
+      "title": "Stuttering",
+      "url": "https://medlineplus.gov/stuttering.html",
+      "groups": [
+        "Brain and Nerves",
+        "Symptoms"
+      ],
+      "urgent_text": [
+        "Younger children may not need therapy right away. Their parents and teachers can learn strategies to help the child practice speaking. That can help some children. As a parent, it's important to be calm and relaxed when your child is speaking. If your child feels pressured, it can make it harder for them to talk. The speech-language pathologist will probably want to evaluate your child regularly, to see whether treatment is needed.",
+        "Speech therapy can help children and adults minimize stuttering. Some techniques include:",
+        "Speaking more slowly",
+        "Controlling breathing",
+        "Gradually working up from single-syllable responses to longer words and more complex sentences",
+        "For adults, self-help groups can help you find resources and support as you face the challenges of stuttering.",
+        "There are electronic devices to help with fluency, but more research is needed to see whether they really help over the long term. Some people have tried medicines that usually treat other health problems such as epilepsy, anxiety, or depression. But these medicines are not approved for stuttering, and they often have side effects.",
+        "NIH: National Institute on Deafness and Other Communication Disorders"
+      ]
+    },
+    {
+      "title": "Sudden Cardiac Arrest",
+      "url": "https://medlineplus.gov/suddencardiacarrest.html",
+      "groups": [
+        "Blood, Heart and Circulation"
+      ],
+      "urgent_text": [
+        "SCA is an emergency. A person having SCA needs to be treated with a defibrillator right away. A defibrillator is a device sends an electric shock to the heart. The electric shock can restore a normal rhythm to a heart that's stopped beating. To work well, it needs to be done within minutes of the SCA.",
+        "Most police officers, emergency medical technicians, and other first responders are trained and equipped to use a defibrillator. Call 9-1-1 right away if someone has signs or symptoms of SCA. The sooner you call for help, the sooner lifesaving treatment can begin.",
+        "What should I do if I think that someone has had an SCA?",
+        "Many public places such as schools, businesses, and airports have automated external defibrillators (AEDs). AEDs are special defibrillators that untrained people can use if they think that someone has had SCA. AEDS are programmed to give an electric shock if they detect a dangerous arrhythmia. This prevents giving a shock to someone who may have fainted but isn't having SCA.",
+        "If you see someone who you think has had SCA, you should give cardiopulmonary resuscitation (CPR) until defibrillation can be done.",
+        "People who are at risk for SCA may want to consider having an AED at home. Ask your cardiologist to help you decide whether having an AED in your home might help you.",
+        "What are the treatments after surviving sudden cardiac arrest (SCA)?",
+        "If you survive SCA, you'll likely be admitted to a hospital for ongoing care and treatment. In the hospital, your medical team will closely watch your heart. They may give you medicines to try to reduce the risk of another SCA."
+      ]
+    },
+    {
+      "title": "Suicide",
+      "url": "https://medlineplus.gov/suicide.html",
+      "groups": [
+        "Mental Health and Behavior",
+        "Social/Family Issues"
+      ],
+      "urgent_text": [
+        "If you or someone you know has the warning signs for suicide, get help right away , especially if there is a change in behavior. If it is an emergency, dial 911. Otherwise there are five steps that you can take:",
+        "Ask the person if they're thinking about killing themselves.",
+        "Keep them safe. Find out whether they have a plan for suicide and keep them away from things that they can use to kill themselves.",
+        "Be there with them. Listen carefully and find out what they are thinking and feeling.",
+        "Help them connect to resources that can help them, such as through:",
+        "Calling or texting the 988 Suicide & Crisis Lifeline at 988.",
+        "Chatting through Lifeline Chat.",
+        "For veterans, reaching the Veterans Crisis Line by:"
+      ]
+    },
+    {
+      "title": "Tetanus",
+      "url": "https://medlineplus.gov/tetanus.html",
+      "groups": [
+        "Infections"
+      ],
+      "urgent_text": [
+        "The infection causes painful tightening of the muscles, usually all over the body. It can lead to \"locking\" of the jaw. This makes it impossible to open your mouth or swallow. Tetanus is a medical emergency. You need to get treatment in a hospital.",
+        "A vaccine can prevent tetanus. It is given as a part of routine childhood vaccination. Adults should get a tetanus shot, or booster, every 10 years. If you get a bad cut or burn, see your doctor - you may need a booster. Immediate and proper wound care can prevent tetanus infection."
+      ]
+    },
+    {
+      "title": "Thyroid Cancer",
+      "url": "https://medlineplus.gov/thyroidcancer.html",
+      "groups": [
+        "Cancers",
+        "Ear, Nose and Throat",
+        "Endocrine System"
+      ],
+      "urgent_text": [
+        "Watchful waiting, which means that you don't get treatment right away. Your regularly checks to see if your signs or symptoms appear or change.",
+        "NIH: National Cancer Institute"
+      ]
+    },
+    {
+      "title": "Toddler Health",
+      "url": "https://medlineplus.gov/toddlerhealth.html",
+      "groups": [
+        "Children and Teenagers"
+      ],
+      "urgent_text": [
+        "Most young children get sick. It is hard for parents to know what is serious. You can learn what the common warning signs are. In the end, trust your intuition. If you are worried about your toddler, call your health care provider right away.",
+        "Well-child visits are important to your toddler's health. Toddlers will get their recommended vaccines during these visits. Routine exams and screenings help you and your kids prevent and treat health problems as well as chart their growth and development ."
+      ]
+    },
+    {
+      "title": "Tonsillitis",
+      "url": "https://medlineplus.gov/tonsillitis.html",
+      "groups": [
+        "Children and Teenagers",
+        "Ear, Nose and Throat",
+        "Mouth and Teeth",
+        "Immune System"
+      ],
+      "urgent_text": [
+        "You should get emergency care right away if your child:",
+        "Has trouble breathing",
+        "Starts drooling",
+        "Has a lot of trouble swallowing",
+        "How is tonsillitis diagnosed?",
+        "To diagnose tonsillitis, your child's health care provider will first ask you about your child's symptoms and medical history. The provider will look at your child's throat and neck, checking for things such as redness or white spots on the tonsils and swollen lymph nodes.",
+        "Your child will probably also have one or more tests to check for strep throat, since it can cause tonsillitis and it requires treatment. It could be a rapid strep test, a throat culture, or both. For both tests, the provider uses a cotton swab to collect a sample of fluids from your child's tonsils and the back of the throat. With the rapid strep test, testing is done in the office, and you get the results within minutes. The throat culture is done in a lab, and it usually takes a few days to get the results. The throat culture is a more reliable test. So sometimes if the rapid strep test is negative (meaning that it does not show any strep bacteria), the provider will also do a throat culture just to make sure that your child does not have strep.",
+        "What are the treatments for tonsillitis?"
+      ]
+    },
+    {
+      "title": "Transient Ischemic Attack",
+      "url": "https://medlineplus.gov/transientischemicattack.html",
+      "groups": [
+        "Blood, Heart and Circulation",
+        "Brain and Nerves"
+      ],
+      "urgent_text": [
+        "Most symptoms of a TIA disappear within an hour, although they may last for up to 24 hours. Because you cannot tell if these symptoms are from a TIA or a stroke, you should go to the hospital right away.",
+        "TIAs are often a warning sign for future strokes . Taking medicine, such as blood thinners , may reduce your risk of a stroke. Your doctor might also recommend surgery. You can also help lower your risk by having a healthy lifestyle . This includes not smoking, not drinking too much, eating a healthy diet, and exercising. It is also important to control other health problems, such as high blood pressure and cholesterol .",
+        "NIH: National Institute of Neurological Disorders and Stroke"
+      ]
+    },
+    {
+      "title": "Triglycerides",
+      "url": "https://medlineplus.gov/triglycerides.html",
+      "groups": [
+        "Blood, Heart and Circulation",
+        "Food and Nutrition"
+      ],
+      "urgent_text": [
+        "Triglycerides are a type of fat. They are the most common type of fat in your body. They come from foods, especially butter, oils, and other fats you eat. Triglycerides also come from extra calories. These are the calories that you eat, but your body does not need right away.",
+        "Your body changes these extra calories into triglycerides and stores them in fat cells. When your body needs energy, it releases the triglycerides. Your VLDL cholesterol particles carry the triglycerides to your tissues.",
+        "Having a high level of triglycerides can raise your risk of heart diseases , such as coronary artery disease .",
+        "What causes high triglycerides?",
+        "Factors that can raise your triglyceride level include:",
+        "Regularly eating more calories than you burn off, especially if you eat a lot of sugar",
+        "Being overweight or having obesity",
+        "Cigarette smoking"
+      ]
+    },
+    {
+      "title": "Tubal Ligation",
+      "url": "https://medlineplus.gov/tuballigation.html",
+      "groups": [
+        "Women",
+        "Pregnancy and Reproduction",
+        "Female Reproductive System"
+      ],
+      "urgent_text": [
+        "Tubal ligation (getting your \"tubes tied\") is a type of surgery. It prevents a woman from getting pregnant. It is a permanent form of birth control , and is effective right away.",
+        "The surgery cuts, ties, or seals the fallopian tubes. This blocks the path between the ovaries and the uterus. The sperm cannot reach the egg to fertilize it, and the egg cannot reach the uterus. You get the surgery in a hospital or outpatient surgical center. It usually takes about 30 minutes. Almost all women go home the same day. They can return to most normal activities within a few days.",
+        "Tubal ligation can sometimes be reversed. The reversal is major surgery, and does not always work."
+      ]
+    },
+    {
+      "title": "Uncommon Infant and Newborn Problems",
+      "url": "https://medlineplus.gov/uncommoninfantandnewbornproblems.html",
+      "groups": [
+        "Children and Teenagers"
+      ],
+      "urgent_text": [
+        "It can be scary when your baby is sick, especially when it is not an everyday problem like a cold or a fever. You may not know whether the problem is serious or how to treat it. If you have concerns about your baby's health, call your health care provider right away.",
+        "Learning information about your baby's condition can help ease your worry. Do not be afraid to ask questions about your baby's care. By working together with your health care provider, you make sure that your baby gets the best care possible."
+      ]
+    },
+    {
+      "title": "Vaginal Bleeding",
+      "url": "https://medlineplus.gov/vaginalbleeding.html",
+      "groups": [
+        "Women",
+        "Symptoms",
+        "Female Reproductive System"
+      ],
+      "urgent_text": [
+        "Bleeding during pregnancy can have several different causes. It is not always serious, but to be safe you should contact your health care provider right away.",
+        "Pelvic exams, blood tests, imaging tests , and other procedures can help your health care provider diagnose the problem. Treatment depends on the cause. Treatments may include medicines, hormones, and surgery."
+      ]
+    },
+    {
+      "title": "Whooping Cough",
+      "url": "https://medlineplus.gov/whoopingcough.html",
+      "groups": [
+        "Children and Teenagers",
+        "Infections",
+        "Lungs and Breathing"
+      ],
+      "urgent_text": [
+        "The early symptoms in babies can be different. They may only cough a little bit, or they may not cough at all. Babies may have apnea, which means that there is a pause in breathing. They may start to turn blue. If this happens, get medical care for your baby right away.",
+        "As whopping cough gets worse, the symptoms may include:",
+        "Fits of many, rapid coughs followed by a high-pitched \"whoop\" sound",
+        "Vomiting during or after coughing fits",
+        "Exhaustion after coughing fits",
+        "The coughing fits get worse and start happening more often, especially at night. You may have them for up to 10 weeks or more.",
+        "Recovery from this can happen slowly. Your cough gets milder and happens less often. The coughing fits can come back if you have another respiratory infection, even months after you first got whooping cough.",
+        "How is whooping cough diagnosed?"
+      ]
+    },
+    {
+      "title": "X-Rays",
+      "url": "https://medlineplus.gov/xrays.html",
+      "groups": [
+        "Diagnostic Tests"
+      ],
+      "urgent_text": [
+        "After an x-ray, you can return to normal activities right away. A specialist called a radiologist reviews the images and shares the results with your provider."
+      ]
+    }
+  ]
+}

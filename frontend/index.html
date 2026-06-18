@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Healthcare Chatbot</title>
+  <link rel="stylesheet" href="./css/style.css" />
+</head>
+<body>
+  <div id="app-shell" class="app-shell">
+    <aside class="sidebar">
+      <div class="sidebar-top">
+        <button id="new-chat-btn" class="sidebar-primary-btn" type="button">
+          Cuộc trò chuyện mới
+        </button>
+      </div>
+
+      <div id="history-list" class="history-list">
+        <div class="history-empty">Chưa có cuộc trò chuyện nào.</div>
+      </div>
+
+      <div class="sidebar-bottom">
+        <button id="clear-history-btn" class="sidebar-danger-btn" type="button">
+          Xóa toàn bộ lịch sử
+        </button>
+      </div>
+    </aside>
+
+    <main class="chat-layout">
+      <header class="topbar">
+        <div class="topbar-left">
+          <button
+            id="toggle-sidebar-btn"
+            class="icon-btn"
+            type="button"
+            title="Thu gọn / mở lịch sử chat"
+          >
+            ☰
+          </button>
+
+          <div class="conversation-title-wrap">
+            <h1 id="current-chat-title" class="conversation-title">Healthcare Chatbot</h1>
+            <p id="current-chat-subtitle" class="conversation-subtitle">
+              Hỗ trợ thu thập triệu chứng và sàng lọc ban đầu
+            </p>
+          </div>
+        </div>
+
+        <div class="topbar-right">
+          <button id="rename-chat-btn" class="ghost-btn" type="button">
+            Đổi tên
+          </button>
+        </div>
+      </header>
+
+      <section id="chat-box" class="chat-box">
+        <div class="message bot">
+          <div class="message-bubble bot-bubble">
+            Dạ em chào anh/chị. Em là trợ lý y khoa ảo, ở đây để lắng nghe và hỗ trợ ghi nhận tình trạng sức khỏe của mình. Anh/chị đang cảm thấy khó chịu ở đâu nhất và tình trạng này xuất hiện từ lúc nào ạ? Nếu có đau, anh/chị có thể cho em biết điểm đau từ 0 đến 10. Anh/chị cũng có thể cho em biết giới tính và tuổi nếu có thể ạ.
+          </div>
+        </div>
+      </section>
+
+      <footer class="chat-input-area">
+        <div class="input-wrap">
+          <input
+            type="text"
+            id="message-input"
+            placeholder="Nhập triệu chứng của bạn..."
+            autocomplete="off"
+          />
+        </div>
+        <button id="send-btn" type="button">Gửi</button>
+      </footer>
+    </main>
+  </div>
+
+  <script src="./js/api.js"></script>
+  <script src="./js/chat.js"></script>
+  <script src="./js/app.js"></script>
+</body>
+</html>

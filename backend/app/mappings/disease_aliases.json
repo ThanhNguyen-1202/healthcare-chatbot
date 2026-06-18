@@ -1,0 +1,296 @@
+{
+  "Spontaneous pneumothorax": [
+    "Tràn khí màng phổi tự phát"
+  ],
+  "Tràn khí màng phổi tự phát": [
+    "Spontaneous pneumothorax"
+  ],
+  "Cluster headache": [
+    "Đau đầu từng cụm"
+  ],
+  "Đau đầu từng cụm": [
+    "Cluster headache"
+  ],
+  "Boerhaave": [
+    "Hội chứng Boerhaave (vỡ thực quản tự phát)"
+  ],
+  "Hội chứng Boerhaave (vỡ thực quản tự phát)": [
+    "Boerhaave"
+  ],
+  "Spontaneous rib fracture": [
+    "Gãy xương sườn tự phát"
+  ],
+  "Gãy xương sườn tự phát": [
+    "Spontaneous rib fracture"
+  ],
+  "GERD": [
+    "Trào ngược dạ dày - thực quản"
+  ],
+  "Trào ngược dạ dày - thực quản": [
+    "GERD"
+  ],
+  "HIV (initial infection)": [
+    "Nhiễm HIV giai đoạn đầu"
+  ],
+  "Nhiễm HIV giai đoạn đầu": [
+    "HIV (initial infection)"
+  ],
+  "Anemia": [
+    "Thiếu máu"
+  ],
+  "Thiếu máu": [
+    "Anemia"
+  ],
+  "Viral pharyngitis": [
+    "Viêm họng do vi-rút"
+  ],
+  "Viêm họng do vi-rút": [
+    "Viral pharyngitis"
+  ],
+  "Inguinal hernia": [
+    "Thoát vị bẹn"
+  ],
+  "Thoát vị bẹn": [
+    "Inguinal hernia"
+  ],
+  "Myasthenia gravis": [
+    "Nhược cơ"
+  ],
+  "Nhược cơ": [
+    "Myasthenia gravis"
+  ],
+  "Whooping cough": [
+    "Ho gà"
+  ],
+  "Ho gà": [
+    "Whooping cough"
+  ],
+  "Anaphylaxis": [
+    "Phản vệ"
+  ],
+  "Phản vệ": [
+    "Anaphylaxis"
+  ],
+  "Epiglottitis": [
+    "Viêm nắp thanh quản"
+  ],
+  "Viêm nắp thanh quản": [
+    "Epiglottitis"
+  ],
+  "Guillain-Barré syndrome": [
+    "Hội chứng Guillain-Barré"
+  ],
+  "Hội chứng Guillain-Barré": [
+    "Guillain-Barré syndrome"
+  ],
+  "Acute laryngitis": [
+    "Viêm thanh quản cấp"
+  ],
+  "Viêm thanh quản cấp": [
+    "Acute laryngitis"
+  ],
+  "Croup": [
+    "Viêm thanh khí phế quản (Croup)"
+  ],
+  "Viêm thanh khí phế quản (Croup)": [
+    "Croup"
+  ],
+  "PSVT": [
+    "Nhịp nhanh kịch phát trên thất"
+  ],
+  "Nhịp nhanh kịch phát trên thất": [
+    "PSVT"
+  ],
+  "Atrial fibrillation": [
+    "Rung nhĩ"
+  ],
+  "Rung nhĩ": [
+    "Atrial fibrillation"
+  ],
+  "Bronchiectasis": [
+    "Giãn phế quản"
+  ],
+  "Giãn phế quản": [
+    "Bronchiectasis"
+  ],
+  "Allergic sinusitis": [
+    "Viêm mũi xoang dị ứng"
+  ],
+  "Viêm mũi xoang dị ứng": [
+    "Allergic sinusitis"
+  ],
+  "Chagas": [
+    "Bệnh Chagas"
+  ],
+  "Bệnh Chagas": [
+    "Chagas"
+  ],
+  "Scombroid food poisoning": [
+    "Ngộ độc thực phẩm Scombroid"
+  ],
+  "Ngộ độc thực phẩm Scombroid": [
+    "Scombroid food poisoning"
+  ],
+  "Myocarditis": [
+    "Viêm cơ tim"
+  ],
+  "Viêm cơ tim": [
+    "Myocarditis"
+  ],
+  "Larygospasm": [
+    "Co thắt thanh quản"
+  ],
+  "Co thắt thanh quản": [
+    "Larygospasm"
+  ],
+  "Acute dystonic reactions": [
+    "Phản ứng loạn trương lực cấp"
+  ],
+  "Phản ứng loạn trương lực cấp": [
+    "Acute dystonic reactions"
+  ],
+  "Localized edema": [
+    "Phù khu trú"
+  ],
+  "Phù khu trú": [
+    "Localized edema"
+  ],
+  "SLE": [
+    "Lupus ban đỏ hệ thống"
+  ],
+  "Lupus ban đỏ hệ thống": [
+    "SLE"
+  ],
+  "Tuberculosis": [
+    "Lao phổi"
+  ],
+  "Lao phổi": [
+    "Tuberculosis"
+  ],
+  "Unstable angina": [
+    "Đau thắt ngực không ổn định"
+  ],
+  "Đau thắt ngực không ổn định": [
+    "Unstable angina"
+  ],
+  "Stable angina": [
+    "Đau thắt ngực ổn định"
+  ],
+  "Đau thắt ngực ổn định": [
+    "Stable angina"
+  ],
+  "Ebola": [
+    "Bệnh do vi-rút Ebola"
+  ],
+  "Bệnh do vi-rút Ebola": [
+    "Ebola"
+  ],
+  "Acute otitis media": [
+    "Viêm tai giữa cấp"
+  ],
+  "Viêm tai giữa cấp": [
+    "Acute otitis media"
+  ],
+  "Panic attack": [
+    "Cơn hoảng loạn"
+  ],
+  "Cơn hoảng loạn": [
+    "Panic attack"
+  ],
+  "Bronchospasm / acute asthma exacerbation": [
+    "Co thắt phế quản / cơn hen cấp"
+  ],
+  "Co thắt phế quản / cơn hen cấp": [
+    "Bronchospasm / acute asthma exacerbation"
+  ],
+  "Bronchitis": [
+    "Viêm phế quản"
+  ],
+  "Viêm phế quản": [
+    "Bronchitis"
+  ],
+  "Acute COPD exacerbation / infection": [
+    "Đợt cấp COPD / nhiễm trùng"
+  ],
+  "Đợt cấp COPD / nhiễm trùng": [
+    "Acute COPD exacerbation / infection"
+  ],
+  "Pulmonary embolism": [
+    "Thuyên tắc phổi"
+  ],
+  "Thuyên tắc phổi": [
+    "Pulmonary embolism"
+  ],
+  "URTI": [
+    "Nhiễm trùng đường hô hấp trên"
+  ],
+  "Nhiễm trùng đường hô hấp trên": [
+    "URTI"
+  ],
+  "Influenza": [
+    "Cúm"
+  ],
+  "Cúm": [
+    "Influenza"
+  ],
+  "Pneumonia": [
+    "Viêm phổi"
+  ],
+  "Viêm phổi": [
+    "Pneumonia"
+  ],
+  "Acute rhinosinusitis": [
+    "Viêm mũi xoang cấp"
+  ],
+  "Viêm mũi xoang cấp": [
+    "Acute rhinosinusitis"
+  ],
+  "Chronic rhinosinusitis": [
+    "Viêm mũi xoang mạn"
+  ],
+  "Viêm mũi xoang mạn": [
+    "Chronic rhinosinusitis"
+  ],
+  "Bronchiolitis": [
+    "Viêm tiểu phế quản"
+  ],
+  "Viêm tiểu phế quản": [
+    "Bronchiolitis"
+  ],
+  "Pulmonary neoplasm": [
+    "U phổi"
+  ],
+  "U phổi": [
+    "Pulmonary neoplasm"
+  ],
+  "Possible NSTEMI / STEMI": [
+    "Nghi nhồi máu cơ tim cấp"
+  ],
+  "Nghi nhồi máu cơ tim cấp": [
+    "Possible NSTEMI / STEMI"
+  ],
+  "Sarcoidosis": [
+    "Bệnh Sarcoidosis"
+  ],
+  "Bệnh Sarcoidosis": [
+    "Sarcoidosis"
+  ],
+  "Pancreatic neoplasm": [
+    "U tụy"
+  ],
+  "U tụy": [
+    "Pancreatic neoplasm"
+  ],
+  "Acute pulmonary edema": [
+    "Phù phổi cấp"
+  ],
+  "Phù phổi cấp": [
+    "Acute pulmonary edema"
+  ],
+  "Pericarditis": [
+    "Viêm màng ngoài tim"
+  ],
+  "Viêm màng ngoài tim": [
+    "Pericarditis"
+  ]
+}
