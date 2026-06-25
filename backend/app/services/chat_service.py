@@ -39,25 +39,27 @@ FIELD_LABELS = {
 }
 
 FIELD_QUESTIONS = {
-    "main_symptom": "Triệu chứng chính hiện tại là gì? Ví dụ: sốt, ho, đau bụng, đau ngực, phát ban...",
+    "main_symptom": "Anh/chị vui lòng nhập triệu chứng chính hiện tại. Ví dụ: sốt, ho, đau bụng, đau ngực, phát ban hoặc khó thở.",
     "duration": "Triệu chứng này đã xuất hiện hoặc kéo dài bao lâu rồi?",
     "temperature": "Anh/chị có đo nhiệt độ không? Nếu có, hiện tại khoảng bao nhiêu độ?",
     "pain_score": "Nếu có đau, anh/chị chấm điểm đau từ 0 đến 10 là bao nhiêu?",
-    "symptom_location": "Triệu chứng nằm ở vị trí nào rõ nhất? Ví dụ: ngực trái, bụng dưới, vùng trán, sau hốc mắt...",
+    "symptom_location": "Triệu chứng nằm ở vị trí nào rõ nhất? Ví dụ: ngực trái, bụng dưới, vùng trán hoặc sau hốc mắt.",
     "red_flags": "Anh/chị có dấu hiệu nguy hiểm nào không: khó thở nặng, đau ngực dữ dội, lơ mơ, ngất, co giật, chảy máu nhiều hoặc nôn liên tục? Nếu không có, trả lời 'không'.",
-    "comorbidities": "Anh/chị có bệnh nền gì không? Ví dụ: tiểu đường, tăng huyết áp, hen, bệnh tim, suy thận... Nếu không có, trả lời 'không'.",
-    "medications": "Anh/chị đang dùng hoặc mới uống thuốc gì không? Ví dụ: paracetamol, aspirin, kháng sinh, thuốc huyết áp... Nếu không có, trả lời 'không'.",
-    "age": "Anh/chị bao nhiêu tuổi?",
-    "gender": "Anh/chị là nam hay nữ?",
+    "comorbidities": "Anh/chị có bệnh nền gì không? Ví dụ: tiểu đường, tăng huyết áp, hen, bệnh tim hoặc suy thận. Nếu không có, trả lời 'không'.",
+    "medications": "Anh/chị đang dùng hoặc mới uống thuốc gì không? Ví dụ: paracetamol, aspirin, kháng sinh hoặc thuốc huyết áp. Nếu không có, trả lời 'không'.",
+    "age": "Anh/chị vui lòng cho biết tuổi của người đang có triệu chứng. Ví dụ: 25 tuổi.",
+    "gender": "Anh/chị vui lòng cho biết giới tính của người đang có triệu chứng: nam hoặc nữ.",
     "is_pregnant": "Nếu anh/chị là nữ, hiện có đang mang thai không? Nếu không liên quan, có thể trả lời 'không'.",
-    "secondary_symptoms": "Anh/chị còn triệu chứng nào khác không? Ví dụ: ho, khó thở, buồn nôn, đau đầu, phát ban... Nếu không có, trả lời 'không'.",
+    "secondary_symptoms": "Anh/chị còn triệu chứng nào khác không? Ví dụ: ho, khó thở, buồn nôn, đau đầu hoặc phát ban. Nếu không có, trả lời 'không'.",
 }
 
-REQUIRED_FIELDS = []
+REQUIRED_FIELDS = ["age", "gender", "main_symptom"]
 
+# Không bắt buộc hỏi thêm các trường khác. Hệ thống chỉ chặn dự đoán khi thiếu
+# tuổi, giới tính hoặc triệu chứng chính theo yêu cầu hiện tại.
 OPTIONAL_FIELDS = []
 
-QUESTION_ORDER = []
+QUESTION_ORDER = ["age", "gender", "main_symptom"]
 
 
 def is_missing_value(value) -> bool:
@@ -866,7 +868,7 @@ async def process_chat(request: ChatRequest) -> ChatResponse:
         next_question = FIELD_QUESTIONS.get(target_field, "Anh/chị vui lòng cung cấp thêm thông tin.")
         reply = (
             f"{build_intake_summary(collected_data)}\n\n"
-            f"Hiện còn thiếu dữ liệu quan trọng: {', '.join(missing_labels)}.\n"
+            f"Hiện còn thiếu dữ liệu bắt buộc trước khi dự đoán: {', '.join(missing_labels)}.\n"
             f"{next_question}"
         )
         await session_repo.add_message(session_id, "bot", reply)
@@ -952,12 +954,18 @@ async def process_chat(request: ChatRequest) -> ChatResponse:
         logger.exception("Hybrid disease prediction failed")
         ml_diseases = prediction_result.get("possible_diseases", []) or []
 
-    predicted_disease_names = []
+    # Dùng đủ tên Việt + canonical name để truy xuất RAG, nhưng phần giải thích
+    # chỉ hiển thị tên bệnh chính cho từng Top-K để tránh lặp cùng một bệnh.
+    rag_query_disease_names = []
+    display_disease_names = []
     for item in ml_diseases:
+        display_name = item.get("name") or item.get("canonical_name")
+        if display_name and display_name not in display_disease_names:
+            display_disease_names.append(display_name)
         for key in ["name", "canonical_name"]:
             value = item.get(key)
-            if value and value not in predicted_disease_names:
-                predicted_disease_names.append(value)
+            if value and value not in rag_query_disease_names:
+                rag_query_disease_names.append(value)
 
     if prediction_result.get("triage_priority") == 1:
         final_department = "Cấp cứu"
@@ -972,12 +980,12 @@ async def process_chat(request: ChatRequest) -> ChatResponse:
         symptoms=symptoms,
         red_flags=red_flags,
         department=final_department,
-        diseases=predicted_disease_names,
-        top_k=3,
+        diseases=rag_query_disease_names,
+        top_k=8,
     )
     rag_explanation = build_rag_explanation(
         docs,
-        disease_names=predicted_disease_names,
+        disease_names=display_disease_names,
         symptoms=symptoms,
         red_flags=red_flags,
         department=final_department,

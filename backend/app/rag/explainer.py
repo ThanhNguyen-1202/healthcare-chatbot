@@ -121,11 +121,50 @@ def build_vietnamese_fallback(doc: Dict[str, Any]) -> Tuple[str, str]:
     return display_title, " ".join(sentences)
 
 
-def shorten_text(text: str, max_length: int = 320) -> str:
-    text = (text or "").strip()
+def shorten_text(text: str, max_length: int = 900) -> str:
+    """Return a complete, readable excerpt without trailing ellipsis.
+
+    Người dùng yêu cầu phần gợi ý/tài liệu không được bị cắt dạng "...".
+    Hàm này giữ các câu hoàn chỉnh trong giới hạn độ dài; nếu nguồn quá dài,
+    chỉ lấy các câu đầu đã hoàn chỉnh và vẫn kết thúc bằng dấu câu.
+    """
+    text = re.sub(r"\s+", " ", (text or "").strip())
+    if not text:
+        return ""
     if len(text) <= max_length:
+        return ensure_sentence_end(text)
+
+    sentences = re.split(r"(?<=[.!?。！？])\s+", text)
+    selected: List[str] = []
+    total = 0
+    for sentence in sentences:
+        sentence = sentence.strip()
+        if not sentence:
+            continue
+        next_total = total + len(sentence) + (1 if selected else 0)
+        if selected and next_total > max_length:
+            break
+        if not selected and len(sentence) > max_length:
+            break
+        selected.append(sentence)
+        total = next_total
+
+    if selected:
+        return ensure_sentence_end(" ".join(selected))
+
+    # Fallback khi văn bản không có dấu câu rõ ràng: cắt theo từ, không dùng dấu ba chấm.
+    words = text[:max_length].rsplit(" ", 1)[0].strip()
+    return ensure_sentence_end(words)
+
+
+def ensure_sentence_end(text: str) -> str:
+    text = (text or "").strip()
+    if not text:
         return text
-    return text[: max_length - 3].rstrip() + "..."
+    if text[-1] in ".!?…。！？":
+        # Chuẩn hóa dấu ba chấm thành dấu chấm để không còn câu bị lửng.
+        return text.rstrip("…").rstrip(".") + "." if text.endswith("…") else text
+    return text + "."
 
 
 def _prepare_doc_for_display(doc: Dict[str, Any]) -> Tuple[str, str, str]:
@@ -290,9 +329,9 @@ def build_rag_explanation(
     department_text = (department or "").strip()
 
     lines = [
-        "Giải thích RAG theo bệnh nghi ngờ và triệu chứng:",
+        "Giải thích theo bệnh nghi ngờ và triệu chứng:",
         f"- Triệu chứng dùng để đối chiếu: {symptoms_text}.",
-        "- Hệ thống giải thích bằng cách kết hợp tên bệnh Top 3 với triệu chứng đã nhập và tài liệu RAG liên quan; đây không phải chẩn đoán chắc chắn.",
+        "- Hệ thống giải thích bằng cách kết hợp tên bệnh Top 3 với triệu chứng đã nhập và tài liệu liên quan, đây không phải chẩn đoán chắc chắn.",
     ]
     if department_text:
         lines.append(f"- Khoa gợi ý để kiểm tra ban đầu: {department_text}.")
@@ -302,9 +341,9 @@ def build_rag_explanation(
 
     if not disease_names:
         if not docs:
-            lines.append("- Chưa có đủ bệnh nghi ngờ hoặc tài liệu RAG để giải thích chi tiết.")
+            lines.append("- Chưa có đủ bệnh nghi ngờ hoặc tài liệu để giải thích chi tiết.")
         else:
-            lines.append("- Chưa có danh sách bệnh Top 3 rõ ràng, nên hệ thống chỉ giải thích theo triệu chứng và tài liệu RAG gần nhất.")
+            lines.append("- Chưa có danh sách bệnh Top 3 rõ ràng, nên hệ thống chỉ giải thích theo triệu chứng và tài liệu gần nhất.")
             for idx, doc in enumerate(docs[:3], start=1):
                 title, content, source = _prepare_doc_for_display(doc)
                 if content:
@@ -322,9 +361,10 @@ def build_rag_explanation(
             if matched_doc:
                 title, content, source = _prepare_doc_for_display(matched_doc)
                 reason_text = _safe_reason_text(reasons)
-                lines.append(
-                    f"- {disease}: {content}"
-                )
+                if content:
+                    lines.append(f"- {disease}: {ensure_sentence_end(content)}")
+                else:
+                    lines.append(f"- {disease}: Tài liệu tham khảo có nhắc đến bệnh này nhưng chưa có nội dung mô tả đủ rõ để giải thích. Người bệnh nên được bác sĩ kiểm chứng khi thăm khám.")
                 evidence_id = str(matched_doc.get("evidence_id") or f"KB{idx}")
                 if evidence_id not in used_evidence_ids:
                     used_evidence_ids.add(evidence_id)

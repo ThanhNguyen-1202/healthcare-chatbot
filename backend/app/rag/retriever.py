@@ -17,6 +17,14 @@ KNOWLEDGE_PATH = (
     / "processed"
     / "rag_knowledge_base_merged.jsonl"
 )
+
+DDXPLUS_DISEASE_SUPPLEMENT_PATH = (
+    Path(__file__).resolve().parent.parent.parent.parent
+    / "data"
+    / "processed"
+    / "ddxplus_49_disease_rag_supplement.jsonl"
+)
+
 ALIAS_PATH = Path(__file__).resolve().parent.parent / "mappings" / "disease_aliases.json"
 
 
@@ -99,6 +107,38 @@ def load_knowledge_base(force_reload: bool = False) -> List[Dict[str, Any]]:
                 doc = json.loads(line)
                 doc.setdefault("evidence_id", f"KB{idx}")
                 docs.append(doc)
+
+        # Nạp thêm bộ giải thích đủ 49 bệnh DDXPlus nếu file tồn tại.
+        # Cơ chế này tránh trường hợp bệnh Top-1/Top-3 không có context RAG.
+        existing_ids = {str(doc.get("evidence_id")) for doc in docs if doc.get("evidence_id")}
+        if DDXPLUS_DISEASE_SUPPLEMENT_PATH.exists():
+            appended = 0
+            with open(DDXPLUS_DISEASE_SUPPLEMENT_PATH, "r", encoding="utf-8") as file_obj:
+                for line in file_obj:
+                    line = line.strip()
+                    if not line:
+                        continue
+                    doc = json.loads(line)
+                    evidence_id = str(doc.get("evidence_id") or "")
+                    if evidence_id and evidence_id in existing_ids:
+                        continue
+                    if evidence_id:
+                        existing_ids.add(evidence_id)
+                    else:
+                        doc.setdefault("evidence_id", f"DDXPLUS_DISEASE_AUTO_{len(existing_ids) + 1}")
+                    docs.append(doc)
+                    appended += 1
+            if appended:
+                logger.info(
+                    "Appended %s DDXPlus disease RAG supplement documents from %s",
+                    appended,
+                    DDXPLUS_DISEASE_SUPPLEMENT_PATH,
+                )
+        else:
+            logger.warning(
+                "DDXPlus disease RAG supplement file not found at %s",
+                DDXPLUS_DISEASE_SUPPLEMENT_PATH,
+            )
 
         _knowledge_cache = docs
         logger.info("Loaded %s RAG knowledge documents from %s", len(docs), KNOWLEDGE_PATH)
@@ -404,6 +444,39 @@ def structured_score(
     return score
 
 
+
+
+def disease_hit_score(doc: Dict[str, Any], expanded_diseases: List[str]) -> float:
+    """Prioritize documents that explicitly mention predicted diseases/aliases.
+
+    RAG++ phải lấy đúng nội dung của bệnh đã dự đoán trước. Vì vậy, khi danh
+    sách bệnh đã có, tài liệu khớp tên bệnh/alias trong metadata, tiêu đề hoặc
+    nội dung được đưa lên trước tài liệu chỉ khớp triệu chứng chung.
+    """
+    if not expanded_diseases:
+        return 0.0
+
+    doc_disease_names = set(normalize_list(doc.get("disease_names", [])))
+    doc_disease_aliases = set(normalize_list(doc.get("disease_aliases", [])))
+    title = normalize_text(doc.get("title"))
+    content = normalize_text(doc.get("content"))
+    disease_terms = normalize_list(expanded_diseases)
+
+    score = 0.0
+    for disease in disease_terms:
+        disease_norm = normalize_text(disease)
+        if not disease_norm:
+            continue
+        if disease_norm in doc_disease_names:
+            score = max(score, 60.0)
+        elif disease_norm in doc_disease_aliases:
+            score = max(score, 55.0)
+        elif disease_norm in title:
+            score = max(score, 45.0)
+        elif disease_norm in content:
+            score = max(score, 25.0)
+    return score
+
 def build_query_text(
     symptoms: List[str],
     red_flags: List[str],
@@ -446,17 +519,28 @@ def retrieve_relevant_documents(
             department=department,
             diseases=expanded_diseases,
         )
-        total = structured + bm25 * 1.5 + cosine * 8
+        disease_boost = disease_hit_score(doc, expanded_diseases)
+
+        # Nếu có bệnh dự đoán, ưu tiên tài liệu khớp bệnh; nếu không có bệnh
+        # thì dùng truy xuất theo triệu chứng như cũ.
+        total = disease_boost + structured + bm25 * 1.5 + cosine * 8
         if total > 0:
             doc_copy = dict(doc)
             doc_copy["retrieval_score"] = round(total, 4)
             doc_copy["retrieval_features"] = {
+                "disease_boost": round(disease_boost, 4),
                 "structured": round(structured, 4),
                 "bm25": round(bm25, 4),
                 "tfidf_cosine": round(cosine, 4),
             }
             scored_docs.append((total, doc_copy))
 
-    scored_docs.sort(key=lambda item: item[0], reverse=True)
+    # Nhóm tài liệu khớp bệnh trước, rồi mới đến tài liệu chỉ khớp triệu chứng.
+    disease_scored = [item for item in scored_docs if item[1].get("retrieval_features", {}).get("disease_boost", 0) > 0]
+    symptom_scored = [item for item in scored_docs if item not in disease_scored]
+    disease_scored.sort(key=lambda item: item[0], reverse=True)
+    symptom_scored.sort(key=lambda item: item[0], reverse=True)
+    ordered_docs = disease_scored + symptom_scored if expanded_diseases else sorted(scored_docs, key=lambda item: item[0], reverse=True)
+
     limit = max(1, min(int(top_k or 3), 8))
-    return [doc for _, doc in scored_docs[:limit]]
+    return [doc for _, doc in ordered_docs[:limit]]

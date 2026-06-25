@@ -84,10 +84,64 @@ def _normalize_top_diseases(items: List[Dict[str, Any]], top_k: int) -> List[Dic
     return results
 
 
+def _is_missing_value(value: Any) -> bool:
+    if value is None:
+        return True
+    if isinstance(value, str):
+        return value.strip() == ""
+    if isinstance(value, (list, tuple, set, dict)):
+        return len(value) == 0
+    return False
+
+
+def _required_input_missing(age: Any, gender: Any, symptoms: List[str]) -> List[str]:
+
+    missing: List[str] = []
+    if _is_missing_value(age):
+        missing.append("age")
+    if _is_missing_value(gender):
+        missing.append("gender")
+    if _is_missing_value(symptoms):
+        missing.append("symptoms")
+    return missing
+
+
+def _missing_field_question(missing: List[str]) -> str:
+    labels = {
+        "age": "tuổi",
+        "gender": "giới tính",
+        "symptoms": "triệu chứng",
+    }
+    questions = {
+        "age": "Anh/chị vui lòng cho biết tuổi của người đang có triệu chứng.",
+        "gender": "Anh/chị vui lòng cho biết giới tính của người đang có triệu chứng: nam hoặc nữ.",
+        "symptoms": "Anh/chị vui lòng mô tả triệu chứng chính hiện tại, ví dụ: sốt, ho, đau bụng, đau ngực hoặc khó thở.",
+    }
+    first = missing[0] if missing else "symptoms"
+    return (
+        "Thiếu dữ liệu bắt buộc trước khi dự đoán: "
+        + ", ".join(labels.get(item, item) for item in missing)
+        + ". "
+        + questions.get(first, "Anh/chị vui lòng cung cấp thêm thông tin.")
+    )
+
+
 @router.post("/")
 @limiter.limit(settings.predict_rate_limit)
 async def predict_endpoint(request: Request, payload: PredictionRequest) -> dict:
     """Predict triage and possible diseases with per-client rate limiting."""
+    missing_required = _required_input_missing(payload.age, payload.gender, payload.symptoms)
+    if missing_required:
+        return api_response(
+            data={
+                "matched": False,
+                "missing_fields": missing_required,
+                "next_step": "need_required_fields",
+                "message": _missing_field_question(missing_required),
+            },
+            message="Missing mandatory clinical fields",
+        )
+
     result = predict_from_symptoms(
         symptoms=payload.symptoms,
         red_flags=payload.red_flags,
@@ -143,6 +197,31 @@ async def predict_ragpp_endpoint(request: Request, payload: RAGPPPredictionReque
     )
     top_k = max(1, min(int(payload.top_k or 5), 5))
 
+    missing_required = _required_input_missing(age, gender, symptoms)
+    if missing_required:
+        return api_response(
+            data={
+                "input_mode": "message" if payload.message else "structured",
+                "intake": intake,
+                "symptoms": symptoms,
+                "ddxplus_evidences": evidence_codes,
+                "missing_fields": missing_required,
+                "next_step": "need_required_fields",
+                "question": _missing_field_question(missing_required),
+                "top_diseases": [],
+                "prediction": {},
+                "ragpp": {
+                    "retrieval": "skipped",
+                    "evidence": [],
+                    "explanation": "Chưa chạy RAG++ vì còn thiếu tuổi, giới tính hoặc triệu chứng.",
+                },
+                "safety_notice": MEDICAL_DISCLAIMER,
+                "medical_disclaimer": MEDICAL_DISCLAIMER,
+            },
+            message="Missing mandatory clinical fields",
+            metadata={"retrieval_backend": "skipped"},
+        )
+
     prediction = predict_from_symptoms(
         symptoms=symptoms,
         red_flags=red_flags,
@@ -176,20 +255,30 @@ async def predict_ragpp_endpoint(request: Request, payload: RAGPPPredictionReque
         prediction.setdefault("warnings", []).append(str(exc))
 
     top_diseases = _normalize_top_diseases(ranked_diseases, top_k=top_k)
-    disease_names: List[str] = []
+    rag_query_disease_names: List[str] = []
+    display_disease_names: List[str] = []
     for item in top_diseases:
+        display_name = item.get("name") or item.get("canonical_name")
+        if display_name and display_name not in display_disease_names:
+            display_disease_names.append(display_name)
         for key in ["name", "canonical_name"]:
             value = item.get(key)
-            if value and value not in disease_names:
-                disease_names.append(value)
+            if value and value not in rag_query_disease_names:
+                rag_query_disease_names.append(value)
     docs = retrieve_relevant_documents(
         symptoms=symptoms,
         red_flags=red_flags,
         department=prediction.get("department"),
-        diseases=disease_names,
-        top_k=4,
+        diseases=rag_query_disease_names,
+        top_k=8,
     )
-    explanation = build_rag_explanation(docs)
+    explanation = build_rag_explanation(
+        docs,
+        disease_names=display_disease_names,
+        symptoms=symptoms,
+        red_flags=red_flags,
+        department=prediction.get("department"),
+    )
 
     return api_response(
         data={
