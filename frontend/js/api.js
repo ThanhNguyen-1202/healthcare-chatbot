@@ -34,7 +34,10 @@ async function sendMessageToBackend(message, sessionId = null) {
 }
 
 async function getChatSession(sessionId) {
-  const response = await fetch(`${API_BASE_URL}/chat/session/${sessionId}`);
+  const deviceId = getOrCreateDeviceId();
+  const response = await fetch(
+    `${API_BASE_URL}/chat/session/${encodeURIComponent(sessionId)}?device_id=${encodeURIComponent(deviceId)}`
+  );
 
   if (!response.ok) {
     const errorText = await response.text();

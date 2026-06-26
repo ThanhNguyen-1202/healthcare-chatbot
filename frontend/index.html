@@ -9,14 +9,44 @@
 <body>
   <div id="app-shell" class="app-shell">
     <aside class="sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-mark" aria-hidden="true">✚</div>
+        <div class="brand-copy">
+          <h2>Healthcare Chatbot</h2>
+        </div>
+      </div>
+
       <div class="sidebar-top">
         <button id="new-chat-btn" class="sidebar-primary-btn" type="button">
-          Cuộc trò chuyện mới
+          <span class="btn-plus">＋</span>
+          <span>Cuộc trò chuyện mới</span>
         </button>
+      </div>
+
+      <div class="history-header">
+        <span>Lịch sử trò chuyện</span>
+      </div>
+
+      <div class="history-search-wrap">
+        <span class="history-search-icon">⌕</span>
+        <input
+          id="history-search-input"
+          type="search"
+          placeholder="Tìm kiếm cuộc trò chuyện..."
+          autocomplete="off"
+        />
       </div>
 
       <div id="history-list" class="history-list">
         <div class="history-empty">Chưa có cuộc trò chuyện nào.</div>
+      </div>
+
+      <div class="sidebar-note">
+        <div class="note-title">Lưu ý quan trọng</div>
+        <p>
+          Chatbot chỉ hỗ trợ tư vấn và sàng lọc ban đầu, không thay thế chẩn đoán của bác sĩ.
+          Vui lòng đến cơ sở y tế để được thăm khám nếu cần thiết.
+        </p>
       </div>
 
       <div class="sidebar-bottom">
@@ -34,45 +64,112 @@
             class="icon-btn"
             type="button"
             title="Thu gọn / mở lịch sử chat"
+            aria-label="Thu gọn hoặc mở lịch sử chat"
           >
             ☰
           </button>
 
-          <div class="conversation-title-wrap">
-            <h1 id="current-chat-title" class="conversation-title">Healthcare Chatbot</h1>
-            <p id="current-chat-subtitle" class="conversation-subtitle">
-              Hỗ trợ thu thập triệu chứng và sàng lọc ban đầu
-            </p>
+          <div class="page-brand">
+            <div class="brand-mark large" aria-hidden="true">✚</div>
+            <div class="conversation-title-wrap">
+              <h1 id="current-chat-title" class="conversation-title">Healthcare Chatbot</h1>
+              <p id="current-chat-subtitle" class="conversation-subtitle">
+                Hỗ trợ tư vấn và sàng lọc ban đầu
+              </p>
+            </div>
           </div>
         </div>
 
         <div class="topbar-right">
-          <button id="rename-chat-btn" class="ghost-btn" type="button">
+          <button id="disclaimer-btn" class="disclaimer-pill" type="button">ⓘ Tuyên bố miễn trừ trách nhiệm</button>
+          <button id="export-chat-btn" class="topbar-action-btn" type="button" title="Xuất cuộc trò chuyện ra TXT">
+            Xuất TXT
+          </button>
+          <button id="rename-chat-btn" class="topbar-action-btn" type="button" title="Đổi tên cuộc trò chuyện">
             Đổi tên
           </button>
         </div>
       </header>
 
+      <section class="quick-intake-panel" aria-label="Nhập nhanh thông tin ban đầu">
+        <div class="quick-intake-title">
+          <span>Thông tin sàng lọc nhanh</span>
+          <small>Tuổi, giới tính và triệu chứng chính giúp hệ thống hiểu câu hỏi tốt hơn</small>
+        </div>
+        <div class="quick-intake-fields">
+          <label>
+            <span>Tuổi</span>
+            <input id="quick-age-input" type="number" min="0" max="120" placeholder="VD: 25" />
+          </label>
+          <label>
+            <span>Giới tính</span>
+            <select id="quick-gender-select">
+              <option value="">Chọn</option>
+              <option value="nam">Nam</option>
+              <option value="nữ">Nữ</option>
+              <option value="khác">Khác</option>
+            </select>
+          </label>
+          <label class="quick-symptom-field">
+            <span>Triệu chứng chính</span>
+            <input id="quick-symptom-input" type="text" placeholder="VD: đau họng, ho khan, sốt nhẹ..." />
+          </label>
+          <button id="apply-intake-btn" type="button">Đưa vào ô chat</button>
+        </div>
+      </section>
+
       <section id="chat-box" class="chat-box">
         <div class="message bot">
+          <div class="message-avatar bot-avatar">🤖</div>
           <div class="message-bubble bot-bubble">
-            Dạ em chào anh/chị. Em là trợ lý y khoa ảo, ở đây để lắng nghe và hỗ trợ ghi nhận tình trạng sức khỏe của mình. Anh/chị đang cảm thấy khó chịu ở đâu nhất và tình trạng này xuất hiện từ lúc nào ạ? Nếu có đau, anh/chị có thể cho em biết điểm đau từ 0 đến 10. Anh/chị cũng có thể cho em biết giới tính và tuổi nếu có thể ạ.
+            Dạ em chào anh/chị. Em là trợ lý y khoa ảo, ở đây để lắng nghe và hỗ trợ ghi nhận tình trạng sức khỏe của mình. Anh/chị vui lòng mô tả triệu chứng đang gặp, kèm tuổi và giới tính để hệ thống có thể sàng lọc ban đầu chính xác hơn ạ.
           </div>
         </div>
       </section>
 
-      <footer class="chat-input-area">
-        <div class="input-wrap">
-          <input
-            type="text"
-            id="message-input"
-            placeholder="Nhập triệu chứng của bạn..."
-            autocomplete="off"
-          />
+      <footer class="chat-input-panel">
+        <div class="chat-input-area">
+          <button id="voice-btn" class="voice-btn" type="button" title="Nhập triệu chứng bằng giọng nói" aria-label="Nhập bằng giọng nói">🎤</button>
+          <div class="input-wrap">
+            <input
+              type="text"
+              id="message-input"
+              placeholder="Nhập triệu chứng của bạn..."
+              autocomplete="off"
+            />
+          </div>
+          <button id="send-btn" type="button">Gửi <span class="send-icon">➤</span></button>
         </div>
-        <button id="send-btn" type="button">Gửi</button>
+        <div class="privacy-note">🔒 Thông tin của bạn được bảo mật và chỉ sử dụng cho mục đích hỗ trợ sức khỏe.</div>
       </footer>
     </main>
+  </div>
+
+
+  <div id="disclaimer-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="disclaimer-title">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2 id="disclaimer-title">Tuyên bố miễn trừ trách nhiệm</h2>
+        <button id="close-disclaimer-btn" class="modal-close-btn" type="button" aria-label="Đóng">×</button>
+      </div>
+      <div class="modal-body">
+        <p>
+          Healthcare Chatbot chỉ hỗ trợ tư vấn và sàng lọc ban đầu dựa trên thông tin người dùng cung cấp.
+          Kết quả từ hệ thống không thay thế chẩn đoán, tư vấn hoặc điều trị của bác sĩ.
+        </p>
+        <p>
+          Nếu có dấu hiệu nguy hiểm như khó thở, đau ngực dữ dội, ngất xỉu, yếu liệt, co giật,
+          chảy máu không cầm hoặc triệu chứng nặng lên nhanh, người dùng cần đến cơ sở y tế gần nhất
+          hoặc gọi cấp cứu 115.
+        </p>
+        <p>
+          Không tự ý dùng thuốc, ngưng thuốc hoặc trì hoãn việc thăm khám chỉ dựa trên phản hồi của chatbot.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button id="accept-disclaimer-btn" class="modal-primary-btn" type="button">Tôi đã hiểu</button>
+      </div>
+    </div>
   </div>
 
   <script src="./js/api.js"></script>

@@ -1,9 +1,19 @@
 const SESSION_STORAGE_KEY = "chat_session_id";
 const CHAT_HISTORY_STORAGE_KEY = "chat_session_history";
+const CHAT_FEEDBACK_STORAGE_KEY = "chat_response_feedback";
 const SIDEBAR_COLLAPSED_KEY = "chat_sidebar_collapsed";
 
 let currentSessionId = localStorage.getItem(SESSION_STORAGE_KEY) || null;
 let loadingMessageDiv = null;
+let historySearchTerm = "";
+let activeRecognition = null;
+let voiceIsRecording = false;
+let voiceManuallyStopped = true;
+let voiceBaseText = "";
+let voiceFinalTranscript = "";
+let voiceInterimTranscript = "";
+let voiceRestartTimer = null;
+let voiceSessionStartedAt = 0;
 
 function getAppShell() {
   return document.getElementById("app-shell");
@@ -27,6 +37,18 @@ function getCurrentChatSubtitleElement() {
 
 function getToggleSidebarButton() {
   return document.getElementById("toggle-sidebar-btn");
+}
+
+function getHistorySearchInput() {
+  return document.getElementById("history-search-input");
+}
+
+function getDisclaimerModal() {
+  return document.getElementById("disclaimer-modal");
+}
+
+function getMessageInput() {
+  return document.getElementById("message-input");
 }
 
 function escapeHtml(text) {
@@ -78,6 +100,35 @@ function getHistoryItem(sessionId) {
   return getStoredChatHistory().find((item) => item.session_id === sessionId) || null;
 }
 
+function normalizeSearchText(text) {
+  return String(text || "")
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/đ/g, "d")
+    .trim();
+}
+
+function sortHistoryItems(items) {
+  return [...items].sort((a, b) => {
+    if (Boolean(a.is_pinned) !== Boolean(b.is_pinned)) {
+      return Boolean(b.is_pinned) - Boolean(a.is_pinned);
+    }
+
+    return new Date(b.updated_at || 0) - new Date(a.updated_at || 0);
+  });
+}
+
+function filterHistoryItems(items) {
+  const q = normalizeSearchText(historySearchTerm);
+  if (!q) return items;
+
+  return items.filter((item) => {
+    const haystack = normalizeSearchText(`${item.title || ""} ${item.preview || ""}`);
+    return haystack.includes(q);
+  });
+}
+
 function isSidebarCollapsed() {
   return localStorage.getItem(SIDEBAR_COLLAPSED_KEY) === "true";
 }
@@ -127,7 +178,7 @@ function setCurrentChatTitle(title, subtitle) {
 
   if (subtitleEl) {
     subtitleEl.textContent =
-      subtitle || "Hỗ trợ thu thập triệu chứng và sàng lọc ban đầu";
+      subtitle || "Hỗ trợ tư vấn và sàng lọc ban đầu";
   }
 }
 
@@ -142,6 +193,7 @@ function upsertHistoryItem(item) {
     preview: item.preview ?? existing?.preview ?? "",
     updated_at: item.updated_at || new Date().toISOString(),
     is_custom_title: item.is_custom_title ?? existing?.is_custom_title ?? false,
+    is_pinned: item.is_pinned ?? existing?.is_pinned ?? false,
   };
 
   if (existing && existing.is_custom_title && !item.force_title_update) {
@@ -155,14 +207,13 @@ function upsertHistoryItem(item) {
     items.unshift(cleanItem);
   }
 
-  items.sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
-  saveStoredChatHistory(items);
+  saveStoredChatHistory(sortHistoryItems(items));
   renderHistoryList();
 }
 
 function deleteHistoryItem(sessionId) {
   const items = getStoredChatHistory().filter((item) => item.session_id !== sessionId);
-  saveStoredChatHistory(items);
+  saveStoredChatHistory(sortHistoryItems(items));
 
   if (currentSessionId === sessionId) {
     setCurrentSessionId(null);
@@ -170,6 +221,21 @@ function deleteHistoryItem(sessionId) {
   } else {
     renderHistoryList();
   }
+}
+
+function togglePinHistoryItem(sessionId) {
+  const items = getStoredChatHistory();
+  const idx = items.findIndex((item) => item.session_id === sessionId);
+  if (idx < 0) return;
+
+  items[idx] = {
+    ...items[idx],
+    is_pinned: !items[idx].is_pinned,
+    updated_at: items[idx].updated_at || new Date().toISOString(),
+  };
+
+  saveStoredChatHistory(sortHistoryItems(items));
+  renderHistoryList();
 }
 
 function clearAllHistory() {
@@ -191,6 +257,92 @@ function extractSessionMeta(session) {
     preview: truncateText(lastMessage?.content || "", 72),
     updated_at: session?.updated_at || new Date().toISOString(),
   };
+}
+
+
+function simpleHash(text) {
+  let hash = 0;
+  const value = String(text || "");
+
+  for (let i = 0; i < value.length; i++) {
+    hash = (hash << 5) - hash + value.charCodeAt(i);
+    hash |= 0;
+  }
+
+  return Math.abs(hash).toString(36);
+}
+
+function getStoredFeedback() {
+  try {
+    const raw = localStorage.getItem(CHAT_FEEDBACK_STORAGE_KEY);
+    if (!raw) return {};
+    const parsed = JSON.parse(raw);
+    return parsed && typeof parsed === "object" ? parsed : {};
+  } catch (error) {
+    console.error("Không đọc được đánh giá phản hồi:", error);
+    return {};
+  }
+}
+
+function saveStoredFeedback(feedbackMap) {
+  localStorage.setItem(CHAT_FEEDBACK_STORAGE_KEY, JSON.stringify(feedbackMap));
+}
+
+function getFeedbackKey(content) {
+  return `${currentSessionId || "welcome"}:${simpleHash(content)}`;
+}
+
+function getFeedbackValue(content) {
+  const feedbackMap = getStoredFeedback();
+  return feedbackMap[getFeedbackKey(content)]?.value || "";
+}
+
+function saveFeedbackValue(content, value) {
+  const feedbackMap = getStoredFeedback();
+  feedbackMap[getFeedbackKey(content)] = {
+    value,
+    session_id: currentSessionId || null,
+    content_preview: truncateText(content, 160),
+    created_at: new Date().toISOString(),
+  };
+  saveStoredFeedback(feedbackMap);
+}
+
+function attachFeedbackControls(container, content) {
+  if (!container || !content) return;
+
+  const feedbackWrap = document.createElement("div");
+  feedbackWrap.className = "feedback-actions";
+
+  const currentValue = getFeedbackValue(content);
+
+  feedbackWrap.innerHTML = `
+    <span class="feedback-label">Đánh giá phản hồi:</span>
+    <button class="feedback-btn feedback-up ${currentValue === "up" ? "active" : ""}" type="button">👍 Hữu ích</button>
+    <button class="feedback-btn feedback-down ${currentValue === "down" ? "active" : ""}" type="button">👎 Chưa hữu ích</button>
+    <span class="feedback-saved">${currentValue ? "Đã lưu đánh giá" : ""}</span>
+  `;
+
+  const upBtn = feedbackWrap.querySelector(".feedback-up");
+  const downBtn = feedbackWrap.querySelector(".feedback-down");
+  const savedLabel = feedbackWrap.querySelector(".feedback-saved");
+
+  function updateFeedback(value) {
+    saveFeedbackValue(content, value);
+    upBtn.classList.toggle("active", value === "up");
+    downBtn.classList.toggle("active", value === "down");
+    savedLabel.textContent = "Đã lưu đánh giá";
+  }
+
+  upBtn.addEventListener("click", function () {
+    updateFeedback("up");
+  });
+
+  downBtn.addEventListener("click", function () {
+    updateFeedback("down");
+  });
+
+  container.appendChild(feedbackWrap);
 }
 
 function formatBotMessage(content) {
@@ -294,6 +446,13 @@ function addMessage(content, sender, isLoading = false) {
   const wrapper = document.createElement("div");
   wrapper.classList.add("message", sender);
 
+  const avatar = document.createElement("div");
+  avatar.classList.add("message-avatar", sender === "bot" ? "bot-avatar" : "user-avatar");
+  avatar.textContent = sender === "bot" ? "🤖" : "👤";
+
+  const contentWrap = document.createElement("div");
+  contentWrap.classList.add("message-content");
+
   const bubble = document.createElement("div");
   bubble.classList.add("message-bubble", sender === "bot" ? "bot-bubble" : "user-bubble");
 
@@ -307,7 +466,14 @@ function addMessage(content, sender, isLoading = false) {
     bubble.textContent = content;
   }
 
-  wrapper.appendChild(bubble);
+  contentWrap.appendChild(bubble);
+
+  if (sender === "bot" && !isLoading) {
+    attachFeedbackControls(contentWrap, content);
+  }
+
+  wrapper.appendChild(avatar);
+  wrapper.appendChild(contentWrap);
   chatBox.appendChild(wrapper);
   chatBox.scrollTop = chatBox.scrollHeight;
 
@@ -340,7 +506,7 @@ function buildDefaultWelcome() {
   );
   setCurrentChatTitle(
     "Healthcare Chatbot",
-    "Hỗ trợ thu thập triệu chứng và sàng lọc ban đầu"
+    "Hỗ trợ tư vấn và sàng lọc ban đầu"
   );
 }
 
@@ -348,10 +514,16 @@ function renderHistoryList() {
   const historyList = getHistoryList();
   if (!historyList) return;
 
-  const items = getStoredChatHistory();
+  const allItems = sortHistoryItems(getStoredChatHistory());
+  const items = filterHistoryItems(allItems);
+
+  if (allItems.length === 0) {
+    historyList.innerHTML = `<div class="history-empty">Chưa có cuộc trò chuyện nào.</div>`;
+    return;
+  }
 
   if (items.length === 0) {
-    historyList.innerHTML = `<div class="history-empty">Chưa có cuộc trò chuyện nào.</div>`;
+    historyList.innerHTML = `<div class="history-empty">Không tìm thấy cuộc trò chuyện phù hợp.</div>`;
     return;
   }
 
@@ -359,9 +531,13 @@ function renderHistoryList() {
 
   items.forEach((item) => {
     const wrapper = document.createElement("div");
-    wrapper.className = "history-item" + (item.session_id === currentSessionId ? " active" : "");
+    wrapper.className =
+      "history-item" +
+      (item.session_id === currentSessionId ? " active" : "") +
+      (item.is_pinned ? " pinned" : "");
 
     wrapper.innerHTML = `
+      <button class="history-pin-btn ${item.is_pinned ? "active" : ""}" type="button" title="${item.is_pinned ? "Bỏ ghim" : "Ghim cuộc trò chuyện"}">${item.is_pinned ? "📌" : "📍"}</button>
       <button class="history-delete-btn" type="button" title="Xóa cuộc trò chuyện">×</button>
       <div class="history-item-title">${escapeHtml(item.title || "Cuộc trò chuyện")}</div>
       <div class="history-item-preview">${escapeHtml(item.preview || "")}</div>
@@ -371,6 +547,15 @@ function renderHistoryList() {
     wrapper.addEventListener("click", async function () {
       await openHistorySession(item.session_id);
     });
+
+    const pinBtn = wrapper.querySelector(".history-pin-btn");
+    if (pinBtn) {
+      pinBtn.addEventListener("click", function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+        togglePinHistoryItem(item.session_id);
+      });
+    }
 
     const deleteBtn = wrapper.querySelector(".history-delete-btn");
     if (deleteBtn) {
@@ -417,6 +602,7 @@ async function openHistorySession(sessionId) {
       preview: meta.preview,
       updated_at: meta.updated_at,
       is_custom_title: stored?.is_custom_title ?? false,
+      is_pinned: stored?.is_pinned ?? false,
     });
   } catch (error) {
     console.error("Không mở được lịch sử chat:", error);
@@ -489,6 +675,7 @@ async function handleSendMessage() {
       preview: meta.preview,
       updated_at: meta.updated_at,
       is_custom_title: stored?.is_custom_title ?? false,
+      is_pinned: stored?.is_pinned ?? false,
     });
   } catch (error) {
     console.error("Có lỗi khi gửi tin nhắn:", error);
@@ -510,6 +697,11 @@ function startNewChat() {
     input.value = "";
     input.focus();
   }
+}
+
+function handleHistorySearchInput(event) {
+  historySearchTerm = event?.target?.value || "";
+  renderHistoryList();
 }
 
 function renameCurrentConversation() {
@@ -537,10 +729,347 @@ function renameCurrentConversation() {
     preview: existing?.preview || "",
     updated_at: new Date().toISOString(),
     is_custom_title: true,
+    is_pinned: existing?.is_pinned ?? false,
     force_title_update: true,
   });
 
   setCurrentChatTitle(cleanTitle, "Đang trò chuyện");
+}
+
+function setVoiceButtonState(isRecording) {
+  const voiceBtn = document.getElementById("voice-btn");
+  if (!voiceBtn) return;
+
+  if (isRecording) {
+    voiceBtn.classList.add("recording");
+    voiceBtn.textContent = "⏺";
+    voiceBtn.title = "Đang nghe liên tục, bấm lại để dừng";
+  } else {
+    voiceBtn.classList.remove("recording");
+    voiceBtn.textContent = "🎤";
+    voiceBtn.title = "Nhập triệu chứng bằng giọng nói";
+  }
+}
+
+function normalizeVoiceText(text) {
+  return String(text || "")
+    .toLowerCase()
+    .replace(/[.,!?;:]+$/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function appendUniqueVoiceChunk(chunk) {
+  const cleanChunk = String(chunk || "").replace(/\s+/g, " ").trim();
+  if (!cleanChunk) return;
+
+  const current = normalizeVoiceText(voiceFinalTranscript);
+  const incoming = normalizeVoiceText(cleanChunk);
+
+  if (!incoming) return;
+
+  // Tránh lặp khi Chrome trả lại cùng một đoạn final nhiều lần.
+  if (current === incoming || current.endsWith(incoming)) return;
+
+  // Nếu đoạn mới đã bao gồm toàn bộ transcript cũ, thay bằng đoạn đầy đủ hơn.
+  if (incoming.startsWith(current) && current.length > 0) {
+    voiceFinalTranscript = cleanChunk;
+    return;
+  }
+
+  voiceFinalTranscript = `${voiceFinalTranscript} ${cleanChunk}`
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function buildVoiceInputValue() {
+  const input = document.getElementById("message-input");
+  if (!input) return;
+
+  input.value = `${voiceBaseText} ${voiceFinalTranscript} ${voiceInterimTranscript}`
+    .replace(/\s+/g, " ")
+    .trim();
+
+  input.focus();
+}
+
+function startVoiceRecognition() {
+  if (!activeRecognition) return;
+
+  const input = document.getElementById("message-input");
+  voiceIsRecording = true;
+  voiceManuallyStopped = false;
+
+  if (!voiceBaseText && input?.value?.trim()) {
+    voiceBaseText = input.value.trim();
+  }
+
+  setVoiceButtonState(true);
+
+  try {
+    activeRecognition.start();
+  } catch (error) {
+    // Chrome sẽ báo lỗi nếu start() được gọi khi recognition vẫn đang chạy.
+    // Trường hợp này không cần hiển thị lỗi cho người dùng.
+    console.warn("Voice recognition chưa sẵn sàng để start lại:", error);
+  }
+}
+
+function stopVoiceRecognition() {
+  voiceIsRecording = false;
+  voiceManuallyStopped = true;
+
+  if (voiceRestartTimer) {
+    clearTimeout(voiceRestartTimer);
+    voiceRestartTimer = null;
+  }
+
+  // Lưu cả đoạn interim cuối cùng để tránh mất 1-2 từ cuối câu.
+  appendUniqueVoiceChunk(voiceInterimTranscript);
+  voiceInterimTranscript = "";
+  buildVoiceInputValue();
+
+  setVoiceButtonState(false);
+
+  try {
+    activeRecognition?.stop();
+  } catch (error) {
+    console.warn("Không thể dừng nhập giọng nói:", error);
+  }
+}
+
+
+function applyQuickIntakeToInput() {
+  const ageInput = document.getElementById("quick-age-input");
+  const genderSelect = document.getElementById("quick-gender-select");
+  const symptomInput = document.getElementById("quick-symptom-input");
+  const input = getMessageInput();
+
+  if (!input) return;
+
+  const age = ageInput?.value?.trim() || "";
+  const gender = genderSelect?.value?.trim() || "";
+  const symptom = symptomInput?.value?.trim() || "";
+
+  if (!age && !gender && !symptom) {
+    window.alert("Em hãy nhập ít nhất tuổi, giới tính hoặc triệu chứng chính.");
+    return;
+  }
+
+  const parts = [];
+
+  if (gender || age) {
+    const personInfo = [
+      gender ? `giới tính ${gender}` : "",
+      age ? `${age} tuổi` : "",
+    ].filter(Boolean).join(", ");
+
+    parts.push(`Tôi là người bệnh ${personInfo}.`);
+  }
+
+  if (symptom) {
+    parts.push(`Triệu chứng chính của tôi là ${symptom}.`);
+  }
+
+  const quickText = parts.join(" ");
+  input.value = input.value.trim()
+    ? `${input.value.trim()} ${quickText}`
+    : quickText;
+
+  input.focus();
+}
+
+function openDisclaimerModal() {
+  const modal = getDisclaimerModal();
+  if (modal) {
+    modal.classList.remove("hidden");
+  }
+}
+
+function closeDisclaimerModal() {
+  const modal = getDisclaimerModal();
+  if (modal) {
+    modal.classList.add("hidden");
+  }
+}
+
+function getConversationExportText() {
+  const title =
+    document.getElementById("current-chat-title")?.textContent?.trim() ||
+    "Healthcare Chatbot";
+
+  const subtitle =
+    document.getElementById("current-chat-subtitle")?.textContent?.trim() ||
+    "";
+
+  const lines = [
+    "HEALTHCARE CHATBOT - NỘI DUNG CUỘC TRÒ CHUYỆN",
+    `Tiêu đề: ${title}`,
+    subtitle ? `Ghi chú: ${subtitle}` : "",
+    `Thời gian xuất: ${new Date().toLocaleString("vi-VN")}`,
+    "",
+    "Lưu ý: Nội dung này chỉ dùng để tham khảo, không thay thế chẩn đoán hoặc tư vấn của bác sĩ.",
+    "",
+    "----- NỘI DUNG CHAT -----",
+  ].filter(Boolean);
+
+  const messages = Array.from(document.querySelectorAll("#chat-box .message"));
+
+  messages.forEach((message, index) => {
+    const role = message.classList.contains("user") ? "Người dùng" : "Chatbot";
+    const bubble = message.querySelector(".message-bubble");
+    const content = bubble?.innerText?.trim() || "";
+
+    if (content) {
+      lines.push("");
+      lines.push(`[${index + 1}] ${role}:`);
+      lines.push(content);
+    }
+  });
+
+  const feedbackMap = getStoredFeedback();
+  const currentFeedback = Object.values(feedbackMap).filter(
+    (item) => !currentSessionId || item.session_id === currentSessionId
+  );
+
+  if (currentFeedback.length > 0) {
+    lines.push("");
+    lines.push("----- ĐÁNH GIÁ PHẢN HỒI -----");
+
+    currentFeedback.forEach((item, index) => {
+      const label = item.value === "up" ? "Hữu ích" : "Chưa hữu ích";
+      lines.push(`${index + 1}. ${label} - ${item.content_preview || ""}`);
+    });
+  }
+
+  return lines.join("\n");
+}
+
+function exportCurrentConversation() {
+  const messages = document.querySelectorAll("#chat-box .message-bubble");
+
+  if (!messages.length) {
+    window.alert("Chưa có nội dung để xuất.");
+    return;
+  }
+
+  const text = getConversationExportText();
+  const blob = new Blob([text], { type: "text/plain;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  const timestamp = new Date().toISOString().slice(0, 19).replace(/[:T]/g, "-");
+
+  link.href = url;
+  link.download = `healthcare-chatbot-${timestamp}.txt`;
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+
+  URL.revokeObjectURL(url);
+}
+
+function initVoiceInput() {
+  const voiceBtn = document.getElementById("voice-btn");
+  const input = document.getElementById("message-input");
+
+  const SpeechRecognition =
+    window.SpeechRecognition || window.webkitSpeechRecognition;
+
+  if (!voiceBtn || !input) return;
+
+  if (!SpeechRecognition) {
+    voiceBtn.disabled = true;
+    voiceBtn.title = "Trình duyệt này chưa hỗ trợ nhập giọng nói";
+    return;
+  }
+
+  activeRecognition = new SpeechRecognition();
+  activeRecognition.lang = "vi-VN";
+  activeRecognition.continuous = true;
+  activeRecognition.interimResults = true;
+  activeRecognition.maxAlternatives = 1;
+
+  activeRecognition.onstart = function () {
+    voiceSessionStartedAt = Date.now();
+    setVoiceButtonState(true);
+  };
+
+  activeRecognition.onresult = function (event) {
+    voiceInterimTranscript = "";
+
+    for (let i = event.resultIndex; i < event.results.length; i++) {
+      const result = event.results[i];
+      const transcript = (result[0]?.transcript || "").replace(/\s+/g, " ").trim();
+      if (!transcript) continue;
+
+      if (result.isFinal) {
+        appendUniqueVoiceChunk(transcript);
+      } else {
+        // Giữ đoạn đang nghe tạm thời, không ghi đè transcript đã final.
+        voiceInterimTranscript = `${voiceInterimTranscript} ${transcript}`
+          .replace(/\s+/g, " ")
+          .trim();
+      }
+    }
+
+    buildVoiceInputValue();
+  };
+
+  activeRecognition.onerror = function (event) {
+    console.warn("Lỗi nhập giọng nói:", event.error);
+
+    if (event.error === "not-allowed" || event.error === "service-not-allowed") {
+      voiceIsRecording = false;
+      voiceManuallyStopped = true;
+      setVoiceButtonState(false);
+      voiceBtn.disabled = true;
+      voiceBtn.title = "Trình duyệt chưa được cấp quyền micro";
+      return;
+    }
+
+    // Các lỗi như no-speech/audio-capture/network thường làm recognition tự dừng.
+    // onend sẽ khởi động lại nếu người dùng chưa chủ động dừng.
+  };
+
+  activeRecognition.onend = function () {
+    // Nhiều trình duyệt không final toàn bộ câu trước khi onend.
+    // Gộp interim cuối để tránh tình trạng nghe được chữ này mất chữ kia.
+    appendUniqueVoiceChunk(voiceInterimTranscript);
+    voiceInterimTranscript = "";
+    buildVoiceInputValue();
+
+    if (voiceIsRecording && !voiceManuallyStopped) {
+      setVoiceButtonState(true);
+
+      if (voiceRestartTimer) clearTimeout(voiceRestartTimer);
+
+      // Tự mở lại sau khi Chrome/Edge tự ngắt phiên nghe.
+      // Delay ngắn giúp tránh lỗi "recognition already started" nhưng vẫn giảm mất chữ.
+      voiceRestartTimer = setTimeout(function () {
+        try {
+          activeRecognition.start();
+        } catch (error) {
+          console.warn("Không thể tự khởi động lại nhập giọng nói:", error);
+        }
+      }, 120);
+      return;
+    }
+
+    setVoiceButtonState(false);
+  };
+
+  voiceBtn.onclick = function () {
+    if (voiceIsRecording) {
+      stopVoiceRecognition();
+      return;
+    }
+
+    voiceBaseText = input.value.trim();
+    voiceFinalTranscript = "";
+    voiceInterimTranscript = "";
+    voiceSessionStartedAt = Date.now();
+    startVoiceRecognition();
+  };
 }
 
 function bindUIEvents() {
@@ -550,6 +1079,13 @@ function bindUIEvents() {
   const toggleSidebarBtn = document.getElementById("toggle-sidebar-btn");
   const renameChatBtn = document.getElementById("rename-chat-btn");
   const clearHistoryBtn = document.getElementById("clear-history-btn");
+  const historySearchInput = getHistorySearchInput();
+  const disclaimerBtn = document.getElementById("disclaimer-btn");
+  const closeDisclaimerBtn = document.getElementById("close-disclaimer-btn");
+  const acceptDisclaimerBtn = document.getElementById("accept-disclaimer-btn");
+  const disclaimerModal = getDisclaimerModal();
+  const exportChatBtn = document.getElementById("export-chat-btn");
+  const applyIntakeBtn = document.getElementById("apply-intake-btn");
 
   if (sendBtn) {
     sendBtn.onclick = handleSendMessage;
@@ -579,16 +1115,59 @@ function bindUIEvents() {
   if (clearHistoryBtn) {
     clearHistoryBtn.onclick = clearAllHistory;
   }
+
+  if (historySearchInput) {
+    historySearchInput.oninput = handleHistorySearchInput;
+  }
+
+  if (disclaimerBtn) {
+    disclaimerBtn.onclick = openDisclaimerModal;
+  }
+
+  if (closeDisclaimerBtn) {
+    closeDisclaimerBtn.onclick = closeDisclaimerModal;
+  }
+
+  if (acceptDisclaimerBtn) {
+    acceptDisclaimerBtn.onclick = closeDisclaimerModal;
+  }
+
+  if (disclaimerModal) {
+    disclaimerModal.addEventListener("click", function (event) {
+      if (event.target === disclaimerModal) {
+        closeDisclaimerModal();
+      }
+    });
+  }
+
+  if (exportChatBtn) {
+    exportChatBtn.onclick = exportCurrentConversation;
+  }
+
+  if (applyIntakeBtn) {
+    applyIntakeBtn.onclick = applyQuickIntakeToInput;
+  }
+
+  document.addEventListener("keydown", function (event) {
+    if (event.key === "Escape") {
+      closeDisclaimerModal();
+    }
+  });
 }
 
 function initChatUI() {
   bindUIEvents();
+  initVoiceInput();
   loadChatHistory();
 }
 
 window.toggleSidebar = toggleSidebar;
 window.renameCurrentConversation = renameCurrentConversation;
 window.clearAllHistory = clearAllHistory;
+window.togglePinHistoryItem = togglePinHistoryItem;
 window.startNewChat = startNewChat;
 window.handleSendMessage = handleSendMessage;
+window.applyQuickIntakeToInput = applyQuickIntakeToInput;
+window.openDisclaimerModal = openDisclaimerModal;
+window.exportCurrentConversation = exportCurrentConversation;
 window.initChatUI = initChatUI;
