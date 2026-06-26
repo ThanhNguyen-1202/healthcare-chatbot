@@ -20,6 +20,7 @@ from app.core.api_response import api_response
 from app.core.config import settings
 from app.core.logging_config import configure_logging
 from app.core.rate_limit import limiter
+from app.core.vietnam_time import VIETNAM_TIMEZONE_NAME, now_vietnam_iso
 from app.db.mongo import close_mongo_connection, connect_to_mongo, get_database
 from app.rag.retriever import get_retriever_status, initialize_retriever_cache
 from app.services.ml_disease_prediction_service import get_model_status, load_disease_model
@@ -101,6 +102,8 @@ async def health_check() -> dict:
                 "app_name": settings.app_name,
                 "environment": settings.app_env,
                 "database": settings.mongo_db,
+                "timezone": VIETNAM_TIMEZONE_NAME,
+                "server_time": now_vietnam_iso(),
                 "rag": get_retriever_status(),
                 "disease_model": get_model_status(),
                 "vietnamese_text_model": get_vn_text_model_status(),
@@ -115,6 +118,8 @@ async def health_check() -> dict:
                 "app_name": settings.app_name,
                 "environment": settings.app_env,
                 "database": settings.mongo_db,
+                "timezone": VIETNAM_TIMEZONE_NAME,
+                "server_time": now_vietnam_iso(),
                 "detail": str(exc),
             },
             success=False,

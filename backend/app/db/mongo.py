@@ -4,6 +4,7 @@ from typing import Optional
 from motor.motor_asyncio import AsyncIOMotorClient, AsyncIOMotorDatabase
 
 from app.core.config import settings
+from app.core.vietnam_time import VIETNAM_TZ
 
 logger = logging.getLogger(__name__)
 
@@ -24,6 +25,8 @@ async def connect_to_mongo() -> None:
         settings.mongo_uri,
         serverSelectionTimeoutMS=5000,
         uuidRepresentation="standard",
+        tz_aware=True,
+        tzinfo=VIETNAM_TZ,
     )
     await mongodb.client.admin.command("ping")
     logger.info("Connected to MongoDB database: %s", settings.mongo_db)

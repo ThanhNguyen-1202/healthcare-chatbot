@@ -1,6 +1,6 @@
-from datetime import datetime
 from typing import Any, Dict, List
 
+from app.core.vietnam_time import now_vietnam
 from app.db.mongo import get_database
 
 
@@ -24,7 +24,7 @@ class PredictionRepository:
             "session_id": session_id,
             "collected_data": collected_data or {},
             "prediction_result": prediction_result or {},
-            "created_at": datetime.utcnow(),
+            "created_at": now_vietnam(),
         }
 
         await collection.insert_one(document)

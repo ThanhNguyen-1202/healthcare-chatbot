@@ -747,8 +747,17 @@ def build_prediction_reply(
         context_text = "\n" + "\n".join(context_lines)
     reason_text = "\n".join(reason_lines)
 
+    emergency_warning = ""
+    if prediction_result.get("triage_priority") == 1 or "cấp cứu" in str(triage_level).lower():
+        emergency_warning = (
+            "Cảnh báo ưu tiên: Hệ thống phát hiện dấu hiệu nguy hiểm. "
+            "Người bệnh nên đến cơ sở y tế hoặc gọi 115 ngay; phần Top bệnh bên dưới "
+            "chỉ có giá trị tham khảo để sàng lọc ban đầu, không trì hoãn xử trí cấp cứu.\n\n"
+        )
+
     return (
         "Em đã phân tích thông tin từ cuộc hội thoại.\n\n"
+        f"{emergency_warning}"
         f"{disease_block}\n\n"
         f"Trạng thái sàng lọc: {triage_level} ({triage_label})\n"
         f"Khuyến nghị hành động: {action_guidance}{context_text}\n"
@@ -768,6 +777,31 @@ async def process_chat(request: ChatRequest) -> ChatResponse:
     session_restarted = False
 
     existing_session = await session_repo.get_session(session_id) if request.session_id else None
+    if existing_session:
+        existing_device_id = existing_session.get("device_id")
+
+        # Không cho thiết bị khác ghi tiếp vào session đã thuộc về device_id khác.
+        # Nếu bị lệch device_id, backend tự tạo phiên mới thay vì dùng chung lịch sử.
+        if existing_device_id and device_id and existing_device_id != device_id:
+            logger.warning(
+                "Session ownership mismatch; restarting session. session_id=%s",
+                session_id,
+            )
+            session_id = str(uuid.uuid4())
+            session_restarted = True
+            existing_session = None
+        elif existing_device_id and not device_id:
+            logger.warning(
+                "Session has device_id but request has no device_id; restarting session. session_id=%s",
+                session_id,
+            )
+            session_id = str(uuid.uuid4())
+            session_restarted = True
+            existing_session = None
+        elif not existing_device_id and device_id:
+            await session_repo.attach_device_if_missing(session_id, device_id)
+            existing_session["device_id"] = device_id
+
     if existing_session and existing_session.get("status") == "completed":
         session_id = str(uuid.uuid4())
         session_restarted = True
@@ -816,46 +850,10 @@ async def process_chat(request: ChatRequest) -> ChatResponse:
     await session_repo.update_intake_snapshot(session_id, collected_data)
     public_collected_data = strip_internal_fields(collected_data)
 
+    # Red flag chỉ được dùng để nâng mức sàng lọc/cấp cứu, không còn chặn nhánh dự đoán bệnh.
+    # Khi đã đủ tuổi, giới tính và triệu chứng, hệ thống vẫn chạy DDXPlus Top-K,
+    # sau đó hiển thị cảnh báo cấp cứu trước phần dự đoán để người dùng không bỏ qua nguy cơ.
     emergency_result = check_emergency_triage(public_collected_data)
-    if emergency_result.get("is_emergency"):
-        symptoms = collect_symptoms(collected_data)
-        docs = retrieve_relevant_documents(
-            symptoms=symptoms,
-            red_flags=collected_data.get("red_flags", []) or [],
-            department="Cấp cứu",
-            diseases=[],
-            top_k=3,
-        )
-        rag_text = build_rag_explanation(
-            docs,
-            symptoms=symptoms,
-            red_flags=collected_data.get("red_flags", []) or [],
-            department="Cấp cứu",
-        )
-        matched_flags = emergency_result.get("matched_flags", []) or []
-        action = emergency_result.get("action_recommendation") or get_action_guidance("Cấp cứu ngay")
-
-        reply = (
-            f"{build_intake_summary(collected_data)}\n\n"
-            "Cảnh báo: Có dấu hiệu nguy hiểm nghiêm trọng. Người bệnh nên đến cơ sở y tế hoặc gọi 115 ngay.\n\n"
-            f"Dấu hiệu/lý do khớp: {', '.join(matched_flags) if matched_flags else 'có dấu hiệu nguy hiểm'}\n"
-            f"Trạng thái sàng lọc: {emergency_result.get('triage_level', 'Cấp cứu ngay')} ({emergency_result.get('triage_label', 'Mức 1 - Cấp cứu ngay')})\n"
-            f"Khuyến nghị hành động: {action}\n"
-            f"Khoa gợi ý: {emergency_result.get('department', 'Cấp cứu')}\n\n"
-            f"{rag_text}\n\n"
-            "Lưu ý an toàn: Đây là thông tin hỗ trợ sàng lọc ban đầu, không thay thế chẩn đoán hoặc xử trí trực tiếp từ bác sĩ."
-        )
-        await session_repo.add_message(session_id, "bot", reply)
-        await session_repo.mark_session_completed(session_id)
-        return ChatResponse(
-            session_id=session_id,
-            reply=reply,
-            missing_fields=[],
-            collected_data=public_collected_data,
-            next_step=emergency_result.get("next_step", "emergency_override"),
-            device_id=device_id,
-            session_restarted=session_restarted,
-        )
 
     missing_info = get_missing_fields(collected_data)
     missing_required = missing_info["required"]

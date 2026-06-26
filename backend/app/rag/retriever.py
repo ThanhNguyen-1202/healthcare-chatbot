@@ -18,6 +18,10 @@ KNOWLEDGE_PATH = (
     / "rag_knowledge_base_merged.jsonl"
 )
 
+# Bổ sung 49 tài liệu giải thích DDXPlus. File này giúp RAG++ luôn có
+# ít nhất một context đúng bệnh cho mọi bệnh mà model có thể dự đoán.
+# Nếu rag_knowledge_base_merged.jsonl đã được merge sẵn thì hàm load sẽ
+# tự bỏ qua bản trùng theo evidence_id.
 DDXPLUS_DISEASE_SUPPLEMENT_PATH = (
     Path(__file__).resolve().parent.parent.parent.parent
     / "data"
@@ -493,6 +497,99 @@ def build_query_text(
     return " ".join(str(item) for item in parts if item)
 
 
+def _best_doc_for_single_disease(
+    docs: List[Dict[str, Any]],
+    disease_name: str,
+    symptoms: List[str],
+    red_flags: List[str],
+    department: Optional[str],
+) -> Optional[Dict[str, Any]]:
+    """Return the strongest document that explicitly matches one predicted disease.
+
+    This guarantees RAG++ has at least one disease-specific context for each
+    predicted disease when the 49-disease supplement is available. Symptom-only
+    matches are not enough for this per-disease slot, because explanation must
+    describe the disease that was actually predicted.
+    """
+    expanded_terms = expand_disease_queries([disease_name])
+    if not expanded_terms:
+        return None
+
+    best_doc: Optional[Dict[str, Any]] = None
+    best_total = 0.0
+    for doc in docs or []:
+        disease_boost = disease_hit_score(doc, expanded_terms)
+        if disease_boost <= 0:
+            continue
+        structured = structured_score(
+            doc=doc,
+            symptoms=symptoms or [],
+            red_flags=red_flags or [],
+            department=department,
+            diseases=expanded_terms,
+        )
+        total = disease_boost + structured
+        if total > best_total:
+            doc_copy = dict(doc)
+            doc_copy["retrieval_score"] = round(total, 4)
+            doc_copy["retrieval_features"] = {
+                "disease_boost": round(disease_boost, 4),
+                "structured": round(structured, 4),
+                "bm25": 0.0,
+                "tfidf_cosine": 0.0,
+                "forced_disease_context": True,
+                "matched_predicted_disease": disease_name,
+            }
+            best_doc = doc_copy
+            best_total = total
+    return best_doc
+
+
+def _prepend_disease_specific_docs(
+    docs: List[Dict[str, Any]],
+    ordered_docs: List[Dict[str, Any]],
+    diseases: List[str],
+    symptoms: List[str],
+    red_flags: List[str],
+    department: Optional[str],
+    limit: int,
+) -> List[Dict[str, Any]]:
+    """Put one explicitly disease-matched document for each predicted disease first."""
+    results: List[Dict[str, Any]] = []
+    used_ids = set()
+
+    for disease_name in diseases or []:
+        if len(results) >= limit:
+            break
+        best_doc = _best_doc_for_single_disease(
+            docs=docs,
+            disease_name=disease_name,
+            symptoms=symptoms,
+            red_flags=red_flags,
+            department=department,
+        )
+        if not best_doc:
+            continue
+        evidence_id = str(best_doc.get("evidence_id") or best_doc.get("title") or "")
+        if evidence_id and evidence_id in used_ids:
+            continue
+        if evidence_id:
+            used_ids.add(evidence_id)
+        results.append(best_doc)
+
+    for doc in ordered_docs:
+        if len(results) >= limit:
+            break
+        evidence_id = str(doc.get("evidence_id") or doc.get("title") or "")
+        if evidence_id and evidence_id in used_ids:
+            continue
+        if evidence_id:
+            used_ids.add(evidence_id)
+        results.append(doc)
+
+    return results
+
+
 def retrieve_relevant_documents(
     symptoms: List[str],
     red_flags: Optional[List[str]] = None,
@@ -543,4 +640,20 @@ def retrieve_relevant_documents(
     ordered_docs = disease_scored + symptom_scored if expanded_diseases else sorted(scored_docs, key=lambda item: item[0], reverse=True)
 
     limit = max(1, min(int(top_k or 3), 8))
-    return [doc for _, doc in ordered_docs[:limit]]
+    ordered_doc_list = [doc for _, doc in ordered_docs]
+
+    # Khi đã có Top bệnh, luôn ưu tiên đưa tài liệu khớp từng bệnh dự đoán
+    # vào đầu danh sách context. Điều này giúp explainer không phải giải thích
+    # một bệnh bằng tài liệu chỉ khớp triệu chứng chung.
+    if diseases:
+        return _prepend_disease_specific_docs(
+            docs=docs,
+            ordered_docs=ordered_doc_list,
+            diseases=list(diseases or [])[:limit],
+            symptoms=symptoms or [],
+            red_flags=red_flags or [],
+            department=department,
+            limit=limit,
+        )
+
+    return ordered_doc_list[:limit]

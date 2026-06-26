@@ -1,6 +1,6 @@
-from datetime import datetime, timezone
 from typing import Optional
 
+from app.core.vietnam_time import now_vietnam
 from app.db.mongo import get_database
 
 
@@ -17,7 +17,7 @@ class SessionRepository:
         session_id: str,
         device_id: Optional[str] = None,
     ) -> dict:
-        now = datetime.now(timezone.utc)
+        now = now_vietnam()
 
         return {
             "session_id": session_id,
@@ -32,7 +32,7 @@ class SessionRepository:
         device_id: Optional[str] = None,
     ) -> None:
         collection = self._get_collection()
-        now = datetime.now(timezone.utc)
+        now = now_vietnam()
 
         await collection.update_one(
             {"session_id": session_id},
@@ -49,6 +49,36 @@ class SessionRepository:
             upsert=True,
         )
 
+
+    async def attach_device_if_missing(
+        self,
+        session_id: str,
+        device_id: Optional[str],
+    ) -> None:
+        """Attach a device_id to legacy sessions that were created before device binding."""
+        if not device_id:
+            return
+
+        collection = self._get_collection()
+        now = now_vietnam()
+
+        await collection.update_one(
+            {
+                "session_id": session_id,
+                "$or": [
+                    {"device_id": {"$exists": False}},
+                    {"device_id": None},
+                    {"device_id": ""},
+                ],
+            },
+            {
+                "$set": {
+                    "device_id": device_id,
+                    "updated_at": now,
+                }
+            },
+        )
+
     async def add_message(
         self,
         session_id: str,
@@ -56,7 +86,7 @@ class SessionRepository:
         content: str,
     ) -> None:
         collection = self._get_collection()
-        now = datetime.now(timezone.utc)
+        now = now_vietnam()
 
         await collection.update_one(
             {"session_id": session_id},
@@ -89,7 +119,7 @@ class SessionRepository:
     async def mark_session_completed(self, session_id: str) -> None:
         """Mark a session as completed after final screening output."""
         collection = self._get_collection()
-        now = datetime.now(timezone.utc)
+        now = now_vietnam()
 
         await collection.update_one(
             {"session_id": session_id},
@@ -108,7 +138,7 @@ class SessionRepository:
         intake_data: dict,
     ) -> None:
         collection = self._get_collection()
-        now = datetime.now(timezone.utc)
+        now = now_vietnam()
 
         await collection.update_one(
             {"session_id": session_id},
@@ -127,7 +157,7 @@ class SessionRepository:
 
     async def clear_intake_snapshot(self, session_id: str) -> None:
         collection = self._get_collection()
-        now = datetime.now(timezone.utc)
+        now = now_vietnam()
 
         await collection.update_one(
             {"session_id": session_id},

@@ -95,7 +95,11 @@ def _is_missing_value(value: Any) -> bool:
 
 
 def _required_input_missing(age: Any, gender: Any, symptoms: List[str]) -> List[str]:
+    """Return missing mandatory fields before DDXPlus prediction/RAG++.
 
+    Dự án yêu cầu bắt buộc có tuổi, giới tính và ít nhất một triệu chứng
+    rõ ràng trước khi chạy mô hình DDXPlus hoặc RAG++.
+    """
     missing: List[str] = []
     if _is_missing_value(age):
         missing.append("age")
@@ -265,10 +269,12 @@ async def predict_ragpp_endpoint(request: Request, payload: RAGPPPredictionReque
             value = item.get(key)
             if value and value not in rag_query_disease_names:
                 rag_query_disease_names.append(value)
+    final_department = "Cấp cứu" if prediction.get("triage_priority") == 1 else prediction.get("department")
+
     docs = retrieve_relevant_documents(
         symptoms=symptoms,
         red_flags=red_flags,
-        department=prediction.get("department"),
+        department=final_department,
         diseases=rag_query_disease_names,
         top_k=8,
     )
@@ -277,8 +283,11 @@ async def predict_ragpp_endpoint(request: Request, payload: RAGPPPredictionReque
         disease_names=display_disease_names,
         symptoms=symptoms,
         red_flags=red_flags,
-        department=prediction.get("department"),
+        department=final_department,
     )
+
+    if final_department and prediction.get("department") != final_department:
+        prediction["department"] = final_department
 
     return api_response(
         data={

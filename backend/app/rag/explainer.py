@@ -122,12 +122,6 @@ def build_vietnamese_fallback(doc: Dict[str, Any]) -> Tuple[str, str]:
 
 
 def shorten_text(text: str, max_length: int = 900) -> str:
-    """Return a complete, readable excerpt without trailing ellipsis.
-
-    Người dùng yêu cầu phần gợi ý/tài liệu không được bị cắt dạng "...".
-    Hàm này giữ các câu hoàn chỉnh trong giới hạn độ dài; nếu nguồn quá dài,
-    chỉ lấy các câu đầu đã hoàn chỉnh và vẫn kết thúc bằng dấu câu.
-    """
     text = re.sub(r"\s+", " ", (text or "").strip())
     if not text:
         return ""
@@ -162,7 +156,6 @@ def ensure_sentence_end(text: str) -> str:
     if not text:
         return text
     if text[-1] in ".!?…。！？":
-        # Chuẩn hóa dấu ba chấm thành dấu chấm để không còn câu bị lửng.
         return text.rstrip("…").rstrip(".") + "." if text.endswith("…") else text
     return text + "."
 
@@ -234,7 +227,7 @@ def _combined_doc_score(
     symptoms: List[str],
     red_flags: List[str],
 ) -> Tuple[float, List[str]]:
-    """Score one RAG doc by BOTH predicted disease and entered symptoms.\n\n    Không còn bắt buộc tài liệu phải khớp 100% theo tên bệnh. Một tài liệu có thể\n    được dùng để giải thích nếu nó khớp theo tên bệnh, alias Việt-Anh, hoặc khớp\n    nhiều triệu chứng người dùng nhập.\n    """
+    
     doc_text = _doc_text_for_matching(doc)
     doc_tokens = tokenize_vi(doc_text)
     score = 0.0
@@ -274,6 +267,39 @@ def _combined_doc_score(
     return score, reasons
 
 
+def _explicit_disease_match_score(doc: Dict[str, Any], disease_name: str) -> Tuple[float, List[str]]:
+
+    doc_text = _doc_text_for_matching(doc)
+    doc_disease_names = {normalize_text(item) for item in normalize_list(doc.get("disease_names", []))}
+    doc_disease_aliases = {normalize_text(item) for item in normalize_list(doc.get("disease_aliases", []))}
+    title = normalize_text(doc.get("title"))
+    reasons: List[str] = []
+    best_score = 0.0
+
+    for alias in _disease_aliases(disease_name):
+        if not alias:
+            continue
+        if alias in doc_disease_names:
+            best_score = max(best_score, 40.0)
+            reasons.append(f"metadata khớp tên bệnh/alias '{alias}'")
+        elif alias in doc_disease_aliases:
+            best_score = max(best_score, 35.0)
+            reasons.append(f"metadata khớp alias bệnh '{alias}'")
+        elif alias in title:
+            best_score = max(best_score, 30.0)
+            reasons.append(f"tiêu đề có nhắc bệnh/alias '{alias}'")
+        elif alias in doc_text:
+            best_score = max(best_score, 18.0)
+            reasons.append(f"nội dung có nhắc bệnh/alias '{alias}'")
+
+    # Loại trùng lý do, giữ ngắn để hiển thị được.
+    unique_reasons: List[str] = []
+    for reason in reasons:
+        if reason not in unique_reasons:
+            unique_reasons.append(reason)
+    return best_score, unique_reasons
+
+
 def _find_best_doc_for_disease_and_symptoms(
     docs: List[Dict[str, Any]],
     disease_name: str,
@@ -285,15 +311,22 @@ def _find_best_doc_for_disease_and_symptoms(
     best_score = 0.0
 
     for doc in docs or []:
-        score, reasons = _combined_doc_score(doc, disease_name, symptoms, red_flags)
+        disease_score, disease_reasons = _explicit_disease_match_score(doc, disease_name)
+        if disease_score <= 0:
+            continue
+
+        combined_score, combined_reasons = _combined_doc_score(doc, disease_name, symptoms, red_flags)
+        score = disease_score + combined_score
+        reasons = disease_reasons + [reason for reason in combined_reasons if reason not in disease_reasons]
         if score > best_score:
             best_doc = doc
             best_reasons = reasons
             best_score = score
 
-    # Ngưỡng thấp để cho phép giải thích theo triệu chứng khi tên bệnh Việt-Anh chưa map đủ.
-    if best_score >= 3:
+    if best_doc is not None:
         return best_doc, best_reasons, best_score
+
+
     return None, [], best_score
 
 
@@ -321,7 +354,7 @@ def build_rag_explanation(
     red_flags: List[str] = None,
     department: str = None,
 ) -> str:
-    """Build explanation by combining predicted diseases + user symptoms + RAG docs.\n\n    Phiên bản này không chỉ lấy đúng tên bệnh để giải thích. Nó chọn tài liệu RAG\n    theo điểm khớp kết hợp: tên bệnh/alias + triệu chứng + red flag + điểm retriever.\n    """
+  
     disease_names = normalize_list(disease_names or [])[:3]
     symptoms = normalize_list(symptoms or [])
     red_flags = normalize_list(red_flags or [])
@@ -333,8 +366,8 @@ def build_rag_explanation(
         f"- Triệu chứng dùng để đối chiếu: {symptoms_text}.",
         "- Hệ thống giải thích bằng cách kết hợp tên bệnh Top 3 với triệu chứng đã nhập và tài liệu liên quan, đây không phải chẩn đoán chắc chắn.",
     ]
-    if department_text:
-        lines.append(f"- Khoa gợi ý để kiểm tra ban đầu: {department_text}.")
+    # if department_text:
+    #     lines.append(f"- Khoa gợi ý để kiểm tra ban đầu: {department_text}.")
 
     source_lines: List[str] = []
     used_evidence_ids: Set[str] = set()
